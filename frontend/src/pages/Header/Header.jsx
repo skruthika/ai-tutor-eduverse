@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Navbar, Container, Form, InputGroup, Dropdown, Button } from "react-bootstrap";
-import { Search, Person, Bell, Settings, BoxArrowRight } from "react-bootstrap-icons";
+import { Search, Person, Bell, Gear, BoxArrowRight } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../api";
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
@@ -111,7 +111,7 @@ const Header = () => {
                 My Profile
               </Dropdown.Item>
               <Dropdown.Item href="#settings">
-                <Settings size={16} className="me-2" />
+                <Gear size={16} className="me-2" />
                 Settings
               </Dropdown.Item>
               <Dropdown.Divider />
