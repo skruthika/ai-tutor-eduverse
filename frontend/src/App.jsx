@@ -22,16 +22,16 @@ const ProtectedRoute = ({ element }) => {
 };
 
 const PublicRoute = ({ element }) => {
-  return !isAuthenticated() ? element : <Navigate to="/dashboard" replace />;
+  return !isAuthenticated() ? element : <Navigate to="/welcome" replace />;
 };
 
 const App = () => {
   return (
     <ThemeProvider>
       <div className="app-container">
-        <Header />
-        <main className="main-content">
-          <Router>
+        <Router>
+          <Header />
+          <main className="main-content">
             <Routes>
               {/* Root route - redirect based on authentication */}
               <Route 
@@ -67,9 +67,9 @@ const App = () => {
                 } 
               />
             </Routes>
-          </Router>
-        </main>
-        <Footer />
+          </main>
+          <Footer />
+        </Router>
       </div>
     </ThemeProvider>
   );
