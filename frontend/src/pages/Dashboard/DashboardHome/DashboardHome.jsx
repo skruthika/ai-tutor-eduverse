@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button, ProgressBar } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, ProgressBar, Badge } from "react-bootstrap";
 import { 
   TrophyFill, 
   BookHalf, 
@@ -10,7 +10,9 @@ import {
   ArrowRight,
   Plus,
   Fire,
-  ChatSquare
+  ChatSquare,
+  Calendar,
+  Target
 } from "react-bootstrap-icons";
 import { getUserStats, getAllLearningGoals } from "../../../api";
 import "./DashboardHome.scss";
@@ -79,18 +81,20 @@ const DashboardHome = () => {
     }
   ];
 
-  const recentCourses = learningGoals.slice(0, 6).map(goal => ({
+  // Filter to show only user's actual courses, not sample data
+  const userCourses = learningGoals.slice(0, 6).map(goal => ({
     id: goal.name,
     title: goal.name,
     progress: goal.progress || 0,
     duration: goal.duration,
     lastAccessed: "2 hours ago",
-    difficulty: "Intermediate"
+    difficulty: "Intermediate",
+    isUserCourse: true
   }));
 
   if (loading) {
     return (
-      <div className="simple-dashboard-home">
+      <div className="enhanced-dashboard-home">
         <Container fluid className="dashboard-container">
           <div className="loading-state">
             <div className="spinner-border text-primary mb-3" role="status">
@@ -104,24 +108,45 @@ const DashboardHome = () => {
   }
 
   return (
-    <div className="simple-dashboard-home">
+    <div className="enhanced-dashboard-home">
       <Container fluid className="dashboard-container">
-        {/* Welcome Section */}
+        {/* Enhanced Welcome Section */}
         <div className="welcome-section">
-          <h1 className="welcome-title">
-            {greeting}, {userName}! 👋
-          </h1>
-          <p className="welcome-subtitle">
-            Ready to continue your learning journey?
-          </p>
+          <div className="welcome-content">
+            <div className="greeting-badge">
+              <Calendar size={16} className="me-2" />
+              {new Date().toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </div>
+            <h1 className="welcome-title">
+              {greeting}, {userName}! 👋
+            </h1>
+            <p className="welcome-subtitle">
+              Ready to continue your learning journey? Let's make today productive!
+            </p>
+            <div className="quick-actions">
+              <Button variant="primary" className="action-btn">
+                <ChatSquare size={16} className="me-2" />
+                Start Learning
+              </Button>
+              <Button variant="outline-primary" className="action-btn">
+                <Target size={16} className="me-2" />
+                Set Goal
+              </Button>
+            </div>
+          </div>
         </div>
 
-        {/* Progress Cards */}
+        {/* Enhanced Progress Cards */}
         <div className="progress-section">
-          <Row className="g-3">
+          <Row className="g-4">
             {progressCards.map((card, index) => (
               <Col lg={3} md={6} key={index}>
-                <Card className="progress-card">
+                <Card className="enhanced-progress-card">
                   <Card.Body>
                     <div className="card-header-content">
                       <div className={`progress-icon bg-${card.color}`}>
@@ -136,7 +161,7 @@ const DashboardHome = () => {
                       <ProgressBar 
                         now={card.progress} 
                         variant={card.color}
-                        className="custom-progress"
+                        className="enhanced-progress"
                       />
                       <small className="progress-text">{Math.round(card.progress)}% progress</small>
                     </div>
@@ -147,40 +172,57 @@ const DashboardHome = () => {
           </Row>
         </div>
 
-        {/* My Courses Section */}
+        {/* Enhanced My Courses Section */}
         <div className="courses-section">
           <div className="section-header">
-            <h2 className="section-title">
-              <BookHalf className="me-2" />
-              My Courses
-            </h2>
-            <Button variant="outline-primary" size="sm">
-              View All <ArrowRight size={16} />
-            </Button>
+            <div className="section-title-group">
+              <h2 className="section-title">
+                <BookHalf className="me-2" />
+                My Courses
+              </h2>
+              <p className="section-description">Your personalized learning paths</p>
+            </div>
+            {userCourses.length > 0 && (
+              <Button variant="outline-primary" size="sm" className="view-all-btn">
+                View All <ArrowRight size={16} />
+              </Button>
+            )}
           </div>
 
-          {recentCourses.length > 0 ? (
-            <Row className="g-3">
-              {recentCourses.map((course, index) => (
+          {userCourses.length > 0 ? (
+            <Row className="g-4">
+              {userCourses.map((course, index) => (
                 <Col lg={4} md={6} key={index}>
-                  <Card className="course-card">
+                  <Card className="enhanced-course-card">
                     <Card.Body>
-                      <h6 className="course-title">{course.title}</h6>
+                      <div className="course-header">
+                        <h6 className="course-title">{course.title}</h6>
+                        <Badge bg="primary" className="user-badge">My Course</Badge>
+                      </div>
                       <div className="course-meta">
                         <small className="text-muted">
                           <ClockHistory size={14} className="me-1" />
                           {course.duration}
                         </small>
+                        <small className="text-muted">
+                          Last accessed: {course.lastAccessed}
+                        </small>
                       </div>
-                      <ProgressBar 
-                        now={course.progress} 
-                        className="course-progress"
-                      />
+                      <div className="progress-section">
+                        <ProgressBar 
+                          now={course.progress} 
+                          className="course-progress"
+                          variant="primary"
+                        />
+                        <div className="progress-info">
+                          <small className="text-muted">{course.progress}% complete</small>
+                          <small className="text-muted">{course.difficulty}</small>
+                        </div>
+                      </div>
                       <div className="course-actions">
-                        <small className="text-muted">{course.progress}% complete</small>
-                        <Button variant="primary" size="sm">
+                        <Button variant="primary" size="sm" className="continue-btn">
                           <PlayCircleFill size={14} className="me-1" />
-                          Continue
+                          Continue Learning
                         </Button>
                       </div>
                     </Card.Body>
@@ -190,16 +232,62 @@ const DashboardHome = () => {
             </Row>
           ) : (
             <div className="empty-state">
-              <BookHalf size={48} className="text-muted mb-3" />
-              <h6 className="text-muted">No courses yet</h6>
-              <p className="text-muted mb-3">Start your learning journey!</p>
-              <Button variant="primary">
-                <Plus size={16} className="me-2" />
-                Create Learning Goal
-              </Button>
+              <div className="empty-content">
+                <BookHalf size={64} className="empty-icon" />
+                <h5 className="empty-title">No courses yet</h5>
+                <p className="empty-description">
+                  Start your learning journey by creating your first personalized study plan!
+                </p>
+                <div className="empty-actions">
+                  <Button variant="primary" className="create-btn">
+                    <Plus size={16} className="me-2" />
+                    Create Learning Goal
+                  </Button>
+                  <Button variant="outline-primary" className="explore-btn">
+                    <StarFill size={16} className="me-2" />
+                    Explore Topics
+                  </Button>
+                </div>
+              </div>
             </div>
           )}
         </div>
+
+        {/* Quick Stats Summary */}
+        {userCourses.length > 0 && (
+          <div className="stats-summary">
+            <Card className="summary-card">
+              <Card.Body>
+                <Row className="text-center">
+                  <Col md={3}>
+                    <div className="stat-item">
+                      <h4 className="stat-number">{userStats?.totalGoals || 0}</h4>
+                      <p className="stat-label">Active Goals</p>
+                    </div>
+                  </Col>
+                  <Col md={3}>
+                    <div className="stat-item">
+                      <h4 className="stat-number">{userStats?.completedGoals || 0}</h4>
+                      <p className="stat-label">Completed</p>
+                    </div>
+                  </Col>
+                  <Col md={3}>
+                    <div className="stat-item">
+                      <h4 className="stat-number">{userStats?.totalQuizzes || 0}</h4>
+                      <p className="stat-label">Quizzes Taken</p>
+                    </div>
+                  </Col>
+                  <Col md={3}>
+                    <div className="stat-item">
+                      <h4 className="stat-number">{userStats?.streakDays || 0}</h4>
+                      <p className="stat-label">Day Streak</p>
+                    </div>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          </div>
+        )}
       </Container>
     </div>
   );
