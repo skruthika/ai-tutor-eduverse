@@ -55,8 +55,8 @@ const Sidebar = ({
   };
 
   return (
-    <div className={`simple-sidebar ${isCollapsed ? "collapsed" : ""}`}>
-      {/* Sidebar Header */}
+    <div className={`clean-sidebar ${isCollapsed ? "collapsed" : ""}`}>
+      {/* Sidebar Toggle - No brand duplication */}
       <div className="sidebar-header">
         <button
           className="sidebar-toggle"
@@ -66,20 +66,13 @@ const Sidebar = ({
           {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
         </button>
         {!isCollapsed && (
-          <div className="sidebar-brand">
-            <img
-              src="/icons/aitutor-short-no-bg.png"
-              alt="AI Tutor"
-              width="32"
-              height="32"
-              className="brand-logo"
-            />
-            <span className="brand-text">AI Tutor</span>
+          <div className="sidebar-title">
+            <span>Navigation</span>
           </div>
         )}
       </div>
 
-      {/* Navigation Menu */}
+      {/* Navigation Menu - Clean and aligned */}
       <nav className="sidebar-nav">
         {menuItems.map((item) => (
           <button
@@ -88,15 +81,35 @@ const Sidebar = ({
             onClick={() => handleItemClick(item)}
             title={isCollapsed ? item.text : undefined}
           >
-            <div className="nav-icon">
-              {item.icon}
+            <div className="nav-content">
+              <div className="nav-icon">
+                {item.icon}
+              </div>
+              {!isCollapsed && (
+                <span className="nav-text">{item.text}</span>
+              )}
             </div>
-            {!isCollapsed && (
-              <span className="nav-text">{item.text}</span>
-            )}
+            {activeScreen === item.screen && <div className="active-indicator" />}
           </button>
         ))}
       </nav>
+
+      {/* Sidebar Footer - Simple stats */}
+      {!isCollapsed && (
+        <div className="sidebar-footer">
+          <div className="footer-stats">
+            <div className="stat-item">
+              <div className="stat-number">5</div>
+              <div className="stat-label">Courses</div>
+            </div>
+            <div className="stat-divider"></div>
+            <div className="stat-item">
+              <div className="stat-number">3</div>
+              <div className="stat-label">Completed</div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

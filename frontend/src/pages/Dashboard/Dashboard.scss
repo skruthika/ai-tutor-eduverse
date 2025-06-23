@@ -17,6 +17,7 @@
   position: relative;
   min-width: 0;
   overflow: hidden;
+  margin-left: 0; // No margin needed since sidebar is separate
 }
 
 .mobile-overlay {
@@ -36,10 +37,18 @@
   .simple-dashboard {
     height: calc(100vh - 70px);
   }
+  
+  .mobile-overlay {
+    top: 70px;
+  }
 }
 
 @media (max-width: $breakpoint-mobile) {
   .simple-dashboard {
     height: calc(100vh - 60px);
+  }
+  
+  .mobile-overlay {
+    top: 60px;
   }
 }

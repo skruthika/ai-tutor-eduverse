@@ -47,63 +47,66 @@ const Header = () => {
   if (!isAuthenticated() || isWelcomePage) {
     // Public/Welcome Header - Very simple
     return (
-      <Navbar className="simple-navbar" fixed="top">
-        <Container fluid className="px-4">
-          {/* Brand Section */}
-          <Navbar.Brand className="brand-container" href="#home">
+      <Navbar className="clean-navbar welcome" fixed="top">
+        <Container fluid className="navbar-container">
+          {/* Brand Section - Left */}
+          <Navbar.Brand className="brand-section" href="#home">
             <img
               src="/icons/aitutor-short-no-bg.png"
               alt="AI Tutor"
               width="40"
               height="40"
-              className="logo-image"
+              className="brand-logo"
             />
-            <span className="brand-text">AI Tutor</span>
+            <span className="brand-name">AI Tutor</span>
           </Navbar.Brand>
 
-          {/* Right Section - Get Started Button */}
-          <Button 
-            variant="primary" 
-            className="get-started-btn auth-modal-trigger"
-            onClick={handleGetStarted}
-          >
-            Get Started
-          </Button>
+          {/* Actions Section - Right */}
+          <div className="header-actions">
+            <ThemeToggle />
+            <Button 
+              variant="primary" 
+              className="get-started-btn auth-modal-trigger"
+              onClick={handleGetStarted}
+            >
+              Get Started
+            </Button>
+          </div>
         </Container>
       </Navbar>
     );
   }
 
-  // Dashboard Header - Simple with minimal controls
+  // Dashboard Header - Clean and minimal
   return (
-    <Navbar className="simple-navbar dashboard" fixed="top">
-      <Container fluid className="px-4">
-        {/* Brand Section */}
-        <Navbar.Brand className="brand-container" onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
+    <Navbar className="clean-navbar dashboard" fixed="top">
+      <Container fluid className="navbar-container">
+        {/* Brand Section - Left (No duplication with sidebar) */}
+        <Navbar.Brand className="brand-section" onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
           <img
             src="/icons/aitutor-short-no-bg.png"
             alt="AI Tutor"
             width="40"
             height="40"
-            className="logo-image"
+            className="brand-logo"
           />
-          <span className="brand-text">AI Tutor</span>
+          <span className="brand-name">AI Tutor</span>
         </Navbar.Brand>
 
-        {/* Right Section - Simple user controls */}
-        <div className="user-controls">
+        {/* User Controls - Right */}
+        <div className="header-actions">
           {/* Notifications */}
-          <Button variant="ghost" className="control-btn">
+          <Button variant="ghost" className="action-btn">
             <Bell size={18} />
-            <span className="notification-badge">3</span>
+            <span className="notification-dot">3</span>
           </Button>
 
           {/* Theme Toggle */}
           <ThemeToggle />
 
-          {/* User Profile Dropdown */}
+          {/* User Profile */}
           <Dropdown align="end">
-            <Dropdown.Toggle variant="ghost" className="user-toggle">
+            <Dropdown.Toggle variant="ghost" className="user-dropdown">
               <div className="user-avatar">
                 <Person size={18} />
               </div>
@@ -111,11 +114,11 @@ const Header = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="user-menu">
-              <div className="user-info">
+              <div className="user-header">
                 <div className="user-avatar-large">
                   <Person size={20} />
                 </div>
-                <div>
+                <div className="user-details">
                   <div className="name">{userName}</div>
                   <div className="email">{localStorage.getItem("username")}</div>
                 </div>
@@ -124,8 +127,8 @@ const Header = () => {
               <Dropdown.Item onClick={() => navigate('/dashboard')}>
                 Dashboard
               </Dropdown.Item>
-              <Dropdown.Item href="#profile">
-                Profile
+              <Dropdown.Item href="#settings">
+                Settings
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={handleLogout} className="logout-item">
