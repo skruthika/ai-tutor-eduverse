@@ -9,6 +9,7 @@ import { setSelectedLearningGoal } from "../../../globalSlice.js";
 import { setLearningGoals } from "../../../globalSlice.js";
 import { getAllLearningGoals } from "../../../api.js";
 import { FaLevelUpAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({
   isCollapsed,
@@ -20,14 +21,29 @@ const Sidebar = ({
 }) => {
   const [showLearningGoals, setShowLearningGoals] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const learningGoals = useSelector((state) => state.global.learningGoals); // Get learning goals from Redux
 
   const handleLogout = () => {
-    // Clear localStorage
-    localStorage.clear();
-
-    // Reload the page
-    window.location.reload();
+    try {
+      // Clear localStorage
+      localStorage.clear();
+      
+      // Clear any session storage
+      sessionStorage.clear();
+      
+      // Navigate to welcome page
+      navigate('/welcome', { replace: true });
+      
+      // Force a page reload to ensure clean state
+      setTimeout(() => {
+        window.location.href = '/welcome';
+      }, 100);
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Fallback: force reload to root
+      window.location.href = '/';
+    }
   };
 
   useEffect(() => {
@@ -41,6 +57,7 @@ const Sidebar = ({
     };
     fetchGoals();
   }, [dispatch]);
+  
   const getLearningGoalsNames = () => {
     const arr = ["All"];
     learningGoals.map((goal) => arr.push(goal.name));

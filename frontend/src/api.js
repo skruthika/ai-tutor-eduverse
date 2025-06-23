@@ -38,6 +38,26 @@ export const signup = async (name, username, password) => {
   }
 };
 
+// Logout function
+export const logout = async () => {
+  try {
+    // Clear all authentication data
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("name");
+    
+    // Clear any other app-specific data
+    localStorage.removeItem("preferences");
+    
+    // Clear session storage as well
+    sessionStorage.clear();
+    
+    return { success: true };
+  } catch (error) {
+    console.error("Logout error:", error);
+    throw new Error("Logout failed");
+  }
+};
 
 // OAuth GitHub Login
 export const githubLogin = async (code) => {
