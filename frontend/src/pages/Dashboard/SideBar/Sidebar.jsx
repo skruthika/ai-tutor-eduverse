@@ -55,8 +55,8 @@ const Sidebar = ({
   };
 
   return (
-    <div className={`clean-sidebar ${isCollapsed ? "collapsed" : ""}`}>
-      {/* Sidebar Toggle - No brand duplication */}
+    <div className={`optimized-sidebar ${isCollapsed ? "collapsed" : ""}`}>
+      {/* Sidebar Toggle */}
       <div className="sidebar-header">
         <button
           className="sidebar-toggle"
@@ -65,14 +65,9 @@ const Sidebar = ({
         >
           {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
         </button>
-        {!isCollapsed && (
-          <div className="sidebar-title">
-            <span>Navigation</span>
-          </div>
-        )}
       </div>
 
-      {/* Navigation Menu - Clean and aligned */}
+      {/* Navigation Menu */}
       <nav className="sidebar-nav">
         {menuItems.map((item) => (
           <button
@@ -100,12 +95,12 @@ const Sidebar = ({
           <div className="footer-stats">
             <div className="stat-item">
               <div className="stat-number">5</div>
-              <div className="stat-label">Courses</div>
+              <div className="stat-label">Goals</div>
             </div>
             <div className="stat-divider"></div>
             <div className="stat-item">
               <div className="stat-number">3</div>
-              <div className="stat-label">Completed</div>
+              <div className="stat-label">Done</div>
             </div>
           </div>
         </div>
