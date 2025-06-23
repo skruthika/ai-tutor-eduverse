@@ -1,4 +1,4 @@
-const API_BASE_URL = ""; // Changeable in the future
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000"; // Use environment variable or default to localhost:8000
 
 export const login = async (username, password) => {
   try {
@@ -41,10 +41,10 @@ export const signup = async (name, username, password) => {
 // OAuth Google Login
 export const googleLogin = async (credential) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/auth/google-login`, {
+    const response = await fetch(`${API_BASE_URL}/auth/google/verify`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ credential }),
+      body: JSON.stringify({ token: credential }),
     });
 
     const data = await response.json();
@@ -53,6 +53,7 @@ export const googleLogin = async (credential) => {
     localStorage.setItem("token", data.token);
     localStorage.setItem("username", data.username);
     if (data.name) localStorage.setItem("name", data.name);
+    if (data.preferences) localStorage.setItem("preferences", JSON.stringify(data.preferences));
 
     return data;
   } catch (error) {
@@ -280,6 +281,119 @@ export const savePreferencesAPI = async (preferences) => {
     return await response.json();
   } catch (error) {
     console.error("Error saving preferences:", error);
+    throw error;
+  }
+};
+
+/**
+ * Get user profile information
+ * Retrieves the user's profile details from the backend
+ */
+export const getUserProfile = async () => {
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("token");
+
+  if (!username || !token) throw new Error("User not authenticated");
+
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/auth/profile?username=${encodeURIComponent(username)}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.detail || "Failed to fetch user profile");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    throw error;
+  }
+};
+
+/**
+ * Update user profile information
+ * @param {Object} profileData - Object containing profile data to update
+ */
+export const updateUserProfile = async (profileData) => {
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("token");
+
+  if (!username || !token) throw new Error("User not authenticated");
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/profile`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ 
+        username, 
+        ...profileData 
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.detail || "Failed to update user profile");
+    }
+
+    const data = await response.json();
+    
+    // Update local storage with new data if available
+    if (data.name) localStorage.setItem("name", data.name);
+    
+    return data;
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    throw error;
+  }
+};
+
+/**
+ * Get user preferences
+ * Retrieves the user's preferences from the backend
+ */
+export const getPreferences = async () => {
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("token");
+
+  if (!username || !token) throw new Error("User not authenticated");
+
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/chat/preferences?username=${encodeURIComponent(username)}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.detail || "Failed to fetch user preferences");
+    }
+
+    const data = await response.json();
+    
+    // Update local storage with the latest preferences
+    if (data.preferences) {
+      localStorage.setItem("preferences", JSON.stringify(data.preferences));
+    }
+    
+    return data;
+  } catch (error) {
+    console.error("Error fetching user preferences:", error);
     throw error;
   }
 };

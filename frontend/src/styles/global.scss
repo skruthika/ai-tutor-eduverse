@@ -1,6 +1,6 @@
-// Import global styles
-@import "./variables";
-@import "./mixins";
+// Import global styles using modern @use syntax
+@use "./variables" as vars;
+@use "./mixins" as mix;
 
 // Global resets and base styles
 * {
@@ -11,7 +11,7 @@
 
 body {
   font-family: "Arial", sans-serif;
-  background-color: $background-color;
-  color: $text-color;
+  background-color: vars.$light-bg;
+  color: vars.$light-text;
 }
  

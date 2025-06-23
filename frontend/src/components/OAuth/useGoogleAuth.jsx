@@ -1,8 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useEffect, useState } from 'react';
 import { googleLogin } from '../../api';
 import { useNavigate } from 'react-router-dom';
 
-const GoogleOAuth = ({ onSuccess, onError }) => {
+/**
+ * Custom hook for Google OAuth authentication
+ * 
+ * @param {Object} options - Configuration options
+ * @param {Function} options.onSuccess - Callback function called after successful authentication
+ * @param {Function} options.onError - Callback function called when an error occurs
+ * @returns {Object} - Object containing authentication methods and state
+ */
+const useGoogleAuth = ({ onSuccess, onError }) => {
   const navigate = useNavigate();
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [scriptError, setScriptError] = useState(null);
@@ -67,6 +76,10 @@ const GoogleOAuth = ({ onSuccess, onError }) => {
     }
   }, [scriptLoaded]);
 
+  /**
+   * Handle Google authentication response
+   * @param {Object} response - Response from Google OAuth
+   */
   const handleGoogleResponse = async (response) => {
     try {
       const data = await googleLogin(response.credential);
@@ -76,12 +89,16 @@ const GoogleOAuth = ({ onSuccess, onError }) => {
         navigate('/dashboard');
       }
     } catch (error) {
+      console.error('Google login error:', error);
       if (onError) {
-        onError(error.message);
+        onError(error.message || "Failed to authenticate with Google. Please try again.");
       }
     }
   };
-  // Render Google Sign-In button or handle prompt
+
+  /**
+   * Trigger Google login prompt
+   */
   const handleGoogleLogin = () => {
     if (scriptError) {
       if (onError) {
@@ -113,13 +130,20 @@ const GoogleOAuth = ({ onSuccess, onError }) => {
     }
   };
 
-  // Render a custom Google Sign-In button
-  const renderGoogleButton = (buttonText = "Sign in with Google", className = "") => {
+  /**
+   * Render a Google Sign-In button
+   * @param {string} buttonText - Text to display on the button
+   * @param {string} className - CSS class name for styling
+   * @param {Object} props - Additional props to pass to the button
+   * @returns {Function} - Render function that returns JSX for the button
+   */
+  const renderGoogleButton = (buttonText = "Sign in with Google", className = "", props = {}) => {
     return (
       <button 
         className={`google-login-button ${className}`}
         onClick={handleGoogleLogin}
         disabled={!scriptLoaded || scriptError}
+        {...props}
       >
         {scriptError ? "Google Sign-In Unavailable" : 
          !scriptLoaded ? "Loading Google Sign-In..." : 
@@ -137,4 +161,4 @@ const GoogleOAuth = ({ onSuccess, onError }) => {
   };
 };
 
-export default GoogleOAuth;
+export default useGoogleAuth;

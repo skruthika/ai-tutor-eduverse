@@ -4,7 +4,13 @@
     "version": "1.0.0",
     "type": "module",
     "description": "AI-powered personalized learning platform with intelligent tutoring",
-    "keywords": ["ai", "tutor", "learning", "education", "personalized"],
+    "keywords": [
+        "ai",
+        "tutor",
+        "learning",
+        "education",
+        "personalized"
+    ],
     "scripts": {
         "dev": "vite",
         "build": "vite build",
@@ -12,6 +18,7 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@react-oauth/google": "^0.12.2",
         "@reduxjs/toolkit": "^2.6.1",
         "bootstrap": "^5.3.3",
         "date-fns": "^4.1.0",

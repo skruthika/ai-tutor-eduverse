@@ -104,4 +104,6 @@ $card-box-shadow: $box-shadow;
 $input-border-radius: $border-radius;
 $input-focus-border-color: $primary;
 
-@import "bootstrap/scss/bootstrap";
+// The bootstrap import should be at the end of the file
+// so it doesn't interfere with our custom variables
+@forward "bootstrap/scss/bootstrap";

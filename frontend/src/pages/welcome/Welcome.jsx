@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-import { login, signup, googleLogin } from "../../api";
+import { login, signup } from "../../api";
+import useGoogleAuth from "../../components/OAuth/useGoogleAuth";
 import "./welcome.scss";
 import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
 
@@ -14,23 +15,32 @@ const Welcome = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [googlePromptTimeout, setGooglePromptTimeout] = useState(null);
   const navigate = useNavigate();
-
-  // Initialize Google OAuth
-  useEffect(() => {
-    if (window.google) {
-      window.google.accounts.id.initialize({
-        client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID || "your-google-client-id",
-        callback: handleGoogleResponse,
-      });
-    }
-  }, []);
 
   const clearForm = () => {
     setName("");
     setEmail("");
     setPassword("");
+  };
+  
+  const handleModalClose = () => {
+    setShowModal(false);
     setError(null);
+    clearForm();
+    setLoading(false);
+    
+    // Clear the timeout if it exists
+    if (googlePromptTimeout) {
+      clearTimeout(googlePromptTimeout);
+      setGooglePromptTimeout(null);
+    }
+  };
+  
+  const handleTabSelect = (k) => {
+    setActiveTab(k);
+    setError(null);
+    clearForm();
   };
 
   const handleLogin = async () => {
@@ -69,26 +79,48 @@ const Welcome = () => {
     }
   };
 
-  const handleGoogleResponse = async (response) => {
-    setLoading(true);
-    try {
-      const data = await googleLogin(response.credential);
-      console.log("Google Login Success:", data);
-      navigate("/dashboard");
-    } catch (err) {
-      setError(err.message || "Google login failed. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+  const handleGoogleSuccess = (data) => {
+    console.log("Google Login Success:", data);
+    localStorage.setItem("username", data.email || "user");
+    setLoading(false);
+    navigate("/dashboard");
   };
 
-  const handleGoogleLogin = () => {
-    if (window.google) {
-      window.google.accounts.id.prompt();
-    } else {
-      setError("Google OAuth not loaded. Please refresh and try again.");
-    }
+  const handleGoogleError = (errorMessage) => {
+    setError(errorMessage || "Google login failed. Please try again.");
+    setLoading(false);
   };
+  
+  const handleGoogleButtonClick = () => {
+    setLoading(true);
+    handleGoogleLogin();
+    
+    // Set a timeout to clear loading state if prompt is dismissed
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 5000); // 5 second timeout should be enough for Google prompt to appear and handle dismissal
+    
+    setGooglePromptTimeout(timeout);
+  };
+  
+  // Component cleanup
+  useEffect(() => {
+    return () => {
+      if (googlePromptTimeout) {
+        clearTimeout(googlePromptTimeout);
+      }
+    };
+  }, [googlePromptTimeout]);
+
+  // Initialize Google Auth hook
+  const { 
+    handleGoogleLogin, 
+    isLoaded: isGoogleLoaded, 
+    hasError: hasGoogleError 
+  } = useGoogleAuth({
+    onSuccess: handleGoogleSuccess,
+    onError: handleGoogleError
+  });
 
   return (
     <div className="welcome-container">
@@ -248,7 +280,7 @@ const Welcome = () => {
       </section>
 
       {/* Authentication Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered size="lg">
+      <Modal show={showModal} onHide={handleModalClose} centered size="lg">
         <Modal.Header closeButton className="border-0">
           <Modal.Title className="d-flex align-items-center">
             <img
@@ -266,7 +298,7 @@ const Welcome = () => {
           
           <Tabs 
             activeKey={activeTab} 
-            onSelect={(k) => { setActiveTab(k); clearForm(); }} 
+            onSelect={handleTabSelect} 
             className="mb-4 custom-tabs"
           >
             {/* Login Tab */}
@@ -309,11 +341,13 @@ const Welcome = () => {
                 <Button 
                   variant="outline-secondary" 
                   className="w-100 oauth-button"
-                  onClick={handleGoogleLogin}
-                  disabled={loading}
+                  onClick={handleGoogleButtonClick}
+                  disabled={loading || !isGoogleLoaded || hasGoogleError}
                 >
                   <FcGoogle className="me-2" size={20} />
-                  Continue with Google
+                  {!isGoogleLoaded ? "Loading Google Sign-In..." : 
+                   hasGoogleError ? "Google Sign-In Unavailable" : 
+                   "Continue with Google"}
                 </Button>
               </Form>
             </Tab>
@@ -368,11 +402,13 @@ const Welcome = () => {
                 <Button 
                   variant="outline-secondary" 
                   className="w-100 oauth-button"
-                  onClick={handleGoogleLogin}
-                  disabled={loading}
+                  onClick={handleGoogleButtonClick}
+                  disabled={loading || !isGoogleLoaded || hasGoogleError}
                 >
                   <FcGoogle className="me-2" size={20} />
-                  Continue with Google
+                  {!isGoogleLoaded ? "Loading Google Sign-In..." : 
+                   hasGoogleError ? "Google Sign-In Unavailable" : 
+                   "Continue with Google"}
                 </Button>
               </Form>
             </Tab>

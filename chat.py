@@ -137,6 +137,51 @@ async def chat(user_prompt: str, username: str, isQuiz: bool = False, isLearning
         store_chat_history(username, response_message)
         raise HTTPException(status_code=500, detail=str(e))
 
+@chat_router.get("/preferences")
+async def get_preferences(username: str):
+    """
+    Retrieve user preferences
+    """
+    try:
+        # Check chats collection first (where preferences are stored)
+        chat_session = chats_collection.find_one({"username": username})
+        
+        # Default preferences
+        default_preferences = {
+            "userRole": "Student",
+            "timeValue": 15,
+            "language": "English",
+            "ageGroup": "Under 10"
+        }
+        
+        preferences = None
+        
+        # If preferences exist in chats collection
+        if chat_session and "preferences" in chat_session:
+            preferences = chat_session["preferences"]
+        else:
+            # Try to get from users collection as fallback
+            from database import users_collection
+            user = users_collection.find_one({"username": username})
+            
+            if user and "preferences" in user:
+                preferences = user["preferences"]
+            else:
+                # Create default preferences
+                preferences = default_preferences
+                
+                # Store in chats collection
+                chats_collection.update_one(
+                    {"username": username},
+                    {"$set": {"preferences": default_preferences}},
+                    upsert=True
+                )
+        
+        return {"preferences": preferences}
+    except Exception as e:
+        print(f"❌ Error fetching preferences: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch preferences: {str(e)}")
+
 
 @chat_router.get("/history")
 async def get_chat_history(username: str):

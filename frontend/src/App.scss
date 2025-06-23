@@ -1,5 +1,7 @@
-@import "./styles/variables";
-@import "./styles/themes";
+// Use the modern @use syntax instead of deprecated @import
+@use "./styles/variables" as vars;
+// The themes file must come after variables to access the color variables
+@use "./styles/themes";
 
 .app-container {
   min-height: 100vh;
@@ -18,8 +20,8 @@
 
 // Global button styling
 .btn {
-  border-radius: $border-radius;
-  font-weight: $font-weight-medium;
+  border-radius: vars.$border-radius;
+  font-weight: vars.$font-weight-medium;
   transition: all 0.3s ease;
   
   &:hover {
@@ -40,7 +42,7 @@
 
 // Global card styling
 .card {
-  border-radius: $card-border-radius;
+  border-radius: vars.$card-border-radius;
   box-shadow: var(--shadow);
   border: 1px solid var(--border-color);
   background: var(--card-bg);
@@ -50,7 +52,7 @@
 
 // Global form styling
 .form-control {
-  border-radius: $border-radius;
+  border-radius: vars.$border-radius;
   border: 1px solid var(--border-color);
   background: var(--input-bg);
   color: var(--text-primary);

@@ -1,43 +1,45 @@
 // themes.scss
+// Import variables first to ensure they're available
+@use "variables" as vars;
 
 // Light Theme
 [data-theme="light"] {
-  --bg-primary: #{$light-bg};
-  --bg-secondary: #{$light-surface};
-  --text-primary: #{$light-text};
-  --text-secondary: #{$light-text-muted};
-  --border-color: #{$light-border};
-  --shadow: #{$box-shadow};
-  --primary-color: #{$primary-light};
-  --secondary-color: #{$secondary-light};
+  --bg-primary: #{vars.$light-bg};
+  --bg-secondary: #{vars.$light-surface};
+  --text-primary: #{vars.$light-text};
+  --text-secondary: #{vars.$light-text-muted};
+  --border-color: #{vars.$light-border};
+  --shadow: #{vars.$box-shadow};
+  --primary-color: #{vars.$primary-light};
+  --secondary-color: #{vars.$secondary-light};
   
   // Component specific
-  --navbar-bg: #{$light-bg};
-  --sidebar-bg: #{$light-surface};
-  --card-bg: #{$light-bg};
-  --modal-bg: #{$light-bg};
-  --input-bg: #{$light-bg};
-  --button-bg: #{$primary-light};
+  --navbar-bg: #{vars.$light-bg};
+  --sidebar-bg: #{vars.$light-surface};
+  --card-bg: #{vars.$light-bg};
+  --modal-bg: #{vars.$light-bg};
+  --input-bg: #{vars.$light-bg};
+  --button-bg: #{vars.$primary-light};
 }
 
 // Dark Theme
 [data-theme="dark"] {
-  --bg-primary: #{$dark-bg};
-  --bg-secondary: #{$dark-surface};
-  --text-primary: #{$dark-text};
-  --text-secondary: #{$dark-text-muted};
-  --border-color: #{$dark-border};
+  --bg-primary: #{vars.$dark-bg};
+  --bg-secondary: #{vars.$dark-surface};
+  --text-primary: #{vars.$dark-text};
+  --text-secondary: #{vars.$dark-text-muted};
+  --border-color: #{vars.$dark-border};
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-  --primary-color: #{$primary-dark};
-  --secondary-color: #{$secondary-dark};
+  --primary-color: #{vars.$primary-dark};
+  --secondary-color: #{vars.$secondary-dark};
   
   // Component specific
-  --navbar-bg: #{$dark-surface};
-  --sidebar-bg: #{$dark-bg};
-  --card-bg: #{$dark-surface};
-  --modal-bg: #{$dark-surface};
-  --input-bg: #{$dark-surface};
-  --button-bg: #{$primary-dark};
+  --navbar-bg: #{vars.$dark-surface};
+  --sidebar-bg: #{vars.$dark-bg};
+  --card-bg: #{vars.$dark-surface};
+  --modal-bg: #{vars.$dark-surface};
+  --input-bg: #{vars.$dark-surface};
+  --button-bg: #{vars.$primary-dark};
 }
 
 // Global theme application
