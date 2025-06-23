@@ -74,39 +74,11 @@ const ChatScreen = () => {
   }, [chatHistory]);
 
   return (
-    <div className="simple-chat-screen">
+    <div className="enhanced-chat-screen">
       <Container fluid className="chat-container">
-        {/* Chat Header */}
+        {/* Clean Header */}
         <div className="chat-header">
           <h2 className="chat-title">AI Tutor Chat</h2>
-          <div className="chat-actions">
-            <Button
-              variant={isLearningPathQuery ? 'primary' : 'outline-primary'}
-              size="sm"
-              onClick={handleStudyPlan}
-            >
-              <Book size={16} className="me-2" />
-              Study Plan
-            </Button>
-            <Button
-              variant={isQuizQuery ? "primary" : "outline-primary"}
-              size="sm"
-              onClick={handleSelfyQuiz}
-            >
-              <List size={16} className="me-2" />
-              Quiz
-            </Button>
-            {chatHistory.length > 0 && (
-              <Button
-                variant="outline-danger"
-                size="sm"
-                onClick={handleClearChat}
-              >
-                <X size={16} className="me-2" />
-                Clear
-              </Button>
-            )}
-          </div>
         </div>
 
         {/* Chat Messages */}
@@ -190,6 +162,41 @@ const ChatScreen = () => {
             </span>
           </div>
         )}
+
+        {/* Action Buttons - Moved to bottom above input */}
+        <div className="chat-actions-section">
+          <div className="action-buttons-group">
+            <Button
+              variant={isLearningPathQuery ? 'primary' : 'outline-primary'}
+              size="sm"
+              onClick={handleStudyPlan}
+              className="action-btn"
+            >
+              <Book size={16} className="me-2" />
+              Study Plan
+            </Button>
+            <Button
+              variant={isQuizQuery ? "primary" : "outline-primary"}
+              size="sm"
+              onClick={handleSelfyQuiz}
+              className="action-btn"
+            >
+              <List size={16} className="me-2" />
+              Quiz
+            </Button>
+            {chatHistory.length > 0 && (
+              <Button
+                variant="outline-danger"
+                size="sm"
+                onClick={handleClearChat}
+                className="action-btn"
+              >
+                <X size={16} className="me-2" />
+                Clear
+              </Button>
+            )}
+          </div>
+        </div>
 
         {/* Chat Input */}
         <div className="chat-input-section">

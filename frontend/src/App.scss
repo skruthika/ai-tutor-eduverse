@@ -9,6 +9,7 @@
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
   font-family: $font-family-base;
+  padding-bottom: 60px; // Account for fixed footer
 }
 
 .main-content {
@@ -106,6 +107,7 @@
 @media (max-width: $breakpoint-mobile) {
   .app-container {
     font-size: 0.9rem;
+    padding-bottom: 70px; // Adjust for mobile footer
   }
 }
 
@@ -114,4 +116,15 @@
   > * + * {
     margin-top: 1.5rem;
   }
+}
+
+// Ensure proper spacing for fixed footer
+body {
+  margin: 0;
+  padding: 0;
+}
+
+// Smooth transitions for all interactive elements
+button, .btn, .card, .form-control {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

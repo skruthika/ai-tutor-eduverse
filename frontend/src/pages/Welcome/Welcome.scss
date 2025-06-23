@@ -335,7 +335,7 @@
   }
 }
 
-// Enhanced Features Section
+// Enhanced Features Section with Horizontal Layout
 .enhanced-features {
   padding: 8rem 0;
   background: var(--bg-secondary);
@@ -358,6 +358,7 @@
   
   .section-header {
     margin-bottom: 5rem;
+    text-align: center;
   }
   
   .section-badge {
@@ -395,122 +396,136 @@
     line-height: 1.6;
   }
   
+  // Horizontal card layout with consistent spacing
   .features-grid {
-    gap: 2rem;
-  }
-  
-  .feature-col {
-    margin-bottom: 2rem;
-  }
-  
-  .enhanced-feature-card {
-    background: var(--card-bg);
-    border-radius: $border-radius-2xl;
-    padding: 3rem;
-    text-align: center;
-    box-shadow: var(--shadow-lg);
-    border: 2px solid var(--border-light);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-      transform: scaleX(0);
-      transition: transform 0.4s ease;
+    .row {
+      justify-content: center;
+      align-items: stretch;
     }
     
-    &:hover {
-      transform: translateY(-12px);
-      box-shadow: var(--shadow-xl);
-      border-color: var(--primary-color);
+    .feature-col {
+      margin-bottom: 0; // Remove bottom margin for horizontal layout
+      display: flex;
+    }
+    
+    .enhanced-feature-card {
+      background: var(--card-bg);
+      border-radius: $border-radius-2xl;
+      padding: 3rem 2rem; // Consistent padding
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      border: 2px solid var(--border-light);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      height: 100%;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       
       &::before {
-        transform: scaleX(1);
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+      }
+      
+      &:hover {
+        transform: translateY(-12px);
+        box-shadow: var(--shadow-xl);
+        border-color: var(--primary-color);
+        
+        &::before {
+          transform: scaleX(1);
+        }
+        
+        .feature-icon {
+          transform: scale(1.1);
+          
+          &.bg-primary {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+          }
+          
+          &.bg-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+          }
+          
+          &.bg-warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+          }
+        }
+        
+        .feature-arrow {
+          opacity: 1;
+          transform: translateX(0);
+        }
       }
       
       .feature-icon {
-        transform: scale(1.1);
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+        transition: all 0.4s ease;
+        box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
         
         &.bg-primary {
-          background: linear-gradient(135deg, #3b82f6, #6366f1);
+          background: linear-gradient(135deg, #2563eb, #3b82f6);
         }
         
         &.bg-success {
-          background: linear-gradient(135deg, #10b981, #059669);
+          background: linear-gradient(135deg, #059669, #10b981);
         }
         
         &.bg-warning {
-          background: linear-gradient(135deg, #f59e0b, #d97706);
+          background: linear-gradient(135deg, #d97706, #f59e0b);
+        }
+        
+        svg {
+          font-size: 2.5rem;
+          color: white;
+          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
         }
       }
       
+      h3 {
+        font-size: 1.75rem;
+        font-weight: $font-weight-bold;
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+        min-height: 4rem; // Consistent title height
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      p {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-size: 1.125rem;
+        margin-bottom: 2rem;
+        flex: 1; // Take remaining space
+      }
+      
       .feature-arrow {
-        opacity: 1;
-        transform: translateX(0);
+        position: absolute;
+        bottom: 2rem;
+        right: 2rem;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.4s ease;
+        color: var(--primary-color);
+        font-size: 1.5rem;
       }
-    }
-    
-    .feature-icon {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 2rem;
-      transition: all 0.4s ease;
-      box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
-      
-      &.bg-primary {
-        background: linear-gradient(135deg, #2563eb, #3b82f6);
-      }
-      
-      &.bg-success {
-        background: linear-gradient(135deg, #059669, #10b981);
-      }
-      
-      &.bg-warning {
-        background: linear-gradient(135deg, #d97706, #f59e0b);
-      }
-      
-      svg {
-        font-size: 2.5rem;
-        color: white;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-      }
-    }
-    
-    h3 {
-      font-size: 1.75rem;
-      font-weight: $font-weight-bold;
-      color: var(--text-primary);
-      margin-bottom: 1.5rem;
-    }
-    
-    p {
-      color: var(--text-secondary);
-      line-height: 1.7;
-      font-size: 1.125rem;
-      margin-bottom: 2rem;
-    }
-    
-    .feature-arrow {
-      position: absolute;
-      bottom: 2rem;
-      right: 2rem;
-      opacity: 0;
-      transform: translateX(-10px);
-      transition: all 0.4s ease;
-      color: var(--primary-color);
-      font-size: 1.5rem;
     }
   }
 }
@@ -801,6 +816,7 @@
     
     .enhanced-feature-card {
       padding: 2rem;
+      margin-bottom: 2rem; // Add spacing between cards on mobile
     }
   }
   
@@ -875,6 +891,7 @@
       
       h3 {
         font-size: 1.5rem;
+        min-height: auto;
       }
       
       p {

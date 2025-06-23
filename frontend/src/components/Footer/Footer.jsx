@@ -16,11 +16,9 @@ const Footer = () => {
 
   // Check if we're on welcome/login page
   const isWelcomePage = location.pathname === '/welcome' || location.pathname === '/';
-  const showMinimalFooter = isAuthenticated() && !isWelcomePage;
 
-  // One-line minimal footer for all pages
   return (
-    <footer className="minimal-footer">
+    <footer className="fixed-footer">
       <Container fluid>
         <div className="footer-content">
           <span className="copyright">
