@@ -7,7 +7,9 @@ import {
   TrophyFill, 
   Person,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Map,
+  QuestionCircle
 } from "react-bootstrap-icons";
 
 const Sidebar = ({
@@ -29,6 +31,18 @@ const Sidebar = ({
       text: "AI Chat",
       icon: <ChatSquare size={20} />,
       screen: "chat",
+    },
+    {
+      id: "learning-paths",
+      text: "Learning Paths",
+      icon: <Map size={20} />,
+      screen: "learning-paths",
+    },
+    {
+      id: "quiz-system",
+      text: "Quiz System",
+      icon: <QuestionCircle size={20} />,
+      screen: "quiz-system",
     },
     {
       id: "courses",
@@ -89,17 +103,17 @@ const Sidebar = ({
         ))}
       </nav>
 
-      {/* Sidebar Footer - Simple stats */}
+      {/* Sidebar Footer */}
       {!isCollapsed && (
         <div className="sidebar-footer">
           <div className="footer-stats">
             <div className="stat-item">
-              <div className="stat-number">5</div>
+              <div className="stat-number">8</div>
               <div className="stat-label">Goals</div>
             </div>
             <div className="stat-divider"></div>
             <div className="stat-item">
-              <div className="stat-number">3</div>
+              <div className="stat-number">5</div>
               <div className="stat-label">Done</div>
             </div>
           </div>
