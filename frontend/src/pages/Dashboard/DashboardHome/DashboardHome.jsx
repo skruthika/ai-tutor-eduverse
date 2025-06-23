@@ -20,10 +20,34 @@ const DashboardHome = () => {
   const [userStats, setUserStats] = useState(null);
   const [learningGoals, setLearningGoals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showMyCoursesOnly, setShowMyCoursesOnly] = useState(false);
+  const [currentGreeting, setCurrentGreeting] = useState("");
 
   useEffect(() => {
     fetchDashboardData();
+    updateGreeting();
+    
+    // Update greeting every minute
+    const greetingInterval = setInterval(updateGreeting, 60000);
+    return () => clearInterval(greetingInterval);
   }, []);
+
+  const updateGreeting = () => {
+    const currentHour = new Date().getHours();
+    let greeting;
+    
+    if (currentHour >= 5 && currentHour < 12) {
+      greeting = "Good Morning";
+    } else if (currentHour >= 12 && currentHour < 17) {
+      greeting = "Good Afternoon";
+    } else if (currentHour >= 17 && currentHour < 21) {
+      greeting = "Good Evening";
+    } else {
+      greeting = "Good Night";
+    }
+    
+    setCurrentGreeting(greeting);
+  };
 
   const fetchDashboardData = async () => {
     try {
@@ -42,8 +66,6 @@ const DashboardHome = () => {
   };
 
   const userName = localStorage.getItem("name") || "Student";
-  const currentHour = new Date().getHours();
-  const greeting = currentHour < 12 ? "Good morning" : currentHour < 18 ? "Good afternoon" : "Good evening";
 
   const progressCards = [
     {
@@ -80,16 +102,52 @@ const DashboardHome = () => {
     }
   ];
 
-  // Filter to show only user's actual courses, not sample data
-  const userCourses = learningGoals.slice(0, 6).map(goal => ({
-    id: goal.name,
-    title: goal.name,
-    progress: goal.progress || 0,
-    duration: goal.duration,
-    lastAccessed: "2 hours ago",
-    difficulty: "Intermediate",
-    isUserCourse: true
-  }));
+  // Sample courses for demonstration
+  const allCourses = [
+    ...learningGoals.slice(0, 6).map(goal => ({
+      id: goal.name,
+      title: goal.name,
+      progress: goal.progress || 0,
+      duration: goal.duration,
+      lastAccessed: "2 hours ago",
+      difficulty: "Intermediate",
+      isUserCourse: true
+    })),
+    // Add sample courses if user has no goals
+    ...(learningGoals.length === 0 ? [
+      {
+        id: "sample-1",
+        title: "Introduction to Python Programming",
+        progress: 0,
+        duration: "4 weeks",
+        lastAccessed: "Never",
+        difficulty: "Beginner",
+        isUserCourse: false
+      },
+      {
+        id: "sample-2", 
+        title: "Web Development Fundamentals",
+        progress: 0,
+        duration: "6 weeks",
+        lastAccessed: "Never",
+        difficulty: "Beginner",
+        isUserCourse: false
+      },
+      {
+        id: "sample-3",
+        title: "Data Science Basics",
+        progress: 0,
+        duration: "8 weeks", 
+        lastAccessed: "Never",
+        difficulty: "Intermediate",
+        isUserCourse: false
+      }
+    ] : [])
+  ];
+
+  const displayedCourses = showMyCoursesOnly 
+    ? allCourses.filter(course => course.isUserCourse)
+    : allCourses;
 
   if (loading) {
     return (
@@ -109,7 +167,7 @@ const DashboardHome = () => {
   return (
     <div className="enhanced-dashboard-home">
       <Container fluid className="dashboard-container">
-        {/* Enhanced Welcome Section */}
+        {/* Enhanced Welcome Section with Dynamic Greeting */}
         <div className="welcome-section">
           <div className="welcome-content">
             <div className="greeting-badge">
@@ -122,7 +180,7 @@ const DashboardHome = () => {
               })}
             </div>
             <h1 className="welcome-title">
-              {greeting}, {userName}! 👋
+              {currentGreeting}, {userName}! 👋
             </h1>
             <p className="welcome-subtitle">
               Ready to continue your learning journey? Let's make today productive!
@@ -171,81 +229,116 @@ const DashboardHome = () => {
           </Row>
         </div>
 
-        {/* Enhanced My Courses Section */}
+        {/* Enhanced My Courses Section with Toggle */}
         <div className="courses-section">
           <div className="section-header">
             <div className="section-title-group">
               <h2 className="section-title">
                 <BookHalf className="me-2" />
-                My Courses
+                {showMyCoursesOnly ? "My Courses" : "All Courses"}
               </h2>
-              <p className="section-description">Your personalized learning paths</p>
+              <p className="section-description">
+                {showMyCoursesOnly 
+                  ? "Your enrolled learning paths" 
+                  : "Discover and explore learning opportunities"}
+              </p>
             </div>
-            {userCourses.length > 0 && (
-              <Button variant="outline-primary" size="sm" className="view-all-btn">
-                View All <ArrowRight size={16} />
+            <div className="course-controls">
+              <Button 
+                variant={showMyCoursesOnly ? "primary" : "outline-primary"}
+                size="sm" 
+                className="toggle-btn"
+                onClick={() => setShowMyCoursesOnly(!showMyCoursesOnly)}
+              >
+                {showMyCoursesOnly ? "Show All Courses" : "My Courses Only"}
               </Button>
-            )}
+              {displayedCourses.length > 0 && (
+                <Button variant="outline-primary" size="sm" className="view-all-btn">
+                  View All <ArrowRight size={16} />
+                </Button>
+              )}
+            </div>
           </div>
 
-          {userCourses.length > 0 ? (
-            <Row className="g-4">
-              {userCourses.map((course, index) => (
-                <Col lg={4} md={6} key={index}>
-                  <Card className="enhanced-course-card">
-                    <Card.Body>
-                      <div className="course-header">
-                        <h6 className="course-title">{course.title}</h6>
-                        <Badge bg="primary" className="user-badge">My Course</Badge>
-                      </div>
-                      <div className="course-meta">
-                        <small className="text-muted">
-                          <ClockHistory size={14} className="me-1" />
-                          {course.duration}
-                        </small>
-                        <small className="text-muted">
-                          Last accessed: {course.lastAccessed}
-                        </small>
-                      </div>
-                      <div className="progress-section">
-                        <ProgressBar 
-                          now={course.progress} 
-                          className="course-progress"
-                          variant="primary"
-                        />
-                        <div className="progress-info">
-                          <small className="text-muted">{course.progress}% complete</small>
-                          <small className="text-muted">{course.difficulty}</small>
+          {displayedCourses.length > 0 ? (
+            <div className="courses-transition-container">
+              <Row className="g-4">
+                {displayedCourses.map((course, index) => (
+                  <Col lg={4} md={6} key={course.id}>
+                    <Card className="enhanced-course-card">
+                      <Card.Body>
+                        <div className="course-header">
+                          <h6 className="course-title">{course.title}</h6>
+                          <Badge 
+                            bg={course.isUserCourse ? "primary" : "secondary"} 
+                            className="course-badge"
+                          >
+                            {course.isUserCourse ? "Enrolled" : "Available"}
+                          </Badge>
                         </div>
-                      </div>
-                      <div className="course-actions">
-                        <Button variant="primary" size="sm" className="continue-btn">
-                          <PlayCircleFill size={14} className="me-1" />
-                          Continue Learning
-                        </Button>
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
+                        <div className="course-meta">
+                          <small className="text-muted">
+                            <ClockHistory size={14} className="me-1" />
+                            {course.duration}
+                          </small>
+                          <small className="text-muted">
+                            Last accessed: {course.lastAccessed}
+                          </small>
+                        </div>
+                        <div className="progress-section">
+                          <ProgressBar 
+                            now={course.progress} 
+                            className="course-progress"
+                            variant="primary"
+                          />
+                          <div className="progress-info">
+                            <small className="text-muted">{course.progress}% complete</small>
+                            <small className="text-muted">{course.difficulty}</small>
+                          </div>
+                        </div>
+                        <div className="course-actions">
+                          <Button 
+                            variant={course.isUserCourse ? "primary" : "outline-primary"} 
+                            size="sm" 
+                            className="action-btn"
+                          >
+                            <PlayCircleFill size={14} className="me-1" />
+                            {course.isUserCourse ? "Continue Learning" : "Start Course"}
+                          </Button>
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </div>
           ) : (
             <div className="empty-state">
               <div className="empty-content">
                 <BookHalf size={64} className="empty-icon" />
-                <h5 className="empty-title">No courses yet</h5>
+                <h5 className="empty-title">
+                  {showMyCoursesOnly ? "No enrolled courses yet" : "No courses available"}
+                </h5>
                 <p className="empty-description">
-                  Start your learning journey by creating your first personalized study plan!
+                  {showMyCoursesOnly 
+                    ? "Start your learning journey by creating your first personalized study plan!"
+                    : "Check back later for new learning opportunities."}
                 </p>
                 <div className="empty-actions">
                   <Button variant="primary" className="create-btn">
                     <Plus size={16} className="me-2" />
                     Create Learning Goal
                   </Button>
-                  <Button variant="outline-primary" className="explore-btn">
-                    <StarFill size={16} className="me-2" />
-                    Explore Topics
-                  </Button>
+                  {showMyCoursesOnly && (
+                    <Button 
+                      variant="outline-primary" 
+                      className="explore-btn"
+                      onClick={() => setShowMyCoursesOnly(false)}
+                    >
+                      <StarFill size={16} className="me-2" />
+                      Explore All Courses
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
@@ -253,7 +346,7 @@ const DashboardHome = () => {
         </div>
 
         {/* Quick Stats Summary */}
-        {userCourses.length > 0 && (
+        {displayedCourses.length > 0 && (
           <div className="stats-summary">
             <Card className="summary-card">
               <Card.Body>
