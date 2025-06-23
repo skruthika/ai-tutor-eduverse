@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navbar, Container, Form, InputGroup, Dropdown, Button } from "react-bootstrap";
 import { Search, Person, Bell, Gear, BoxArrowRight } from "react-bootstrap-icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { logout } from "../../api";
 import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
 import './header.scss';
@@ -9,6 +9,17 @@ import './header.scss';
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check if user is authenticated
+  const isAuthenticated = () => {
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
+    return !!(token && username && token.trim() !== "" && username.trim() !== "");
+  };
+
+  // Check if we're on welcome/login page
+  const isWelcomePage = location.pathname === '/welcome' || location.pathname === '/';
 
   const handleLogout = async () => {
     try {
@@ -31,11 +42,76 @@ const Header = () => {
     }
   };
 
+  const handleGetStarted = () => {
+    // Scroll to auth section or open modal
+    const authSection = document.querySelector('.auth-modal-trigger');
+    if (authSection) {
+      authSection.click();
+    }
+  };
+
   const userName = localStorage.getItem("name") || "User";
   const userEmail = localStorage.getItem("username") || "";
 
+  // Render different headers based on authentication status
+  if (!isAuthenticated() || isWelcomePage) {
+    // Public/Welcome Header
+    return (
+      <Navbar className="public-navbar" expand="lg" fixed="top">
+        <Container fluid className="px-4">
+          {/* Brand Section */}
+          <div className="d-flex align-items-center">
+            <div className="logo-container">
+              <img
+                src="/icons/aitutor-short-no-bg.png"
+                alt="AI Tutor Logo"
+                width="50"
+                height="50"
+                className="logo-image"
+              />
+            </div>
+            <Navbar.Brand className="brand-text ms-3">
+              <span className="brand-main">AI</span>
+              <span className="brand-accent">Tutor</span>
+            </Navbar.Brand>
+          </div>
+
+          {/* Center Navigation */}
+          <div className="navbar-nav-center d-none d-lg-flex">
+            <nav className="public-nav">
+              <a href="#features" className="nav-link">Features</a>
+              <a href="#pricing" className="nav-link">Pricing</a>
+              <a href="#about" className="nav-link">About</a>
+              <a href="#contact" className="nav-link">Contact</a>
+            </nav>
+          </div>
+
+          {/* Right Section - Public Actions */}
+          <div className="d-flex align-items-center gap-3">
+            <ThemeToggle />
+            <Button 
+              variant="outline-primary" 
+              className="auth-button"
+              onClick={handleGetStarted}
+            >
+              Sign In
+            </Button>
+            <Button 
+              variant="primary" 
+              className="auth-button auth-modal-trigger"
+              onClick={handleGetStarted}
+            >
+              Get Started
+            </Button>
+          </div>
+        </Container>
+      </Navbar>
+    );
+  }
+
+  // Authenticated/Dashboard Header
   return (
-    <Navbar className="modern-navbar" expand="lg" fixed="top">
+    <Navbar className="dashboard-navbar" expand="lg" fixed="top">
       <Container fluid className="px-4">
         {/* Brand Section */}
         <div className="d-flex align-items-center">
@@ -46,9 +122,11 @@ const Header = () => {
               width="50"
               height="50"
               className="logo-image"
+              onClick={() => navigate('/dashboard')}
+              style={{ cursor: 'pointer' }}
             />
           </div>
-          <Navbar.Brand className="brand-text ms-3">
+          <Navbar.Brand className="brand-text ms-3" onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
             <span className="brand-main">AI</span>
             <span className="brand-accent">Tutor</span>
           </Navbar.Brand>
@@ -106,9 +184,9 @@ const Header = () => {
                 </div>
               </div>
               <Dropdown.Divider />
-              <Dropdown.Item href="#profile">
+              <Dropdown.Item onClick={() => navigate('/dashboard')}>
                 <Person size={16} className="me-2" />
-                My Profile
+                Dashboard
               </Dropdown.Item>
               <Dropdown.Item href="#settings">
                 <Gear size={16} className="me-2" />

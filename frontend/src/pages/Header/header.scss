@@ -1,8 +1,8 @@
 @import "../../styles/variables";
 @import "../../styles/themes";
 
-.modern-navbar {
-  background: var(--navbar-bg) !important;
+// Base navbar styles
+.navbar {
   border-bottom: 1px solid var(--border-light);
   height: $navbar-height;
   backdrop-filter: blur(20px);
@@ -10,45 +10,80 @@
   transition: all 0.3s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   z-index: 1030;
+}
+
+// Public/Welcome navbar
+.public-navbar {
+  background: rgba(255, 255, 255, 0.95) !important;
   
-  .logo-container {
-    position: relative;
+  [data-theme="dark"] & {
+    background: rgba(30, 41, 59, 0.95) !important;
+  }
+  
+  .public-nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
     
-    .logo-image {
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.2));
-      border-radius: 50%;
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: $font-weight-medium;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary-color);
+        transition: width 0.3s ease;
+      }
       
       &:hover {
-        transform: scale(1.1) rotate(5deg);
-        filter: drop-shadow(0 8px 16px rgba(59, 130, 246, 0.3));
+        color: var(--primary-color);
+        
+        &::after {
+          width: 100%;
+        }
       }
     }
   }
   
-  .brand-text {
-    font-size: 2rem;
-    font-weight: $font-weight-extrabold;
-    text-decoration: none;
-    margin: 0;
+  .auth-button {
+    font-weight: $font-weight-semibold;
+    padding: 0.75rem 1.5rem;
+    border-radius: $border-radius-lg;
+    transition: all 0.3s ease;
     
-    .brand-main {
-      color: var(--primary-color);
+    &.btn-outline-primary {
+      border: 2px solid var(--primary-color);
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
+    }
+    
+    &.btn-primary {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .brand-accent {
-      color: var(--text-primary);
-      margin-left: 0.1em;
-    }
-    
-    &:hover {
-      text-decoration: none;
+      border: none;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
     }
   }
+}
+
+// Dashboard/Authenticated navbar
+.dashboard-navbar {
+  background: var(--navbar-bg) !important;
   
   .navbar-search-center {
     position: absolute;
@@ -262,17 +297,58 @@
   }
 }
 
+// Shared brand styles
+.logo-container {
+  position: relative;
+  
+  .logo-image {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.2));
+    border-radius: 50%;
+    
+    &:hover {
+      transform: scale(1.1) rotate(5deg);
+      filter: drop-shadow(0 8px 16px rgba(59, 130, 246, 0.3));
+    }
+  }
+}
+
+.brand-text {
+  font-size: 2rem;
+  font-weight: $font-weight-extrabold;
+  text-decoration: none;
+  margin: 0;
+  
+  .brand-main {
+    color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .brand-accent {
+    color: var(--text-primary);
+    margin-left: 0.1em;
+  }
+  
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 // Responsive adjustments
 @media (max-width: 1200px) {
-  .modern-navbar {
-    .navbar-search-center {
+  .navbar {
+    .navbar-search-center,
+    .navbar-nav-center {
       display: none !important;
     }
   }
 }
 
 @media (max-width: 768px) {
-  .modern-navbar {
+  .navbar {
     height: 70px;
     padding: 0.5rem 0;
     
@@ -293,11 +369,16 @@
       width: 44px;
       height: 44px;
     }
+    
+    .auth-button {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
   }
 }
 
 @media (max-width: 576px) {
-  .modern-navbar {
+  .navbar {
     .brand-text {
       font-size: 1.5rem;
     }
@@ -305,5 +386,40 @@
     .notification-btn {
       display: none;
     }
+    
+    .public-nav {
+      display: none;
+    }
+    
+    .auth-button {
+      &:first-of-type {
+        display: none;
+      }
+    }
+  }
+}
+
+// Enhanced animations
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-dropdown-menu {
+  animation: slideDown 0.3s ease-out;
+}
+
+// Focus management
+.navbar {
+  .btn:focus,
+  .dropdown-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
   }
 }

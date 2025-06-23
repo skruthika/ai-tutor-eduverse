@@ -58,6 +58,25 @@ const Welcome = () => {
     }
   };
 
+  // Add click handler to header buttons
+  const handleAuthModalOpen = () => {
+    setShowModal(true);
+  };
+
+  // Add event listener for header button clicks
+  React.useEffect(() => {
+    const authTriggers = document.querySelectorAll('.auth-modal-trigger');
+    authTriggers.forEach(trigger => {
+      trigger.addEventListener('click', handleAuthModalOpen);
+    });
+
+    return () => {
+      authTriggers.forEach(trigger => {
+        trigger.removeEventListener('click', handleAuthModalOpen);
+      });
+    };
+  }, []);
+
   return (
     <div className="welcome-container">
       {/* Hero Section */}
@@ -142,7 +161,7 @@ const Welcome = () => {
       </section>
 
       {/* Features Section */}
-      <section className="features-section">
+      <section className="features-section" id="features">
         <Container>
           <Row>
             <Col lg={12} className="text-center mb-5">
