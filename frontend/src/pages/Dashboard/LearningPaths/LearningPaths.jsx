@@ -10,7 +10,7 @@ import {
   Trash,
   Eye,
   Award,
-  TrendingUp
+  GraphUp
 } from "react-bootstrap-icons";
 import "./LearningPaths.scss";
 
@@ -406,7 +406,7 @@ const LearningPaths = () => {
                       
                       <div className="path-stats">
                         <div className="stat-item">
-                          <TrendingUp className="stat-icon" />
+                          <GraphUp className="stat-icon" />
                           <div>
                             <div className="stat-value">{Math.round(selectedPath.progress || 0)}%</div>
                             <div className="stat-label">Progress</div>
