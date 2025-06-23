@@ -1,7 +1,5 @@
 # AI Tutor - Intelligent Learning Platform
 
-[![AI Tutor Logo](https://res.cloudinary.com/srvraj311/image/upload/c_scale,w_346/v1743788747/Group_4_n7afsr.png)](https://eduverse-backend-lqj5.onrender.com/)
-
 **AI Tutor** is an advanced AI-powered learning platform that creates personalized study plans and provides intelligent tutoring assistance. Built with modern web technologies and powered by **LLaMA 3 70B** via the **Groq API**, it offers a seamless learning experience with real-time chat, progress tracking, and adaptive learning paths.
 
 ## 🌟 Key Features
