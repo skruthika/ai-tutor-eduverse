@@ -41,15 +41,27 @@ export const signup = async (name, username, password) => {
 // OAuth Google Login
 export const googleLogin = async (credential) => {
   try {
+    console.log("Attempting Google login with credential");
+    
+    // The backend expects the token directly as a string
     const response = await fetch(`${API_BASE_URL}/auth/google/verify`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token: credential }),
+      headers: { 
+        "Content-Type": "text/plain" 
+      },
+      body: credential, // Send the raw credential as plain text
     });
 
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.detail || "Google login failed");
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({ detail: "Failed to parse error response" }));
+      console.error("Google login error:", errorData);
+      throw new Error(errorData.detail || "Google login failed");
+    }
 
+    const data = await response.json();
+    console.log("Google login successful:", data);
+    
+    // Store user data in localStorage
     localStorage.setItem("token", data.token);
     localStorage.setItem("username", data.username);
     if (data.name) localStorage.setItem("name", data.name);
@@ -57,7 +69,8 @@ export const googleLogin = async (credential) => {
 
     return data;
   } catch (error) {
-    throw new Error(error.message);
+    console.error("Google login failed:", error);
+    throw new Error(error.message || "Google login failed unexpectedly");
   }
 };
 

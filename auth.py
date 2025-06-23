@@ -1,9 +1,10 @@
 import os
 import bcrypt
 import requests
+import logging
 from jose import jwt
 from datetime import datetime, timedelta
-from fastapi import APIRouter, HTTPException, Depends, Request, Response, status
+from fastapi import APIRouter, HTTPException, Depends, Request, Response, status, Body
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, EmailStr, Field
 from database import users_collection
@@ -221,6 +222,7 @@ async def google_login():
         "scope": "email profile",
         "access_type": "offline",
         "prompt": "consent",
+        "include_granted_scopes": "true",
     }
     
     # Construct the authorization URL
@@ -329,17 +331,74 @@ async def google_callback(code: str, request: Request):
 
 # Verify Google ID token directly from frontend
 @auth_router.post("/google/verify")
-async def verify_google_token(token: str):
+async def verify_google_token(request: Request):
     """
     Verify Google ID token sent from frontend
+    
+    This endpoint accepts a Google ID token in the request body.
+    The token can be sent as:
+    - Plain text in the request body (Content-Type: text/plain)
+    - JSON object with a 'token' field (Content-Type: application/json)
+    - Form data with a 'token' field (Content-Type: application/x-www-form-urlencoded or multipart/form-data)
     """
     try:
-        # Verify the token
-        id_info = id_token.verify_oauth2_token(
-            token, 
-            google_requests.Request(), 
-            GOOGLE_CLIENT_ID
-        )
+        logging.info("Received Google token verification request")
+        content_type = request.headers.get("content-type", "").lower()
+        logging.info(f"Content-Type: {content_type}")
+        logging.info(f"Request headers: {request.headers}")
+        
+        # Extract token based on content type
+        if "text/plain" in content_type:
+            # Read raw body as text for plain text requests
+            token = await request.body()
+            token = token.decode("utf-8")
+            logging.info(f"Extracted token from plain text body, length: {len(token)}")
+        elif "application/json" in content_type:
+            # Parse JSON body for JSON requests
+            json_data = await request.json()
+            token = json_data.get("token")
+            logging.info(f"Extracted token from JSON body: {token is not None}")
+        else:
+            # For form data or any other content type, try to get form data
+            try:
+                form_data = await request.form()
+                token = form_data.get("token")
+                logging.info(f"Extracted token from form data: {token is not None}")
+            except Exception as e:
+                # If form data extraction fails, try to read the raw body
+                logging.warning(f"Form data extraction failed: {str(e)}, trying raw body")
+                token = await request.body()
+                token = token.decode("utf-8")
+                logging.info(f"Extracted token from raw body, length: {len(token)}")
+            
+        # Validate token
+        if not token:
+            error_msg = "No token provided in request"
+            logging.error(error_msg)
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=error_msg
+            )
+            
+        logging.info(f"Token length: {len(token)}")
+        
+        try:
+            # Verify the token
+            id_info = id_token.verify_oauth2_token(
+                token, 
+                google_requests.Request(), 
+                GOOGLE_CLIENT_ID
+            )
+            logging.info("Google token successfully verified")
+            logging.info(f"Token info: {id_info.keys()}")
+        except Exception as e:
+            logging.error(f"Token verification error: {str(e)}")
+            logging.error(f"Token first 20 chars: {token[:20]}...")
+            logging.error(f"Token last 20 chars: {token[-20:]}...")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid Google token: {str(e)}"
+            )
         
         # Verify email
         if not id_info.get("email_verified"):
@@ -403,7 +462,10 @@ async def verify_google_token(token: str):
         }
         
     except Exception as e:
+        error_msg = f"Google token verification failed: {str(e)}"
+        logging.error(error_msg)
+        logging.exception("Full error details:")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Google token verification failed: {str(e)}"
+            detail=error_msg
         )
