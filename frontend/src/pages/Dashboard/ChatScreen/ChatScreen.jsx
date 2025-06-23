@@ -12,7 +12,7 @@ import {
   setIsQuizQuery,
 } from "../../../globalSlice";
 import "./ChatScreen.scss";
-import { Backspace, Book, Eraser, List, Question, X } from "react-bootstrap-icons";
+import { Book, List, X } from "react-bootstrap-icons";
 
 const ChatScreen = () => {
   const dispatch = useDispatch();
@@ -61,7 +61,6 @@ const ChatScreen = () => {
   };
 
   const refreshChat = (message) => {
-    console.log("Called")
     if (message) {
       dispatch(addTemporaryMessage(message));
     } else {
@@ -75,160 +74,133 @@ const ChatScreen = () => {
   }, [chatHistory]);
 
   return (
-    <Container className="chat-screen d-flex flex-column flex-grow-1 p-3">
-      <div className="chat-history flex-grow-1 overflow-scroll overflow-x-hidden">
-        {chatHistory.length > 0 ? (
-          chatHistory.map((message, index) => (
-            <Row
-              key={index}
-              className={`mb-2 d-flex ${
-                message.role === "user"
-                  ? "justify-content-end"
-                  : "justify-content-start"
-              }`}
+    <div className="simple-chat-screen">
+      <Container fluid className="chat-container">
+        {/* Chat Header */}
+        <div className="chat-header">
+          <h2 className="chat-title">AI Tutor Chat</h2>
+          <div className="chat-actions">
+            <Button
+              variant={isLearningPathQuery ? 'primary' : 'outline-primary'}
+              size="sm"
+              onClick={handleStudyPlan}
             >
-              {message.role === "user" ? (
-                <Card
-                  className="p-1 border-dark bg-primary w-auto  text-light"
-                  style={{ borderRadius: "15px", marginRight: "15px", maxWidth: "55%" }}
-                >
-                  <Card.Body>
-                    <Card.Text>{message.content}</Card.Text>
-                    {message.timestamp && (
-                      <small className="text-light d-block text-end">
-                        {formatDistanceToNow(new Date(message.timestamp), {
-                          addSuffix: true,
-                        })}
-                      </small>
-                    )}
-                  </Card.Body>
-                </Card>
-              ) : (
-                <AIMessage
-                  content={message.content}
-                  type={message.type}
-                  timestamp={message.timestamp}
-                  refreshChat={refreshChat}
-                />
-              )}
-            </Row>
-          ))
-        ) : (
-          <div style={{position: "relative", top: "10%"}}>
-            <Card className="m-5 border-0 bg-white text-dark w-50 mx-auto center" >
-              <Card.Header className="bg-white text-center">
-                <Card.Img src="/icons/aitutor-short-no-bg.png" alt="AI Tutor Logo" style={{ width: "200px", height: "200px" }} />
-              </Card.Header>
-              <Card.Body  className="bg-white border-0 border-white text-center">
-              <Card.Title className="display-6 fw-bold text-primary">Welcome to AI Tutor</Card.Title>
-              <Card.Subtitle className="text-muted mb-3">Your intelligent learning companion</Card.Subtitle>
-              <div className="mt-3"></div>
-              <Card.Text className="lead">Start by asking a question or generating a personalized study plan for your next learning adventure</Card.Text>
-              </Card.Body>
-              <Card.Footer  className="bg-white border-0">
-                <div className="d-flex justify-content-center gap-3">
-                  <Button variant={isLearningPathQuery ? "primary rounded-pill" : "outline-primary rounded-pill"} onClick={handleStudyPlan}>
-                  <Book size={15} className="me-2" />
-                    Generate Study Plan
-                  </Button>
-                  <Button variant={ isQuizQuery ? "primary rounded-pill" : "outline-primary rounded-pill"} onClick={handleSelfyQuiz}>
-                  <List size={15} className="me-2" />
-                    Create a Quiz
-                  </Button>
-                </div>
-              </Card.Footer>
-            </Card>
+              <Book size={16} className="me-2" />
+              Study Plan
+            </Button>
+            <Button
+              variant={isQuizQuery ? "primary" : "outline-primary"}
+              size="sm"
+              onClick={handleSelfyQuiz}
+            >
+              <List size={16} className="me-2" />
+              Quiz
+            </Button>
+            {chatHistory.length > 0 && (
+              <Button
+                variant="outline-danger"
+                size="sm"
+                onClick={handleClearChat}
+              >
+                <X size={16} className="me-2" />
+                Clear
+              </Button>
+            )}
+          </div>
+        </div>
+
+        {/* Chat Messages */}
+        <div className="chat-messages">
+          {chatHistory.length > 0 ? (
+            chatHistory.map((message, index) => (
+              <div
+                key={index}
+                className={`message-row ${
+                  message.role === "user" ? "user-message" : "ai-message"
+                }`}
+              >
+                {message.role === "user" ? (
+                  <Card className="user-message-card">
+                    <Card.Body>
+                      <Card.Text>{message.content}</Card.Text>
+                      {message.timestamp && (
+                        <small className="message-time">
+                          {formatDistanceToNow(new Date(message.timestamp), {
+                            addSuffix: true,
+                          })}
+                        </small>
+                      )}
+                    </Card.Body>
+                  </Card>
+                ) : (
+                  <AIMessage
+                    content={message.content}
+                    type={message.type}
+                    timestamp={message.timestamp}
+                    refreshChat={refreshChat}
+                  />
+                )}
+              </div>
+            ))
+          ) : (
+            <div className="welcome-message">
+              <Card className="welcome-card">
+                <Card.Body className="text-center">
+                  <img 
+                    src="/icons/aitutor-short-no-bg.png" 
+                    alt="AI Tutor" 
+                    className="welcome-logo"
+                  />
+                  <h3 className="welcome-title">Welcome to AI Tutor</h3>
+                  <p className="welcome-subtitle">
+                    Your intelligent learning companion is ready to help!
+                  </p>
+                  <div className="welcome-actions">
+                    <Button 
+                      variant="primary" 
+                      onClick={handleStudyPlan}
+                      className="me-2"
+                    >
+                      <Book size={16} className="me-2" />
+                      Create Study Plan
+                    </Button>
+                    <Button 
+                      variant="outline-primary" 
+                      onClick={handleSelfyQuiz}
+                    >
+                      <List size={16} className="me-2" />
+                      Take a Quiz
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Typing Indicator */}
+        {isGenerating && (
+          <div className="typing-indicator">
+            <Spinner animation="grow" size="sm" className="me-2" />
+            <span>
+              {isLearningPathQuery
+                ? "Creating your personalized study plan..."
+                : "AI Tutor is thinking..."}
+            </span>
           </div>
         )}
-        <div ref={messagesEndRef} />
-      </div>
 
-      {isGenerating && (
-        <div className="typing-indicator d-flex align-items-center" style={{position: "relative", top: "10px", left: "10px"}}>
-          <Spinner animation="grow" size="sm" className="me-2" />
-          <span>
-            {isLearningPathQuery
-              ? "AI Tutor is generating a personalized study plan for you..."
-              : "AI Tutor is thinking..."}
-          </span>
+        {/* Chat Input */}
+        <div className="chat-input-section">
+          <ChatInput refreshChat={refreshChat} />
         </div>
-      )}
+      </Container>
 
-    { chatHistory.length > 0 && 
-    (
-<div
-        className="mb-3"
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          background: "white",
-          height: "80px",
-          margin: "0px",
-          marginTop: "-10px",
-          padding: "20px",
-          paddingTop: "10px",
-          borderRadius: '25px',
-          position: 'relative',
-          top: '20px',
-          left: '-15px',
-        }}
-      >
-        <Button
-          variant={isLearningPathQuery ? 'primary' : 'outline-primary'}
-          className="mt-n2 rounded-pill"
-          onClick={() => handleStudyPlan()}
-          style={{
-            fontSize: "0.75rem",
-            borderWidth: "2px",
-            maxWidth: "200px",
-            margin: "-10px 0",
-          }}
-        >
-          <Book size={15} className="me-2" />
-          Create a Study Plan
-        </Button>
-        <Button
-          variant={isQuizQuery ? "primary" : "outline-primary"}
-          className="mt-n2 mx-2 rounded-pill"
-          onClick={() => handleSelfyQuiz()}
-          style={{
-            fontSize: "0.75rem",
-            borderWidth: "2px",
-            maxWidth: "200px",
-            margin: "-10px 0",
-          }}
-        >
-          <List size={15} className="me-2" />
-          Create a Quiz
-        </Button>
-        <Button
-          variant="outline-primary"
-          className="mt-n2  rounded-pill"
-          style={{
-            fontSize: "0.75rem",
-            borderWidth: "2px",
-            maxWidth: "200px",
-            margin: "-10px 0",
-          }}
-          onClick={handleClearChat}
-        >
-          <X size={15} className="me-1" />
-          Clear Chat
-        </Button>
-      </div>
-    )
-    }
-      
-      <div className="chat-input-container" style={  chatHistory.length > 0 ? {border: '1px solid grey'} : { border: '1px solid grey' }}>
-        <ChatInput refreshChat={refreshChat} />
-      </div>
-
-      {/* Confirm Deletion Modal */}
+      {/* Clear Chat Confirmation Modal */}
       <Modal show={showConfirmModal} centered onHide={() => setShowConfirmModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirm Chat Deletion</Modal.Title>
+          <Modal.Title>Clear Chat History</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           Are you sure you want to clear the chat history? This action cannot be undone.
@@ -237,12 +209,12 @@ const ChatScreen = () => {
           <Button variant="outline-secondary" onClick={() => setShowConfirmModal(false)}>
             Cancel
           </Button>
-          <Button variant="outline-danger" onClick={confirmClearChat}>
+          <Button variant="danger" onClick={confirmClearChat}>
             Clear Chat
           </Button>
         </Modal.Footer>
       </Modal>
-    </Container>
+    </div>
   );
 };
 
