@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { formatDistanceToNow } from "date-fns";
-import { Bot, Sparkles } from "react-bootstrap-icons";
+import { Robot, Sparkles } from "react-bootstrap-icons";
 import LearningPath from "./LearningPath";
 import "./AIMessage.scss";
 
@@ -24,7 +24,7 @@ const AIMessage = ({ content, type, timestamp }) => {
     return (
       <div className="ai-message-container">
         <div className="ai-avatar">
-          <Bot size={20} />
+          <Robot size={20} />
           <div className="ai-indicator">
             <Sparkles size={12} />
           </div>
