@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
-import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { login, signup } from "../../api";
-import useGoogleAuth from "../../components/OAuth/useGoogleAuth";
 import "./welcome.scss";
 import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
 
@@ -15,8 +13,6 @@ const Welcome = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
-  const [oauthInProgress, setOauthInProgress] = useState(false);
   const navigate = useNavigate();
 
   const clearForm = () => {
@@ -31,8 +27,6 @@ const Welcome = () => {
     setError(null);
     clearForm();
     setLoading(false);
-    setGoogleLoading(false);
-    setOauthInProgress(false);
   };
   
   const handleTabSelect = (k) => {
@@ -76,77 +70,6 @@ const Welcome = () => {
       setLoading(false);
     }
   };
-
-  const handleGoogleSuccess = (data) => {
-    console.log("Google Login Success:", data);
-    
-    // Ensure we have all required data
-    if (!data || !data.username) {
-      console.error("Missing user data in Google login response:", data);
-      handleGoogleError("Invalid response from Google. Missing user data.");
-      return;
-    }
-    
-    localStorage.setItem("username", data.username);
-    if (data.name) localStorage.setItem("name", data.name);
-    
-    console.log("Google login completed, redirecting to dashboard");
-    setLoading(false);
-    setGoogleLoading(false);
-    setOauthInProgress(false);
-    navigate("/dashboard");
-  };
-
-  const handleGoogleError = (errorMessage) => {
-    console.error("Google login error:", errorMessage);
-    setError(errorMessage || "Google login failed. Please try again.");
-    setLoading(false);
-    setGoogleLoading(false);
-    setOauthInProgress(false);
-  };
-  
-  const handleGoogleButtonClick = () => {
-    console.log("Google login button clicked");
-    
-    // Reset any previous errors
-    setError(null);
-    
-    // Set loading states
-    setLoading(true);
-    setGoogleLoading(true);
-    setOauthInProgress(true);
-    
-    try {
-      console.log("Triggering Google login prompt");
-      handleGoogleLogin();
-    } catch (error) {
-      console.error("Error initiating Google login:", error);
-      handleGoogleError("Failed to initiate Google login. Please try again.");
-    }
-  };
-  
-  // Monitor OAuth progress status
-  useEffect(() => {
-    if (oauthInProgress) {
-      console.log("OAuth authentication in progress");
-    }
-  }, [oauthInProgress]);
-
-  // Initialize Google Auth hook
-  const { 
-    handleGoogleLogin, 
-    isLoaded: isGoogleLoaded, 
-    hasError: hasGoogleError,
-    authState: googleAuthState
-  } = useGoogleAuth({
-    onSuccess: handleGoogleSuccess,
-    onError: handleGoogleError
-  });
-
-  // Log Google auth state changes for debugging
-  useEffect(() => {
-    console.log("Google auth state:", googleAuthState);
-  }, [googleAuthState]);
 
   return (
     <div className="welcome-container">
@@ -323,12 +246,6 @@ const Welcome = () => {
           {error && (
             <Alert variant="danger" className="mb-3">
               {error}
-              {hasGoogleError && (
-                <div className="mt-2 small">
-                  <strong>Note:</strong> There might be an issue with Google authentication. 
-                  Please try the email/password option instead.
-                </div>
-              )}
             </Alert>
           )}
           
@@ -364,35 +281,10 @@ const Welcome = () => {
                   variant="primary"
                   className="w-100 mb-3 modern-button"
                   onClick={handleLogin}
-                  disabled={loading || oauthInProgress}
+                  disabled={loading}
                 >
-                  {loading && !googleLoading ? <Spinner size="sm" animation="border" className="me-2" /> : null}
+                  {loading ? <Spinner size="sm" animation="border" className="me-2" /> : null}
                   Sign In
-                </Button>
-                
-                <div className="oauth-divider">
-                  <span>or continue with</span>
-                </div>
-                
-                <Button 
-                  variant="outline-secondary" 
-                  className="w-100 oauth-button"
-                  onClick={handleGoogleButtonClick}
-                  disabled={loading || !isGoogleLoaded || hasGoogleError || oauthInProgress}
-                >
-                  <FcGoogle className="me-2" size={20} />
-                  {googleLoading ? (
-                    <>
-                      <Spinner size="sm" animation="border" className="me-2" />
-                      Authenticating with Google...
-                    </>
-                  ) : !isGoogleLoaded ? (
-                    "Loading Google Sign-In..."
-                  ) : hasGoogleError ? (
-                    "Google Sign-In Unavailable"
-                  ) : (
-                    "Continue with Google"
-                  )}
                 </Button>
               </Form>
             </Tab>
@@ -434,35 +326,10 @@ const Welcome = () => {
                   variant="primary"
                   className="w-100 mb-3 modern-button"
                   onClick={handleSignup}
-                  disabled={loading || oauthInProgress}
+                  disabled={loading}
                 >
-                  {loading && !googleLoading ? <Spinner size="sm" animation="border" className="me-2" /> : null}
+                  {loading ? <Spinner size="sm" animation="border" className="me-2" /> : null}
                   Create Account
-                </Button>
-                
-                <div className="oauth-divider">
-                  <span>or continue with</span>
-                </div>
-                
-                <Button 
-                  variant="outline-secondary" 
-                  className="w-100 oauth-button"
-                  onClick={handleGoogleButtonClick}
-                  disabled={loading || !isGoogleLoaded || hasGoogleError || oauthInProgress}
-                >
-                  <FcGoogle className="me-2" size={20} />
-                  {googleLoading ? (
-                    <>
-                      <Spinner size="sm" animation="border" className="me-2" />
-                      Authenticating with Google...
-                    </>
-                  ) : !isGoogleLoaded ? (
-                    "Loading Google Sign-In..."
-                  ) : hasGoogleError ? (
-                    "Google Sign-In Unavailable"
-                  ) : (
-                    "Continue with Google"
-                  )}
                 </Button>
               </Form>
             </Tab>

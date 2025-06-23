@@ -38,64 +38,6 @@ export const signup = async (name, username, password) => {
   }
 };
 
-// OAuth Google Login
-export const googleLogin = async (credential) => {
-  try {
-    console.log("Attempting Google login with credential");
-    
-    // The backend expects the token directly as a string
-    const response = await fetch(`${API_BASE_URL}/auth/google/verify`, {
-      method: "POST",
-      headers: { 
-        "Content-Type": "text/plain" 
-      },
-      body: credential, // Send the raw credential as plain text
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({ detail: "Failed to parse error response" }));
-      console.error("Google login error:", errorData);
-      throw new Error(errorData.detail || "Google login failed");
-    }
-
-    const data = await response.json();
-    console.log("Google login successful:", data);
-    
-    // Store user data in localStorage
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("username", data.username);
-    if (data.name) localStorage.setItem("name", data.name);
-    if (data.preferences) localStorage.setItem("preferences", JSON.stringify(data.preferences));
-
-    return data;
-  } catch (error) {
-    console.error("Google login failed:", error);
-    throw new Error(error.message || "Google login failed unexpectedly");
-  }
-};
-
-// OAuth GitHub Login
-export const githubLogin = async (code) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/auth/github-login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code }),
-    });
-
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.detail || "GitHub login failed");
-
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("username", data.username);
-    if (data.name) localStorage.setItem("name", data.name);
-
-    return data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
 export const fetchChatHistory = async () => {
   const username = localStorage.getItem("username");
   if (!username) throw new Error("No username found. Please log in.");
