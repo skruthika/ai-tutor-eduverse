@@ -1,4 +1,4 @@
-const API_BASE_URL = ""; // Changeable in the future
+const API_BASE_URL = "http://localhost:8000"; // Updated to point to FastAPI backend
 
 export const login = async (username, password) => {
   try {
