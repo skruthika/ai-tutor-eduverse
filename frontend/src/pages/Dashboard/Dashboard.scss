@@ -1,4 +1,149 @@
+@import "../../styles/variables";
+@import "../../styles/themes";
+
 .dashboard {
-    height: calc(100vh - 60px);
-    width: 100vw;
+  height: calc(100vh - #{$navbar-height});
+  width: 100vw;
+  margin-top: $navbar-height;
+  background: var(--bg-primary);
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+  position: relative;
+  min-width: 0; // Prevents flex item from overflowing
+  
+  // Add subtle gradient overlay
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(180deg, var(--bg-secondary) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+// Enhanced sidebar transitions
+.sidebar-container {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border-light);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+  
+  &.collapsed {
+    transform: translateX(-100%);
+  }
+}
+
+.preferences-container {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--sidebar-bg);
+  border-left: 1px solid var(--border-light);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+  
+  &.collapsed {
+    transform: translateX(100%);
+  }
+}
+
+// Enhanced responsive design
+@media (max-width: 1200px) {
+  .dashboard {
+    flex-direction: column;
+    height: auto;
+    min-height: calc(100vh - #{$navbar-height});
+  }
+  
+  .sidebar-container,
+  .preferences-container {
+    position: fixed;
+    top: $navbar-height;
+    height: calc(100vh - #{$navbar-height});
+    z-index: 1040;
+  }
+  
+  .sidebar-container {
+    left: 0;
+  }
+  
+  .preferences-container {
+    right: 0;
+  }
+  
+  .chat-container {
+    width: 100%;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 0;
+  }
+  
+  .chat-container {
+    padding: 0 0.5rem;
+    
+    &::before {
+      height: 60px;
+    }
+  }
+  
+  .sidebar-container,
+  .preferences-container {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+// Loading state
+.dashboard.loading {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+}
+
+// Smooth animations for panel transitions
+.panel-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.panel-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.panel-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.panel-exit-active {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }

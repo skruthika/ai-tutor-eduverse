@@ -14,8 +14,12 @@ const ThemeToggle = ({ className = "" }) => {
       onClick={toggleTheme}
       className={`theme-toggle ${className}`}
       title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
     >
-      {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+      <div className="icon-container">
+        <Sun className={`sun-icon ${!isDarkMode ? 'active' : ''}`} size={18} />
+        <Moon className={`moon-icon ${isDarkMode ? 'active' : ''}`} size={18} />
+      </div>
     </Button>
   );
 };
