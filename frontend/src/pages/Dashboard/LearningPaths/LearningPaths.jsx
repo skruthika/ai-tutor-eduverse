@@ -6,7 +6,7 @@ import {
   Clock, 
   Star, 
   PlayCircleFill, 
-  Edit, 
+  Pencil, 
   Trash,
   Eye,
   Award,
