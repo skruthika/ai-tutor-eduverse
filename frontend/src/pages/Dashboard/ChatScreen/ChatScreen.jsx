@@ -117,23 +117,23 @@ const ChatScreen = () => {
           <div style={{position: "relative", top: "10%"}}>
             <Card className="m-5 border-0 bg-white text-dark w-50 mx-auto center" >
               <Card.Header className="bg-white text-center">
-                <Card.Img src="/chatscreen.svg" alt="Eduverse Logo" style={{ width: "500px" }} />
+                <Card.Img src="/icons/aitutor-short-no-bg.png" alt="AI Tutor Logo" style={{ width: "200px", height: "200px" }} />
               </Card.Header>
               <Card.Body  className="bg-white border-0 border-white text-center">
-              <Card.Title>Welcome to Eduverse.ai</Card.Title>
-              <Card.Subtitle>Your personal learning companion</Card.Subtitle>
+              <Card.Title className="display-6 fw-bold text-primary">Welcome to AI Tutor</Card.Title>
+              <Card.Subtitle className="text-muted mb-3">Your intelligent learning companion</Card.Subtitle>
               <div className="mt-3"></div>
-              <Card.Text>Start by asking a question or generating a study plan for you next topic</Card.Text>
+              <Card.Text className="lead">Start by asking a question or generating a personalized study plan for your next learning adventure</Card.Text>
               </Card.Body>
               <Card.Footer  className="bg-white border-0">
-                <div className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center gap-3">
                   <Button variant={isLearningPathQuery ? "primary rounded-pill" : "outline-primary rounded-pill"} onClick={handleStudyPlan}>
                   <Book size={15} className="me-2" />
                     Generate Study Plan
                   </Button>
-                  <Button variant={ isQuizQuery ? "primary rounded-pill" : "outline-primary rounded-pill"} className="ms-3" onClick={handleSelfyQuiz}>
+                  <Button variant={ isQuizQuery ? "primary rounded-pill" : "outline-primary rounded-pill"} onClick={handleSelfyQuiz}>
                   <List size={15} className="me-2" />
-                    Create a Selfy Shot Quiz
+                    Create a Quiz
                   </Button>
                 </div>
               </Card.Footer>
@@ -148,8 +148,8 @@ const ChatScreen = () => {
           <Spinner animation="grow" size="sm" className="me-2" />
           <span>
             {isLearningPathQuery
-              ? "Eduverse is Generating a Study Plan for you"
-              : "Eduverse is typing..."}
+              ? "AI Tutor is generating a personalized study plan for you..."
+              : "AI Tutor is thinking..."}
           </span>
         </div>
       )}
@@ -173,7 +173,6 @@ const ChatScreen = () => {
           position: 'relative',
           top: '20px',
           left: '-15px',
-          // border: '1px solid grey'
         }}
       >
         <Button

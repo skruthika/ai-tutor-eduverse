@@ -5,7 +5,7 @@ export const login = async (username, password) => {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, username, password }),
+      body: JSON.stringify({ username, password }),
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.detail || "Login failed");
@@ -13,7 +13,7 @@ export const login = async (username, password) => {
     localStorage.setItem("token", data.token); // Store token
     localStorage.setItem("username", username); // Store username
     if (data.name)
-    localStorage.setItem("name", data.name);
+      localStorage.setItem("name", data.name);
 
     return data;
   } catch (error) {
@@ -38,6 +38,49 @@ export const signup = async (name, username, password) => {
   }
 };
 
+// OAuth Google Login
+export const googleLogin = async (credential) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/google-login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ credential }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.detail || "Google login failed");
+
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("username", data.username);
+    if (data.name) localStorage.setItem("name", data.name);
+
+    return data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+// OAuth GitHub Login
+export const githubLogin = async (code) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/github-login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.detail || "GitHub login failed");
+
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("username", data.username);
+    if (data.name) localStorage.setItem("name", data.name);
+
+    return data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 
 export const fetchChatHistory = async () => {
   const username = localStorage.getItem("username");
@@ -71,7 +114,6 @@ export const askQuestion = async (
   const token = localStorage.getItem("token");
 
   if (!username || !token) throw new Error("User not authenticated");
-
 
   try {
     const queryParams = new URLSearchParams({
@@ -132,7 +174,6 @@ export const askQuestion = async (
   }
 };
 
-
 /// Save Learning Path API Call
 export const saveLearningPath = async (learningPath, learningGoalName) => {
   const username = localStorage.getItem("username");
@@ -161,33 +202,6 @@ export const saveLearningPath = async (learningPath, learningGoalName) => {
   }
 };
 
-// Get Learning Path API Call
-// export const getLearningPath = async () => {
-//   const username = localStorage.getItem("username");
-//   const token = localStorage.getItem("token");
-
-//   if (!username || !token) throw new Error("User not authenticated");
-
-//   try {
-//     const response = await fetch(
-//       `http://localhost:8000/chat/get-path?username=${encodeURIComponent(username)}`,
-//       {
-//         method: "GET",
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       }
-//     );
-
-//     if (!response.ok) throw new Error("Failed to fetch learning path");
-//     const data = await response.json();
-//     return data.learning_path;
-//   } catch (error) {
-//     console.error("Error fetching learning path:", error);
-//   }
-// };
-
-
 // Get All Learning Goals API Call
 export const getAllLearningGoals = async () => {
   const username = localStorage.getItem("username");
@@ -214,7 +228,6 @@ export const getAllLearningGoals = async () => {
     throw error; // Re-throw the error so the caller can handle it
   }
 };
-
 
 export const clearChat = async () => {
   const username = localStorage.getItem("username");
@@ -270,4 +283,3 @@ export const savePreferencesAPI = async (preferences) => {
     throw error;
   }
 };
-

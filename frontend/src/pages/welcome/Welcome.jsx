@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tab, Tabs, Button, Form, Modal, Alert, Spinner } from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { login, signup } from "../../api";
+import { login, signup, googleLogin, githubLogin } from "../../api";
 import "./welcome.scss";
 import { FaUserGraduate, FaRocket, FaChartLine } from "react-icons/fa";
 
@@ -15,6 +16,16 @@ const Welcome = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  // Initialize Google OAuth
+  useEffect(() => {
+    if (window.google) {
+      window.google.accounts.id.initialize({
+        client_id: "your-google-client-id", // Replace with your actual Google Client ID
+        callback: handleGoogleResponse,
+      });
+    }
+  }, []);
 
   const clearForm = () => {
     setName("");
@@ -59,16 +70,75 @@ const Welcome = () => {
     }
   };
 
+  const handleGoogleResponse = async (response) => {
+    setLoading(true);
+    try {
+      const data = await googleLogin(response.credential);
+      console.log("Google Login Success:", data);
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.message || "Google login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = () => {
+    if (window.google) {
+      window.google.accounts.id.prompt();
+    } else {
+      setError("Google OAuth not loaded. Please refresh and try again.");
+    }
+  };
+
+  const handleGithubLogin = () => {
+    const clientId = "your-github-client-id"; // Replace with your actual GitHub Client ID
+    const redirectUri = `${window.location.origin}/auth/github/callback`;
+    const scope = "user:email";
+    
+    const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
+    window.location.href = githubAuthUrl;
+  };
+
+  // Handle GitHub OAuth callback
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    
+    if (code && window.location.pathname === '/auth/github/callback') {
+      setLoading(true);
+      githubLogin(code)
+        .then((data) => {
+          console.log("GitHub Login Success:", data);
+          navigate("/dashboard");
+        })
+        .catch((err) => {
+          setError(err.message || "GitHub login failed. Please try again.");
+          navigate("/welcome");
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [navigate]);
+
   return (
     <div className="welcome-container">
       {/* Background Section */}
       <div className="hero-section">
         <div className="hero-overlay"></div>
         <div className="hero-content">
-          <h1>Welcome to Eduverse.ai</h1>
+          <div className="brand-logo">
+            <img
+              src="/icons/aitutor-short-no-bg.png"
+              alt="AI Tutor Logo"
+              className="logo-image"
+            />
+          </div>
+          <h1>Welcome to AI Tutor</h1>
           <p>
             Empower your learning with personalized AI-driven learning paths. 
-            Designed to adapt to your needs and help you grow.
+            Designed to adapt to your needs and help you grow with intelligent tutoring.
           </p>
           <Button variant="primary" size="lg" onClick={() => setShowModal(true)}>
             Get Started
@@ -78,22 +148,22 @@ const Welcome = () => {
 
       {/* Features Section */}
       <div className="features-section">
-        <h2>Why Choose Eduverse.ai?</h2>
+        <h2>Why Choose AI Tutor?</h2>
         <div className="features">
           <div className="feature-card">
             <FaUserGraduate className="icon" />
             <h3>🎯 Personalized Learning</h3>
-            <p>Get a custom learning path based on your goals and interests.</p>
+            <p>Get a custom learning path based on your goals and interests with AI-powered recommendations.</p>
           </div>
           <div className="feature-card">
             <FaRocket className="icon" />
-            <h3>🚀 AI-Powered Recommendations</h3>
-            <p>Leverage AI to suggest the best resources and learning material.</p>
+            <h3>🚀 Intelligent Tutoring</h3>
+            <p>Leverage advanced AI to get instant help, explanations, and guidance on any topic.</p>
           </div>
           <div className="feature-card">
             <FaChartLine className="icon" />
             <h3>📊 Progress Tracking</h3>
-            <p>Track your learning journey and achieve your goals efficiently.</p>
+            <p>Track your learning journey with detailed analytics and achieve your goals efficiently.</p>
           </div>
         </div>
       </div>
@@ -101,7 +171,16 @@ const Welcome = () => {
       {/* Modal Section */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>{activeTab === "login" ? "Login to Eduverse.ai" : "Create an Account"}</Modal.Title>
+          <Modal.Title className="d-flex align-items-center">
+            <img
+              src="/icons/aitutor-short-no-bg.png"
+              alt="AI Tutor"
+              width="32"
+              height="32"
+              className="me-2"
+            />
+            {activeTab === "login" ? "Login to AI Tutor" : "Create an Account"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {error && <Alert variant="danger">{error}</Alert>}
@@ -130,15 +209,35 @@ const Welcome = () => {
                 </Form.Group>
                 <Button
                   variant="primary"
-                  className="w-100 mb-2"
+                  className="w-100 mb-3"
                   onClick={handleLogin}
                   disabled={loading}
                 >
                   {loading ? <Spinner size="sm" animation="border" /> : "Login"}
                 </Button>
-                <Button variant="outline-dark" className="w-100">
-                  <FcGoogle className="me-2" /> Sign in with Google
-                </Button>
+                
+                <div className="oauth-divider">
+                  <span>or continue with</span>
+                </div>
+                
+                <div className="oauth-buttons">
+                  <Button 
+                    variant="outline-dark" 
+                    className="oauth-btn"
+                    onClick={handleGoogleLogin}
+                    disabled={loading}
+                  >
+                    <FcGoogle className="me-2" /> Google
+                  </Button>
+                  <Button 
+                    variant="outline-dark" 
+                    className="oauth-btn"
+                    onClick={handleGithubLogin}
+                    disabled={loading}
+                  >
+                    <FaGithub className="me-2" /> GitHub
+                  </Button>
+                </div>
               </Form>
             </Tab>
 
@@ -174,15 +273,35 @@ const Welcome = () => {
                 </Form.Group>
                 <Button
                   variant="success"
-                  className="w-100 mb-2"
+                  className="w-100 mb-3"
                   onClick={handleSignup}
                   disabled={loading}
                 >
                   {loading ? <Spinner size="sm" animation="border" /> : "Sign Up"}
                 </Button>
-                <Button variant="outline-dark" className="w-100">
-                  <FcGoogle className="me-2" /> Sign up with Google
-                </Button>
+                
+                <div className="oauth-divider">
+                  <span>or continue with</span>
+                </div>
+                
+                <div className="oauth-buttons">
+                  <Button 
+                    variant="outline-dark" 
+                    className="oauth-btn"
+                    onClick={handleGoogleLogin}
+                    disabled={loading}
+                  >
+                    <FcGoogle className="me-2" /> Google
+                  </Button>
+                  <Button 
+                    variant="outline-dark" 
+                    className="oauth-btn"
+                    onClick={handleGithubLogin}
+                    disabled={loading}
+                  >
+                    <FaGithub className="me-2" /> GitHub
+                  </Button>
+                </div>
               </Form>
             </Tab>
           </Tabs>

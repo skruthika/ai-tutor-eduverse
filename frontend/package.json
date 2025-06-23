@@ -1,8 +1,10 @@
 {
-    "name": "my-react-app",
+    "name": "ai-tutor",
     "private": true,
-    "version": "0.0.0",
+    "version": "1.0.0",
     "type": "module",
+    "description": "AI-powered personalized learning platform with intelligent tutoring",
+    "keywords": ["ai", "tutor", "learning", "education", "personalized"],
     "scripts": {
         "dev": "vite",
         "build": "vite build",

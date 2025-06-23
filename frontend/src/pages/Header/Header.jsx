@@ -10,15 +10,15 @@ const Header = () => {
         
         {/* App Icon */}
         <img
-          src="/icons/Logo.svg"
-          alt="App Icon"
-          width="32"
-          height="32"
+          src="/icons/aitutor-short-no-bg.png"
+          alt="AI Tutor Logo"
+          width="40"
+          height="40"
           className="me-2"
         />
 
         {/* Logo Text */}
-        <Navbar.Brand className="fw-bold fs-4">Eduverse.ai</Navbar.Brand>
+        <Navbar.Brand className="fw-bold fs-4">AI Tutor</Navbar.Brand>
 
         {/* Empty Space for Future Elements */}
         <div className="flex-grow-1"></div>
@@ -28,4 +28,3 @@ const Header = () => {
 };
 
 export default Header;
- 

@@ -2,7 +2,7 @@
 
 // Primary Color: Vibrant Purple
 $primary: #76098c;
-$primary-gradient:linear-gradient(308deg, rgba(1,6,171,1) 6%, rgba(251,91,152,1) 100%);
+$primary-gradient: linear-gradient(308deg, rgba(1,6,171,1) 6%, rgba(251,91,152,1) 100%);
 $primary-cover-gradient: linear-gradient(
   308deg, 
   rgba(1, 6, 171, 0.8) 60%,   // 0.6 = 60% opacity
@@ -19,7 +19,7 @@ $warning: #ffc233;     // Bright Orange
 $info: #33d4ff;        // Cyan Blue
 $light: #f3f0ff;       // Soft Lavender
 $dark: #321766;        // Deep Purple
-$gray: #a39ebf;         // Muted Grayish Purple       // Gray
+$gray: #a39ebf;        // Muted Grayish Purple
 
 // Update Bootstrap's color map with these custom values
 $theme-colors: (
@@ -34,13 +34,12 @@ $theme-colors: (
 );
 
 // Define missing typography variables
-$font-family-base: "system-ui", sans-serif;
+$font-family-base: "Inter", "Segoe UI", "Roboto", sans-serif;
 $display-font-weight: 700;
 $btn-font-weight: 600;
 
 // Ensure Bootstrap uses these variables
 @import "bootstrap/scss/bootstrap";
-// Font Family - Modern Look
 
 // Force button text color to be white
 $btn-color: white;
@@ -48,17 +47,16 @@ $btn-hover-color: white;
 $btn-active-color: white;
 $btn-link-color: white;
 
-
 // Buttons & Inputs
-$btn-border-radius: 8px;
-$input-border-radius: 8px;
+$btn-border-radius: 12px;
+$input-border-radius: 12px;
 
 // Links
 $link-color: $primary;
 $link-hover-color: darken($primary, 10%);
 
 // Background Colors
-$body-bg: #f4f1ff; // Soft lavender background
+$body-bg: #f8f9ff; // Softer lavender background
 $body-color: #2c2c54; // Dark text for readability
 
 // Spacing (for padding/margins)
@@ -73,7 +71,10 @@ $spacers: (
 );
 
 // Shadows & Borders
-$box-shadow: 0 4px 10px rgba(140, 83, 255, 0.2);
+$box-shadow: 0 8px 25px rgba(118, 9, 140, 0.15);
 $border-color: lighten($primary, 20%);
-$border-radius: 8px;
- 
+$border-radius: 12px;
+
+// Enhanced card styling
+$card-border-radius: 16px;
+$card-box-shadow: 0 4px 20px rgba(118, 9, 140, 0.1);

@@ -5,6 +5,7 @@ import { askQuestion } from "../../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { setChatHistory, setIsGenerating, setIsLearningPathQuery,setStreamChat } from "../../../globalSlice";
 import "./ChatInput.scss";
+
 const ChatInput = ({ refreshChat }) => {
   const [message, setMessage] = useState("");
   const chatHistory = useSelector((state) => state.global.chatHistory);
@@ -22,8 +23,8 @@ const ChatInput = ({ refreshChat }) => {
     
     dispatch(setChatHistory(updatedHistory));
     dispatch(setIsGenerating(true));
-    // dispatch(setIsLearningPathQuery(isLearningPathQuery));
     setMessage(""); // Clear input field
+    
     try {
       await askQuestion(
         message,
@@ -35,14 +36,12 @@ const ChatInput = ({ refreshChat }) => {
           dispatch(setIsGenerating(false));
           dispatch(setIsLearningPathQuery(false));
         },false, isLearningPathQuery
-
       );
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
   
-
   const handleKeyPress = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
@@ -58,7 +57,7 @@ const ChatInput = ({ refreshChat }) => {
       </Button>
       <textarea
         rows={2}
-        placeholder={isLearningPathQuery ? "Start by telling me the topic you want to learn" : "Ask me anything you want to know..."}
+        placeholder={isLearningPathQuery ? "Tell me what you want to learn and I'll create a personalized study plan for you..." : "Ask me anything you want to know..."}
         className="chat-textarea"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
