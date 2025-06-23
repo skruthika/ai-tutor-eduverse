@@ -2,9 +2,9 @@ import os
 import bcrypt
 from jose import jwt
 from datetime import datetime, timedelta
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Query
 from pydantic import BaseModel
-from database import users_collection
+from database import users_collection, chats_collection
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -47,7 +47,7 @@ async def signup(request: SignupRequest):
         raise HTTPException(status_code=400, detail="All fields are required")
 
     if users_collection.find_one({"username": request.username}):
-        raise HTTPException("User already exists")
+        raise HTTPException(status_code=400, detail="User already exists")
 
     hashed_password = hash_password(request.password)
 
@@ -56,15 +56,27 @@ async def signup(request: SignupRequest):
         "userRole": "Student",
         "timeValue": 15,
         "language": "English",
-        "ageGroup": "Under 10"
+        "ageGroup": "Above 18"
     }
 
-    users_collection.insert_one({
+    # Create user document
+    user_doc = {
         "name": request.name,
         "username": request.username,
         "password": hashed_password,
-        "preferences": default_preferences
-    })
+        "preferences": default_preferences,
+        "created_at": datetime.utcnow().isoformat() + "Z",
+        "stats": {
+            "totalGoals": 0,
+            "completedGoals": 0,
+            "totalQuizzes": 0,
+            "averageScore": 0,
+            "streakDays": 0,
+            "totalStudyTime": 0
+        }
+    }
+
+    users_collection.insert_one(user_doc)
 
     return {"message": "User registered successfully with default preferences"}
 
@@ -74,14 +86,14 @@ async def login(request: LoginRequest):
     user = users_collection.find_one({"username": request.username})
     
     if not user or not verify_password(request.password, user["password"]):
-        raise HTTPException("No user exists with this mail")
+        raise HTTPException(status_code=400, detail="Invalid credentials")
 
     # Check and add default preferences if not present
     default_preferences = {
         "userRole": "Student",
         "timeValue": 15,
         "language": "English",
-        "ageGroup": "Under 10"
+        "ageGroup": "Above 18"
     }
     
     if not user.get("preferences"):
@@ -91,5 +103,74 @@ async def login(request: LoginRequest):
         )
         user["preferences"] = default_preferences
 
+    # Ensure stats exist
+    if not user.get("stats"):
+        default_stats = {
+            "totalGoals": 0,
+            "completedGoals": 0,
+            "totalQuizzes": 0,
+            "averageScore": 0,
+            "streakDays": 0,
+            "totalStudyTime": 0
+        }
+        users_collection.update_one(
+            {"username": request.username},
+            {"$set": {"stats": default_stats}}
+        )
+        user["stats"] = default_stats
+
     token = create_jwt_token(request.username)
-    return {"token": token, "username": request.username, "preferences": user["preferences"], "name": user["name"]}
+    return {
+        "token": token, 
+        "username": request.username, 
+        "preferences": user["preferences"], 
+        "name": user["name"]
+    }
+
+# Get User Profile Endpoint
+@auth_router.get("/profile")
+async def get_user_profile(username: str = Query(...)):
+    try:
+        user = users_collection.find_one({"username": username})
+        
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        # Calculate real-time stats from chat collection
+        chat_session = chats_collection.find_one({"username": username})
+        learning_goals = chat_session.get("learning_goals", []) if chat_session else []
+        
+        # Calculate stats
+        total_goals = len(learning_goals)
+        completed_goals = sum(1 for goal in learning_goals if goal.get("progress", 0) >= 100)
+        
+        # Count quiz messages in chat history
+        messages = chat_session.get("messages", []) if chat_session else []
+        quiz_messages = [msg for msg in messages if "quiz" in msg.get("content", "").lower()]
+        total_quizzes = len(quiz_messages)
+        
+        # Update user stats
+        updated_stats = {
+            "totalGoals": total_goals,
+            "completedGoals": completed_goals,
+            "totalQuizzes": total_quizzes,
+            "averageScore": user.get("stats", {}).get("averageScore", 0),
+            "streakDays": user.get("stats", {}).get("streakDays", 0),
+            "totalStudyTime": user.get("stats", {}).get("totalStudyTime", 0)
+        }
+        
+        users_collection.update_one(
+            {"username": username},
+            {"$set": {"stats": updated_stats}}
+        )
+
+        return {
+            "name": user["name"],
+            "username": user["username"],
+            "preferences": user.get("preferences", {}),
+            "stats": updated_stats,
+            "created_at": user.get("created_at")
+        }
+    except Exception as e:
+        print(f"Error fetching user profile: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch user profile")
