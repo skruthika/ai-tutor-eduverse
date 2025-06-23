@@ -1,0 +1,23 @@
+.theme-toggle {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  
+  &:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    transform: scale(1.05);
+  }
+  
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+  }
+}

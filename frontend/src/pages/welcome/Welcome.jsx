@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { Tab, Tabs, Button, Form, Modal, Alert, Spinner } from "react-bootstrap";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { login, signup, googleLogin, githubLogin } from "../../api";
+import { login, signup, googleLogin } from "../../api";
 import "./welcome.scss";
-import { FaUserGraduate, FaRocket, FaChartLine } from "react-icons/fa";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
 
 const Welcome = () => {
   const [showModal, setShowModal] = useState(false);
@@ -21,7 +20,7 @@ const Welcome = () => {
   useEffect(() => {
     if (window.google) {
       window.google.accounts.id.initialize({
-        client_id: "your-google-client-id", // Replace with your actual Google Client ID
+        client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID || "your-google-client-id",
         callback: handleGoogleResponse,
       });
     }
@@ -91,86 +90,166 @@ const Welcome = () => {
     }
   };
 
-  const handleGithubLogin = () => {
-    const clientId = "your-github-client-id"; // Replace with your actual GitHub Client ID
-    const redirectUri = `${window.location.origin}/auth/github/callback`;
-    const scope = "user:email";
-    
-    const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
-    window.location.href = githubAuthUrl;
-  };
-
-  // Handle GitHub OAuth callback
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    
-    if (code && window.location.pathname === '/auth/github/callback') {
-      setLoading(true);
-      githubLogin(code)
-        .then((data) => {
-          console.log("GitHub Login Success:", data);
-          navigate("/dashboard");
-        })
-        .catch((err) => {
-          setError(err.message || "GitHub login failed. Please try again.");
-          navigate("/welcome");
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  }, [navigate]);
-
   return (
     <div className="welcome-container">
-      {/* Background Section */}
-      <div className="hero-section">
-        <div className="hero-overlay"></div>
-        <div className="hero-content">
-          <div className="brand-logo">
-            <img
-              src="/icons/aitutor-short-no-bg.png"
-              alt="AI Tutor Logo"
-              className="logo-image"
-            />
-          </div>
-          <h1>Welcome to AI Tutor</h1>
-          <p>
-            Empower your learning with personalized AI-driven learning paths. 
-            Designed to adapt to your needs and help you grow with intelligent tutoring.
-          </p>
-          <Button variant="primary" size="lg" onClick={() => setShowModal(true)}>
-            Get Started
-          </Button>
-        </div>
-      </div>
+      {/* Hero Section */}
+      <section className="hero-section">
+        <Container>
+          <Row className="align-items-center min-vh-100">
+            <Col lg={6} className="hero-content">
+              <div className="brand-logo mb-4">
+                <img
+                  src="/icons/aitutor-short-no-bg.png"
+                  alt="AI Tutor Logo"
+                  className="logo-image"
+                />
+              </div>
+              <h1 className="hero-title">
+                Welcome to <span className="brand-highlight">AI Tutor</span>
+              </h1>
+              <p className="hero-subtitle">
+                Transform your learning journey with AI-powered personalized education. 
+                Get instant help, create custom study plans, and achieve your goals faster.
+              </p>
+              <div className="hero-actions">
+                <Button 
+                  variant="primary" 
+                  size="lg" 
+                  className="cta-button me-3"
+                  onClick={() => setShowModal(true)}
+                >
+                  Start Learning Today
+                </Button>
+                <Button 
+                  variant="outline-primary" 
+                  size="lg"
+                  onClick={() => setShowModal(true)}
+                >
+                  Sign In
+                </Button>
+              </div>
+              
+              {/* Stats */}
+              <div className="hero-stats mt-5">
+                <div className="stat-item">
+                  <div className="stat-number">10K+</div>
+                  <div className="stat-label">Students</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-number">500+</div>
+                  <div className="stat-label">Courses</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-number">95%</div>
+                  <div className="stat-label">Success Rate</div>
+                </div>
+              </div>
+            </Col>
+            
+            <Col lg={6} className="hero-visual">
+              <div className="hero-image-container">
+                <img
+                  src="/icons/aitutor-short-no-bg.png"
+                  alt="AI Learning"
+                  className="hero-main-image"
+                />
+                <div className="floating-elements">
+                  <div className="floating-card card-1">
+                    <FaBrain className="icon" />
+                    <span>AI-Powered</span>
+                  </div>
+                  <div className="floating-card card-2">
+                    <FaGraduationCap className="icon" />
+                    <span>Personalized</span>
+                  </div>
+                  <div className="floating-card card-3">
+                    <FaLightbulb className="icon" />
+                    <span>Interactive</span>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
 
       {/* Features Section */}
-      <div className="features-section">
-        <h2>Why Choose AI Tutor?</h2>
-        <div className="features">
-          <div className="feature-card">
-            <FaUserGraduate className="icon" />
-            <h3>🎯 Personalized Learning</h3>
-            <p>Get a custom learning path based on your goals and interests with AI-powered recommendations.</p>
-          </div>
-          <div className="feature-card">
-            <FaRocket className="icon" />
-            <h3>🚀 Intelligent Tutoring</h3>
-            <p>Leverage advanced AI to get instant help, explanations, and guidance on any topic.</p>
-          </div>
-          <div className="feature-card">
-            <FaChartLine className="icon" />
-            <h3>📊 Progress Tracking</h3>
-            <p>Track your learning journey with detailed analytics and achieve your goals efficiently.</p>
-          </div>
-        </div>
-      </div>
+      <section className="features-section">
+        <Container>
+          <Row>
+            <Col lg={12} className="text-center mb-5">
+              <h2 className="section-title">Why Choose AI Tutor?</h2>
+              <p className="section-subtitle">
+                Experience the future of learning with our advanced AI technology
+              </p>
+            </Col>
+          </Row>
+          <Row className="g-4">
+            <Col md={4}>
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <FaUserGraduate />
+                </div>
+                <h3>Personalized Learning Paths</h3>
+                <p>
+                  Get custom study plans tailored to your learning style, pace, and goals. 
+                  Our AI analyzes your progress and adapts accordingly.
+                </p>
+              </div>
+            </Col>
+            <Col md={4}>
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <FaRocket />
+                </div>
+                <h3>Instant AI Assistance</h3>
+                <p>
+                  Get immediate help with any question. Our AI tutor is available 24/7 
+                  to provide explanations, examples, and guidance.
+                </p>
+              </div>
+            </Col>
+            <Col md={4}>
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <FaChartLine />
+                </div>
+                <h3>Progress Tracking</h3>
+                <p>
+                  Monitor your learning journey with detailed analytics, achievements, 
+                  and insights to keep you motivated and on track.
+                </p>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
 
-      {/* Modal Section */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Modal.Header closeButton>
+      {/* CTA Section */}
+      <section className="cta-section">
+        <Container>
+          <Row>
+            <Col lg={12} className="text-center">
+              <h2 className="cta-title">Ready to Transform Your Learning?</h2>
+              <p className="cta-subtitle">
+                Join thousands of students who are already learning smarter with AI Tutor
+              </p>
+              <Button 
+                variant="primary" 
+                size="lg" 
+                className="cta-button"
+                onClick={() => setShowModal(true)}
+              >
+                Get Started for Free
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
+      {/* Authentication Modal */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered size="lg">
+        <Modal.Header closeButton className="border-0">
           <Modal.Title className="d-flex align-items-center">
             <img
               src="/icons/aitutor-short-no-bg.png"
@@ -179,65 +258,63 @@ const Welcome = () => {
               height="32"
               className="me-2"
             />
-            {activeTab === "login" ? "Login to AI Tutor" : "Create an Account"}
+            {activeTab === "login" ? "Welcome Back" : "Join AI Tutor"}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Tabs activeKey={activeTab} onSelect={(k) => { setActiveTab(k); clearForm(); }} className="mb-3">
-
+        <Modal.Body className="p-4">
+          {error && <Alert variant="danger" className="mb-3">{error}</Alert>}
+          
+          <Tabs 
+            activeKey={activeTab} 
+            onSelect={(k) => { setActiveTab(k); clearForm(); }} 
+            className="mb-4 custom-tabs"
+          >
             {/* Login Tab */}
-            <Tab eventKey="login" title="Login">
+            <Tab eventKey="login" title="Sign In">
               <Form>
                 <Form.Group className="mb-3">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>Email Address</Form.Label>
                   <Form.Control
                     type="email"
-                    placeholder="Enter email"
+                    placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    className="modern-input"
                   />
                 </Form.Group>
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-4">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"
-                    placeholder="Enter password"
+                    placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    className="modern-input"
                   />
                 </Form.Group>
                 <Button
                   variant="primary"
-                  className="w-100 mb-3"
+                  className="w-100 mb-3 modern-button"
                   onClick={handleLogin}
                   disabled={loading}
                 >
-                  {loading ? <Spinner size="sm" animation="border" /> : "Login"}
+                  {loading ? <Spinner size="sm" animation="border" className="me-2" /> : null}
+                  Sign In
                 </Button>
                 
                 <div className="oauth-divider">
                   <span>or continue with</span>
                 </div>
                 
-                <div className="oauth-buttons">
-                  <Button 
-                    variant="outline-dark" 
-                    className="oauth-btn"
-                    onClick={handleGoogleLogin}
-                    disabled={loading}
-                  >
-                    <FcGoogle className="me-2" /> Google
-                  </Button>
-                  <Button 
-                    variant="outline-dark" 
-                    className="oauth-btn"
-                    onClick={handleGithubLogin}
-                    disabled={loading}
-                  >
-                    <FaGithub className="me-2" /> GitHub
-                  </Button>
-                </div>
+                <Button 
+                  variant="outline-secondary" 
+                  className="w-100 oauth-button"
+                  onClick={handleGoogleLogin}
+                  disabled={loading}
+                >
+                  <FcGoogle className="me-2" size={20} />
+                  Continue with Google
+                </Button>
               </Form>
             </Tab>
 
@@ -245,63 +322,58 @@ const Welcome = () => {
             <Tab eventKey="signup" title="Sign Up">
               <Form>
                 <Form.Group className="mb-3">
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>Full Name</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Enter your name"
+                    placeholder="Enter your full name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    className="modern-input"
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>Email Address</Form.Label>
                   <Form.Control
                     type="email"
-                    placeholder="Enter email"
+                    placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    className="modern-input"
                   />
                 </Form.Group>
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-4">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"
-                    placeholder="Create password"
+                    placeholder="Create a strong password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    className="modern-input"
                   />
                 </Form.Group>
                 <Button
-                  variant="success"
-                  className="w-100 mb-3"
+                  variant="primary"
+                  className="w-100 mb-3 modern-button"
                   onClick={handleSignup}
                   disabled={loading}
                 >
-                  {loading ? <Spinner size="sm" animation="border" /> : "Sign Up"}
+                  {loading ? <Spinner size="sm" animation="border" className="me-2" /> : null}
+                  Create Account
                 </Button>
                 
                 <div className="oauth-divider">
                   <span>or continue with</span>
                 </div>
                 
-                <div className="oauth-buttons">
-                  <Button 
-                    variant="outline-dark" 
-                    className="oauth-btn"
-                    onClick={handleGoogleLogin}
-                    disabled={loading}
-                  >
-                    <FcGoogle className="me-2" /> Google
-                  </Button>
-                  <Button 
-                    variant="outline-dark" 
-                    className="oauth-btn"
-                    onClick={handleGithubLogin}
-                    disabled={loading}
-                  >
-                    <FaGithub className="me-2" /> GitHub
-                  </Button>
-                </div>
+                <Button 
+                  variant="outline-secondary" 
+                  className="w-100 oauth-button"
+                  onClick={handleGoogleLogin}
+                  disabled={loading}
+                >
+                  <FcGoogle className="me-2" size={20} />
+                  Continue with Google
+                </Button>
               </Form>
             </Tab>
           </Tabs>

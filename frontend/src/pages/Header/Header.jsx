@@ -1,27 +1,30 @@
 import React from "react";
-import { Navbar, Container, Button } from "react-bootstrap";
-import { List } from "react-bootstrap-icons"; // Bootstrap Icons
-import './header.scss'
+import { Navbar, Container } from "react-bootstrap";
+import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
+import './header.scss';
 
 const Header = () => {
   return (
-    <Navbar bg="primary" variant="dark" expand="lg" className="px-3 header">
-      <Container fluid className="d-flex align-items-center">
-        
-        {/* App Icon */}
-        <img
-          src="/icons/aitutor-short-no-bg.png"
-          alt="AI Tutor Logo"
-          width="40"
-          height="40"
-          className="me-2"
-        />
+    <Navbar className="modern-navbar shadow-sm" expand="lg">
+      <Container fluid className="px-4">
+        {/* Brand Section */}
+        <div className="d-flex align-items-center">
+          <img
+            src="/icons/aitutor-short-no-bg.png"
+            alt="AI Tutor Logo"
+            width="45"
+            height="45"
+            className="me-3 logo-image"
+          />
+          <Navbar.Brand className="brand-text">
+            AI Tutor
+          </Navbar.Brand>
+        </div>
 
-        {/* Logo Text */}
-        <Navbar.Brand className="fw-bold fs-4">AI Tutor</Navbar.Brand>
-
-        {/* Empty Space for Future Elements */}
-        <div className="flex-grow-1"></div>
+        {/* Right Section */}
+        <div className="d-flex align-items-center gap-3">
+          <ThemeToggle />
+        </div>
       </Container>
     </Navbar>
   );

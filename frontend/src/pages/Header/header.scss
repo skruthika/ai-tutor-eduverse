@@ -1,13 +1,48 @@
 @import "../../styles/variables";
-// Header.scss
-.header {
-  background: $primary-gradient !important;  
+@import "../../styles/themes";
+
+.modern-navbar {
+  background-color: var(--navbar-bg) !important;
+  border-bottom: 1px solid var(--border-color);
+  height: $navbar-height;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
   
-    .navbar {
-        height: 60px;
-      }
-      
-      .navbar-brand {
-        font-weight: bold;
-      }
-}  
+  .logo-image {
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  
+  .brand-text {
+    font-size: 1.75rem;
+    font-weight: $font-weight-bold;
+    color: var(--primary-color) !important;
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .modern-navbar {
+    .brand-text {
+      font-size: 1.5rem;
+    }
+    
+    .logo-image {
+      width: 35px;
+      height: 35px;
+    }
+  }
+}

@@ -1,27 +1,79 @@
 // _variables.scss
 
-// Primary Color: Vibrant Purple
-$primary: #76098c;
-$primary-gradient: linear-gradient(308deg, rgba(1,6,171,1) 6%, rgba(251,91,152,1) 100%);
-$primary-cover-gradient: linear-gradient(
-  308deg, 
-  rgba(1, 6, 171, 0.8) 60%,   // 0.6 = 60% opacity
-  rgba(118, 9, 140, 0.6) 100%
+// Light Theme Colors
+$primary-light: #2563eb;
+$secondary-light: #3b82f6;
+$success-light: #10b981;
+$danger-light: #ef4444;
+$warning-light: #f59e0b;
+$info-light: #06b6d4;
+$light-bg: #ffffff;
+$light-surface: #f8fafc;
+$light-text: #1e293b;
+$light-text-muted: #64748b;
+$light-border: #e2e8f0;
+
+// Dark Theme Colors
+$primary-dark: #3b82f6;
+$secondary-dark: #6366f1;
+$success-dark: #10b981;
+$danger-dark: #ef4444;
+$warning-dark: #f59e0b;
+$info-dark: #06b6d4;
+$dark-bg: #0f172a;
+$dark-surface: #1e293b;
+$dark-text: #f1f5f9;
+$dark-text-muted: #94a3b8;
+$dark-border: #334155;
+
+// Default to light theme
+$primary: $primary-light;
+$secondary: $secondary-light;
+$success: $success-light;
+$danger: $danger-light;
+$warning: $warning-light;
+$info: $info-light;
+$light: $light-bg;
+$dark: $light-text;
+
+// Modern gradients
+$primary-gradient: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+$hero-gradient: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #6366f1 100%);
+
+// Typography
+$font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Spacing
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
+  3: $spacer * 1,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  6: $spacer * 4
 );
 
-$hover: #c590ff;
+// Border radius
+$border-radius: 0.5rem;
+$border-radius-sm: 0.375rem;
+$border-radius-lg: 0.75rem;
+$border-radius-xl: 1rem;
 
-// Derived Theme Colors (Adjusted to Match Primary)
-$secondary: #9528cc;  // Darker purple
-$success: #33ff8a;     // Complementary Green
-$danger: #ff3355;      // Vivid Reddish Pink
-$warning: #ffc233;     // Bright Orange
-$info: #33d4ff;        // Cyan Blue
-$light: #f3f0ff;       // Soft Lavender
-$dark: #321766;        // Deep Purple
-$gray: #a39ebf;        // Muted Grayish Purple
+// Shadows
+$box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$box-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$box-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
-// Update Bootstrap's color map with these custom values
+// Theme colors map
 $theme-colors: (
   "primary": $primary,
   "secondary": $secondary,
@@ -33,48 +85,23 @@ $theme-colors: (
   "dark": $dark
 );
 
-// Define missing typography variables
-$font-family-base: "Inter", "Segoe UI", "Roboto", sans-serif;
-$display-font-weight: 700;
-$btn-font-weight: 600;
+// Component specific
+$navbar-height: 70px;
+$sidebar-width: 280px;
+$footer-height: 60px;
 
-// Ensure Bootstrap uses these variables
+// Buttons
+$btn-border-radius: $border-radius;
+$btn-font-weight: $font-weight-medium;
+$btn-padding-y: 0.75rem;
+$btn-padding-x: 1.5rem;
+
+// Cards
+$card-border-radius: $border-radius-lg;
+$card-box-shadow: $box-shadow;
+
+// Forms
+$input-border-radius: $border-radius;
+$input-focus-border-color: $primary;
+
 @import "bootstrap/scss/bootstrap";
-
-// Force button text color to be white
-$btn-color: white;
-$btn-hover-color: white;
-$btn-active-color: white;
-$btn-link-color: white;
-
-// Buttons & Inputs
-$btn-border-radius: 12px;
-$input-border-radius: 12px;
-
-// Links
-$link-color: $primary;
-$link-hover-color: darken($primary, 10%);
-
-// Background Colors
-$body-bg: #f8f9ff; // Softer lavender background
-$body-color: #2c2c54; // Dark text for readability
-
-// Spacing (for padding/margins)
-$spacer: 1rem;
-$spacers: (
-  0: 0,
-  1: $spacer * 0.25,
-  2: $spacer * 0.5,
-  3: $spacer * 1,
-  4: $spacer * 1.5,
-  5: $spacer * 3
-);
-
-// Shadows & Borders
-$box-shadow: 0 8px 25px rgba(118, 9, 140, 0.15);
-$border-color: lighten($primary, 20%);
-$border-radius: 12px;
-
-// Enhanced card styling
-$card-border-radius: 16px;
-$card-box-shadow: 0 4px 20px rgba(118, 9, 140, 0.1);

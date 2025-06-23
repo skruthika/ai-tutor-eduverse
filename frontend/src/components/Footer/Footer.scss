@@ -1,0 +1,31 @@
+@import "../../styles/variables";
+@import "../../styles/themes";
+
+.modern-footer {
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: 1rem 0;
+  margin-top: auto;
+  
+  .footer-brand {
+    font-weight: $font-weight-semibold;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+  }
+  
+  .footer-text {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .modern-footer {
+    text-align: center;
+    
+    .text-md-end {
+      text-align: center !important;
+      margin-top: 0.5rem;
+    }
+  }
+}

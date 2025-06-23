@@ -1,0 +1,129 @@
+// themes.scss
+
+// Light Theme
+[data-theme="light"] {
+  --bg-primary: #{$light-bg};
+  --bg-secondary: #{$light-surface};
+  --text-primary: #{$light-text};
+  --text-secondary: #{$light-text-muted};
+  --border-color: #{$light-border};
+  --shadow: #{$box-shadow};
+  --primary-color: #{$primary-light};
+  --secondary-color: #{$secondary-light};
+  
+  // Component specific
+  --navbar-bg: #{$light-bg};
+  --sidebar-bg: #{$light-surface};
+  --card-bg: #{$light-bg};
+  --modal-bg: #{$light-bg};
+  --input-bg: #{$light-bg};
+  --button-bg: #{$primary-light};
+}
+
+// Dark Theme
+[data-theme="dark"] {
+  --bg-primary: #{$dark-bg};
+  --bg-secondary: #{$dark-surface};
+  --text-primary: #{$dark-text};
+  --text-secondary: #{$dark-text-muted};
+  --border-color: #{$dark-border};
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --primary-color: #{$primary-dark};
+  --secondary-color: #{$secondary-dark};
+  
+  // Component specific
+  --navbar-bg: #{$dark-surface};
+  --sidebar-bg: #{$dark-bg};
+  --card-bg: #{$dark-surface};
+  --modal-bg: #{$dark-surface};
+  --input-bg: #{$dark-surface};
+  --button-bg: #{$primary-dark};
+}
+
+// Global theme application
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bg-theme-primary {
+  background-color: var(--bg-primary) !important;
+}
+
+.bg-theme-secondary {
+  background-color: var(--bg-secondary) !important;
+}
+
+.text-theme-primary {
+  color: var(--text-primary) !important;
+}
+
+.text-theme-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.border-theme {
+  border-color: var(--border-color) !important;
+}
+
+.shadow-theme {
+  box-shadow: var(--shadow) !important;
+}
+
+// Card theming
+.card {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  box-shadow: var(--shadow);
+}
+
+// Modal theming
+.modal-content {
+  background-color: var(--modal-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+// Form theming
+.form-control {
+  background-color: var(--input-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  
+  &:focus {
+    background-color: var(--input-bg);
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+  }
+  
+  &::placeholder {
+    color: var(--text-secondary);
+  }
+}
+
+// Button theming
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  
+  &:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    filter: brightness(1.1);
+  }
+}
+
+// Navbar theming
+.navbar {
+  background-color: var(--navbar-bg) !important;
+  border-bottom: 1px solid var(--border-color);
+}
+
+// Sidebar theming
+.sidebar {
+  background-color: var(--sidebar-bg);
+  border-right: 1px solid var(--border-color);
+}

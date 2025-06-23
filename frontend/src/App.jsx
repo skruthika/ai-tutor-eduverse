@@ -1,41 +1,41 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import ChatScreen from "./pages/Dashboard/ChatScreen/ChatScreen"; // Example nested route
+import ChatScreen from "./pages/Dashboard/ChatScreen/ChatScreen";
 import Welcome from "./pages/welcome/Welcome";
-import "./App.scss";
 import Header from "./pages/Header/Header";
+import Footer from "./components/Footer/Footer";
+import { ThemeProvider } from "./context/ThemeContext";
+import "./App.scss";
+import "./styles/themes.scss";
 
 const isAuthenticated = () => {
-  return !!localStorage.getItem("token"); // Check if token exists
+  return !!localStorage.getItem("token");
 };
 
-// Protected Route Component
 const ProtectedRoute = ({ element }) => {
   return isAuthenticated() ? element : <Navigate to="/welcome" replace />;
 };
 
 const App = () => {
   return (
-    <>
-      <Header />
-      <Router>
-        <Routes>
-          {/* Redirect root based on authentication */}
-          <Route path="/" element={isAuthenticated() ? <Navigate to="/dashboard" replace /> : <Navigate to="/welcome" replace />} />
-
-          {/* Welcome route for sign-in or login */}
-          <Route path="/welcome" element={<Welcome />} />
-
-          {/* Protected Dashboard route */}
-          <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />}>
-            <Route index element={<ChatScreen />} />
-            {/* Add more nested routes here if needed */}
-          </Route>
-          {/* Add other routes here if needed */}
-        </Routes>
-      </Router>
-    </>
+    <ThemeProvider>
+      <div className="app-container">
+        <Header />
+        <main className="main-content">
+          <Router>
+            <Routes>
+              <Route path="/" element={isAuthenticated() ? <Navigate to="/dashboard" replace /> : <Navigate to="/welcome" replace />} />
+              <Route path="/welcome" element={<Welcome />} />
+              <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />}>
+                <Route index element={<ChatScreen />} />
+              </Route>
+            </Routes>
+          </Router>
+        </main>
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 };
 
