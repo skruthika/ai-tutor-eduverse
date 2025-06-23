@@ -18,33 +18,16 @@
   margin-top: $navbar-height;
 }
 
-// Enhanced global button styling
+// Enhanced global styling
 .btn {
   border-radius: $btn-border-radius;
   font-weight: $btn-font-weight;
   transition: $transition-base;
   border: none;
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
-  }
   
   &:hover {
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
-    
-    &::before {
-      left: 100%;
-    }
   }
   
   &:active {
@@ -64,19 +47,6 @@
   }
 }
 
-.btn-outline-primary {
-  border: 2px solid var(--primary-color);
-  color: var(--primary-color);
-  background: transparent;
-  
-  &:hover, &:focus, &:active {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    color: white;
-  }
-}
-
-// Enhanced global card styling
 .card {
   border-radius: $card-border-radius;
   box-shadow: var(--shadow);
@@ -84,40 +54,20 @@
   background: var(--card-bg);
   color: var(--text-primary);
   transition: $transition-base;
-  overflow: hidden;
   
   &:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
     background: var(--card-hover-bg);
   }
-  
-  .card-body {
-    padding: $card-padding;
-  }
-  
-  .card-header {
-    background: transparent;
-    border-bottom: 1px solid var(--border-light);
-    padding: 1.5rem $card-padding;
-    font-weight: $font-weight-semibold;
-  }
-  
-  .card-footer {
-    background: transparent;
-    border-top: 1px solid var(--border-light);
-    padding: 1.5rem $card-padding;
-  }
 }
 
-// Enhanced global form styling
 .form-control {
   border-radius: $input-border-radius;
   border: 2px solid var(--input-border);
   background: var(--input-bg);
   color: var(--text-primary);
   padding: $input-padding-y $input-padding-x;
-  font-size: 1rem;
   transition: $transition-base;
   
   &:focus {
@@ -125,248 +75,11 @@
     box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
     background: var(--input-bg);
     color: var(--text-primary);
-    transform: translateY(-1px);
   }
   
   &::placeholder {
     color: var(--text-tertiary);
-    font-weight: $font-weight-normal;
   }
-}
-
-.form-select {
-  border-radius: $input-border-radius;
-  border: 2px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--text-primary);
-  padding: $input-padding-y $input-padding-x;
-  transition: $transition-base;
-  
-  &:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
-  }
-}
-
-.form-label {
-  font-weight: $font-weight-semibold;
-  color: var(--text-primary);
-  margin-bottom: 0.75rem;
-  font-size: 0.95rem;
-}
-
-// Enhanced typography
-h1, h2, h3, h4, h5, h6 {
-  font-weight: $font-weight-bold;
-  color: var(--text-primary);
-  line-height: 1.3;
-  margin-bottom: 1rem;
-}
-
-h1 {
-  font-size: 2.5rem;
-  font-weight: $font-weight-extrabold;
-}
-
-h2 {
-  font-size: 2rem;
-}
-
-h3 {
-  font-size: 1.75rem;
-}
-
-h4 {
-  font-size: 1.5rem;
-}
-
-h5 {
-  font-size: 1.25rem;
-}
-
-h6 {
-  font-size: 1.125rem;
-}
-
-p {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 1rem;
-}
-
-// Enhanced links
-a {
-  color: var(--primary-color);
-  text-decoration: none;
-  transition: $transition-fast;
-  
-  &:hover {
-    color: var(--primary-hover);
-    text-decoration: underline;
-  }
-}
-
-// Enhanced badges
-.badge {
-  border-radius: $border-radius-full;
-  font-weight: $font-weight-semibold;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-}
-
-// Enhanced alerts
-.alert {
-  border-radius: $border-radius-lg;
-  border: none;
-  padding: 1.5rem;
-  font-weight: $font-weight-medium;
-  
-  &.alert-success {
-    background: var(--success-bg);
-    color: var(--success-color);
-  }
-  
-  &.alert-warning {
-    background: var(--warning-bg);
-    color: var(--warning-color);
-  }
-  
-  &.alert-danger {
-    background: var(--danger-bg);
-    color: var(--danger-color);
-  }
-  
-  &.alert-info {
-    background: var(--info-bg);
-    color: var(--primary-color);
-  }
-}
-
-// Enhanced modals
-.modal-content {
-  border-radius: $border-radius-2xl;
-  border: none;
-  box-shadow: var(--shadow-xl);
-  background: var(--modal-bg);
-  color: var(--text-primary);
-}
-
-.modal-header {
-  border-bottom: 1px solid var(--border-light);
-  padding: 2rem 2rem 1.5rem;
-  
-  .modal-title {
-    font-weight: $font-weight-bold;
-    font-size: 1.5rem;
-  }
-}
-
-.modal-body {
-  padding: 1.5rem 2rem;
-}
-
-.modal-footer {
-  border-top: 1px solid var(--border-light);
-  padding: 1.5rem 2rem 2rem;
-}
-
-// Enhanced progress bars
-.progress {
-  border-radius: $border-radius-full;
-  background: var(--bg-tertiary);
-  height: 0.75rem;
-  
-  .progress-bar {
-    border-radius: $border-radius-full;
-    background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
-  }
-}
-
-// Enhanced list groups
-.list-group {
-  border-radius: $border-radius-lg;
-  
-  .list-group-item {
-    border-color: var(--border-light);
-    background: var(--card-bg);
-    color: var(--text-primary);
-    transition: $transition-base;
-    
-    &:hover {
-      background: var(--card-hover-bg);
-    }
-    
-    &:first-child {
-      border-top-left-radius: $border-radius-lg;
-      border-top-right-radius: $border-radius-lg;
-    }
-    
-    &:last-child {
-      border-bottom-left-radius: $border-radius-lg;
-      border-bottom-right-radius: $border-radius-lg;
-    }
-  }
-}
-
-// Responsive utilities
-@media (max-width: $breakpoint-mobile) {
-  .app-container {
-    font-size: 0.9rem;
-  }
-  
-  h1 {
-    font-size: 2rem;
-  }
-  
-  h2 {
-    font-size: 1.75rem;
-  }
-  
-  h3 {
-    font-size: 1.5rem;
-  }
-  
-  .card-body {
-    padding: 1.5rem;
-  }
-  
-  .modal-header,
-  .modal-body,
-  .modal-footer {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-// Loading states
-.loading {
-  opacity: 0.7;
-  pointer-events: none;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    margin: -10px 0 0 -10px;
-    border: 2px solid var(--primary-color);
-    border-radius: 50%;
-    border-top-color: transparent;
-    animation: spin 1s linear infinite;
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-// Enhanced scrolling
-html {
-  scroll-behavior: smooth;
 }
 
 // Enhanced scrollbar
@@ -383,83 +96,22 @@ html {
 ::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: $border-radius;
-  border: 2px solid var(--bg-secondary);
   
   &:hover {
     background: var(--text-tertiary);
   }
 }
 
-::-webkit-scrollbar-corner {
-  background: var(--bg-secondary);
-}
-
-// Enhanced focus styles
-:focus-visible {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
-  border-radius: $border-radius-sm;
-}
-
-// Utility classes
-.text-gradient {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.glass-effect {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.hover-lift {
-  transition: $transition-base;
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-  }
-}
-
-.hover-scale {
-  transition: $transition-base;
-  
-  &:hover {
-    transform: scale(1.02);
-  }
-}
-
-// Spacing utilities with 24px minimum
-.spacing-section {
-  margin-bottom: 2rem; // 32px
-}
-
-.spacing-component {
-  margin-bottom: 1.5rem; // 24px minimum
-}
-
-.spacing-element {
-  margin-bottom: 1rem; // 16px
-}
-
-// Grid system enhancements
-.container-fluid {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  
-  @media (min-width: $breakpoint-mobile) {
-    padding-left: 2rem;
-    padding-right: 2rem;
+// Responsive utilities
+@media (max-width: $breakpoint-mobile) {
+  .app-container {
+    font-size: 0.9rem;
   }
 }
 
 // Component spacing system
 .component-spacing {
   > * + * {
-    margin-top: 1.5rem; // 24px minimum spacing between components
+    margin-top: 1.5rem;
   }
 }

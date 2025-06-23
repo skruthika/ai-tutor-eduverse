@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { login, signup } from "../../api";
-import "./welcome.scss";
-import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import "./Welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine } from "react-icons/fa";
 
 const Welcome = () => {
   const [showModal, setShowModal] = useState(false);
@@ -30,7 +30,6 @@ const Welcome = () => {
     setLoading(true);
     try {
       const data = await login(email, password);
-      console.log("Login Success:", data);
       localStorage.setItem("username", email);
       navigate("/dashboard");
     } catch (err) {
@@ -47,8 +46,7 @@ const Welcome = () => {
     }
     setLoading(true);
     try {
-      const data = await signup(name, email, password);
-      console.log("Signup Success:", data);
+      await signup(name, email, password);
       setActiveTab("login");
       clearForm();
     } catch (err) {
@@ -58,12 +56,10 @@ const Welcome = () => {
     }
   };
 
-  // Add click handler to header buttons
   const handleAuthModalOpen = () => {
     setShowModal(true);
   };
 
-  // Add event listener for header button clicks
   React.useEffect(() => {
     const authTriggers = document.querySelectorAll('.auth-modal-trigger');
     authTriggers.forEach(trigger => {
@@ -79,7 +75,7 @@ const Welcome = () => {
 
   return (
     <div className="welcome-container">
-      {/* Hero Section - Full width */}
+      {/* Hero Section */}
       <section className="hero-section">
         <Container fluid>
           <Row className="align-items-center min-vh-100">
@@ -111,7 +107,6 @@ const Welcome = () => {
                   </Button>
                 </div>
                 
-                {/* Stats */}
                 <div className="hero-stats">
                   <div className="stat-item">
                     <div className="stat-number">10K+</div>
@@ -136,20 +131,6 @@ const Welcome = () => {
                   alt="AI Learning"
                   className="hero-main-image"
                 />
-                <div className="floating-elements">
-                  <div className="floating-card card-1">
-                    <FaBrain className="icon" />
-                    <span>AI-Powered</span>
-                  </div>
-                  <div className="floating-card card-2">
-                    <FaGraduationCap className="icon" />
-                    <span>Personalized</span>
-                  </div>
-                  <div className="floating-card card-3">
-                    <FaLightbulb className="icon" />
-                    <span>Interactive</span>
-                  </div>
-                </div>
               </div>
             </Col>
           </Row>
@@ -252,7 +233,6 @@ const Welcome = () => {
             onSelect={(k) => { setActiveTab(k); clearForm(); }} 
             className="mb-4 custom-tabs"
           >
-            {/* Login Tab */}
             <Tab eventKey="login" title="Sign In">
               <Form>
                 <Form.Group className="mb-3">
@@ -287,7 +267,6 @@ const Welcome = () => {
               </Form>
             </Tab>
 
-            {/* Signup Tab */}
             <Tab eventKey="signup" title="Sign Up">
               <Form>
                 <Form.Group className="mb-3">

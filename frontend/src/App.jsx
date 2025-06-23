@@ -1,19 +1,15 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import ChatScreen from "./pages/Dashboard/ChatScreen/ChatScreen";
-import Welcome from "./pages/welcome/Welcome";
-import Header from "./pages/Header/Header";
+import Welcome from "./pages/Welcome/Welcome";
+import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { ThemeProvider } from "./context/ThemeContext";
 import "./App.scss";
-import "./styles/themes.scss";
 
 const isAuthenticated = () => {
   const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
-  
-  // More robust authentication check
   return !!(token && username && token.trim() !== "" && username.trim() !== "");
 };
 
@@ -33,7 +29,6 @@ const App = () => {
           <Header />
           <main className="main-content">
             <Routes>
-              {/* Root route - redirect based on authentication */}
               <Route 
                 path="/" 
                 element={
@@ -43,21 +38,16 @@ const App = () => {
                 } 
               />
               
-              {/* Public routes */}
               <Route 
                 path="/welcome" 
                 element={<PublicRoute element={<Welcome />} />} 
               />
               
-              {/* Protected routes */}
               <Route 
-                path="/dashboard" 
+                path="/dashboard/*" 
                 element={<ProtectedRoute element={<Dashboard />} />}
-              >
-                <Route index element={<ChatScreen />} />
-              </Route>
+              />
               
-              {/* Catch all route - redirect to appropriate page */}
               <Route 
                 path="*" 
                 element={

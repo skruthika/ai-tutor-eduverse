@@ -3,30 +3,25 @@ import { Navbar, Container, Button, Dropdown } from "react-bootstrap";
 import { Person, Bell, BoxArrowRight } from "react-bootstrap-icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { logout } from "../../api";
-import ThemeToggle from "../../components/ThemeToggle/ThemeToggle";
-import './header.scss';
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import './Header.scss';
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Check if user is authenticated
   const isAuthenticated = () => {
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username");
     return !!(token && username && token.trim() !== "" && username.trim() !== "");
   };
 
-  // Check if we're on welcome/login page
   const isWelcomePage = location.pathname === '/welcome' || location.pathname === '/';
 
   const handleLogout = async () => {
     try {
       await logout();
       navigate('/welcome', { replace: true });
-      setTimeout(() => {
-        window.location.href = '/welcome';
-      }, 100);
     } catch (error) {
       console.error('Logout error:', error);
       window.location.href = '/';
@@ -34,7 +29,6 @@ const Header = () => {
   };
 
   const handleGetStarted = () => {
-    // Scroll to auth section or open modal
     const authSection = document.querySelector('.auth-modal-trigger');
     if (authSection) {
       authSection.click();
@@ -43,13 +37,10 @@ const Header = () => {
 
   const userName = localStorage.getItem("name") || "User";
 
-  // Render different headers based on authentication status
   if (!isAuthenticated() || isWelcomePage) {
-    // Public/Welcome Header - Very simple
     return (
       <Navbar className="clean-navbar welcome" fixed="top">
         <Container fluid className="navbar-container">
-          {/* Brand Section - Left */}
           <Navbar.Brand className="brand-section" href="#home">
             <img
               src="/icons/aitutor-short-no-bg.png"
@@ -61,7 +52,6 @@ const Header = () => {
             <span className="brand-name">AI Tutor</span>
           </Navbar.Brand>
 
-          {/* Actions Section - Right */}
           <div className="header-actions">
             <ThemeToggle />
             <Button 
@@ -77,11 +67,9 @@ const Header = () => {
     );
   }
 
-  // Dashboard Header - Clean and minimal
   return (
     <Navbar className="clean-navbar dashboard" fixed="top">
       <Container fluid className="navbar-container">
-        {/* Brand Section - Left (No duplication with sidebar) */}
         <Navbar.Brand className="brand-section" onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
           <img
             src="/icons/aitutor-short-no-bg.png"
@@ -93,18 +81,14 @@ const Header = () => {
           <span className="brand-name">AI Tutor</span>
         </Navbar.Brand>
 
-        {/* User Controls - Right */}
         <div className="header-actions">
-          {/* Notifications */}
           <Button variant="ghost" className="action-btn">
             <Bell size={18} />
             <span className="notification-dot">3</span>
           </Button>
 
-          {/* Theme Toggle */}
           <ThemeToggle />
 
-          {/* User Profile */}
           <Dropdown align="end">
             <Dropdown.Toggle variant="ghost" className="user-dropdown">
               <div className="user-avatar">
