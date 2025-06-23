@@ -11,8 +11,7 @@ import {
   Plus,
   Fire,
   ChatSquare,
-  Calendar,
-  Target
+  Calendar
 } from "react-bootstrap-icons";
 import { getUserStats, getAllLearningGoals } from "../../../api";
 import "./DashboardHome.scss";
@@ -134,7 +133,7 @@ const DashboardHome = () => {
                 Start Learning
               </Button>
               <Button variant="outline-primary" className="action-btn">
-                <Target size={16} className="me-2" />
+                <Plus size={16} className="me-2" />
                 Set Goal
               </Button>
             </div>
