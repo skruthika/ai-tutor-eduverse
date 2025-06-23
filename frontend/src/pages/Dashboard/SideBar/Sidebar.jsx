@@ -2,14 +2,21 @@ import React, { useState, useEffect } from "react";
 import { ResizableBox } from "react-resizable";
 import "react-resizable/css/styles.css";
 import "./Sidebar.scss";
-import { ListGroup } from "react-bootstrap";
-import { Badge3d, ChevronRight, Dash, Dot, Grid, List, MenuApp, Person, QuestionCircle, Trophy } from "react-bootstrap-icons";
+import { ListGroup, Badge } from "react-bootstrap";
+import { 
+  Grid3x3Gap, 
+  BookHalf, 
+  TrophyFill, 
+  BarChartFill, 
+  Folder2Open,
+  ChevronDown,
+  ChevronRight,
+  Dot
+} from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedLearningGoal } from "../../../globalSlice.js";
 import { setLearningGoals } from "../../../globalSlice.js";
 import { getAllLearningGoals } from "../../../api.js";
-import { FaLevelUpAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({
   isCollapsed,
@@ -19,32 +26,9 @@ const Sidebar = ({
   setActiveScreen,
   setPreferencesCollapsed,
 }) => {
-  const [showLearningGoals, setShowLearningGoals] = useState(false);
+  const [expandedItems, setExpandedItems] = useState({});
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const learningGoals = useSelector((state) => state.global.learningGoals); // Get learning goals from Redux
-
-  const handleLogout = () => {
-    try {
-      // Clear localStorage
-      localStorage.clear();
-      
-      // Clear any session storage
-      sessionStorage.clear();
-      
-      // Navigate to welcome page
-      navigate('/welcome', { replace: true });
-      
-      // Force a page reload to ensure clean state
-      setTimeout(() => {
-        window.location.href = '/welcome';
-      }, 100);
-    } catch (error) {
-      console.error('Logout error:', error);
-      // Fallback: force reload to root
-      window.location.href = '/';
-    }
-  };
+  const learningGoals = useSelector((state) => state.global.learningGoals);
 
   useEffect(() => {
     const fetchGoals = async () => {
@@ -57,143 +41,171 @@ const Sidebar = ({
     };
     fetchGoals();
   }, [dispatch]);
-  
-  const getLearningGoalsNames = () => {
-    const arr = ["All"];
-    learningGoals.map((goal) => arr.push(goal.name));
-    return arr;
-  };
 
   const menuItems = [
     {
-      text: "My Profile",
-      icon: <Person size={20} className="text-light ms-4" />,
-      screen: "preference",
+      id: "dashboard",
+      text: "Dashboard",
+      icon: <Grid3x3Gap size={20} />,
+      screen: "dashboard",
+      badge: null,
     },
     {
-      text: "My Learning Goals",
-      icon: <Grid size={20} className="text-light ms-4" />,
+      id: "courses",
+      text: "My Courses",
+      icon: <BookHalf size={20} />,
       screen: "learning-goal",
-      subItems: getLearningGoalsNames(), // Extract names from Redux goals
+      badge: learningGoals.length > 0 ? learningGoals.length : null,
+      subItems: ["All", ...learningGoals.map(goal => goal.name)],
+      expandable: true,
     },
     {
-      text: "My Milestones", 
-      icon: <Trophy size={20} className="text-light ms-4" />,
+      id: "progress",
+      text: "Progress",
+      icon: <BarChartFill size={20} />,
       screen: "milestones",
+      badge: null,
     },
     {
-      text: "My Assessments", 
-      icon: <QuestionCircle size={20} className="text-light ms-4 mt-1" />,
+      id: "resources",
+      text: "Resources",
+      icon: <Folder2Open size={20} />,
       screen: "assessments",
-    }
+      badge: "New",
+    },
   ];
 
-  const handleLearningGoalsClick = () => {
-    setShowLearningGoals(!showLearningGoals);
-    if (!showLearningGoals) {
-      setActiveScreen("learning-goal");
+  const handleItemClick = (item) => {
+    if (item.expandable) {
+      setExpandedItems(prev => ({
+        ...prev,
+        [item.id]: !prev[item.id]
+      }));
     }
-    dispatch(setSelectedLearningGoal('All'));
-    setActiveScreen("learning-goal");
+    
+    setActiveScreen(item.screen);
     setPreferencesCollapsed(false);
+    
+    if (item.screen === "learning-goal") {
+      dispatch(setSelectedLearningGoal('All'));
+    }
   };
 
   const handleSubItemClick = (subItem) => {
-    if (typeof subItem === "string") {
-      setActiveScreen("learning-goal");
-      setPreferencesCollapsed(false);
-      dispatch(setSelectedLearningGoal(subItem));
-      console.log("Clicked sub item:", subItem);
-    } else {
-      console.error("handleSubItemClick: subItem is not a string:", subItem);
-    }
+    setActiveScreen("learning-goal");
+    setPreferencesCollapsed(false);
+    dispatch(setSelectedLearningGoal(subItem));
   };
 
   return (
     <ResizableBox
-    width={isCollapsed ? 70 : width}
-    height={Infinity}
-    axis="x"
-    className="resizable-box"
-    minConstraints={[120]}
-    maxConstraints={[520]}
-    resizeHandles={["e"]}
-    onResizeStop={(e, { size }) => setWidth(size.width)}
-    style={{ height: "100vh" }}
-  >
-    <div
-      className={isCollapsed ? "side-nav-container side-nav-container-NX" : "side-nav-container"}
-      style={{ width: "100%", height: "calc(100vh - 60px)", overflow: "hidden" }}
+      width={isCollapsed ? 80 : width}
+      height={Infinity}
+      axis="x"
+      className="resizable-box"
+      minConstraints={[80]}
+      maxConstraints={[400]}
+      resizeHandles={["e"]}
+      onResizeStop={(e, { size }) => setWidth(size.width)}
+      style={{ height: "100vh" }}
     >
-        <div className="nav-upper">
-          <div className="nav-heading">
-            <button
-              className={
-                isCollapsed
-                  ? "hamburger hamburger-out"
-                  : "hamburger hamburger-in"
-              }
-              onClick={toggleSidebar}
-            >
-              <List size={24} color="#fff" />
-            </button>
-          </div>
-          <div className="nav-menu">
-            {menuItems.map(({ text, icon, screen, subItems }) => (
-              <div key={text || icon}>
-                <a
-                  className={
-                    isCollapsed ? "menu-item menu-item-NX" : "menu-item"
-                  }
-                  href="#"
-                  onClick={
-                    screen === "learning-goal"
-                      ? handleLearningGoalsClick
-                      : () => {
-                          console.log("Clicked:", screen);
-                          setActiveScreen(screen);
-                        }
-                  }
+      <div className={`modern-sidebar ${isCollapsed ? "collapsed" : ""}`}>
+        {/* Sidebar Header */}
+        <div className="sidebar-header">
+          <button
+            className="sidebar-toggle"
+            onClick={toggleSidebar}
+            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            <Grid3x3Gap size={20} />
+          </button>
+          {!isCollapsed && (
+            <div className="sidebar-title">
+              <h6 className="mb-0">Navigation</h6>
+            </div>
+          )}
+        </div>
+
+        {/* Navigation Menu */}
+        <nav className="sidebar-nav">
+          <ul className="nav-list">
+            {menuItems.map((item) => (
+              <li key={item.id} className="nav-item">
+                <button
+                  className={`nav-link ${expandedItems[item.id] ? 'expanded' : ''}`}
+                  onClick={() => handleItemClick(item)}
+                  title={isCollapsed ? item.text : undefined}
                 >
-                  {/* <img className="menu-item-icon text-light" src={icon} alt="" srcSet="" /> */}
-                  {icon}
-                  {!isCollapsed && <p className="ms-2">{text}</p>}
-                </a>
-                {subItems &&
-                  !isCollapsed &&
-                  screen === "learning-goal" &&
-                  showLearningGoals && (
-                    <ListGroup className="sub-menu">
-                      {subItems.map((subItem, index) => (
-                        <ListGroup.Item
-                          key={index}
-                          action
-                          className="sub-menu-item"
+                  <div className="nav-link-content">
+                    <div className="nav-icon">
+                      {item.icon}
+                    </div>
+                    {!isCollapsed && (
+                      <>
+                        <span className="nav-text">{item.text}</span>
+                        <div className="nav-extras">
+                          {item.badge && (
+                            <Badge 
+                              bg={typeof item.badge === 'number' ? 'primary' : 'success'} 
+                              className="nav-badge"
+                            >
+                              {item.badge}
+                            </Badge>
+                          )}
+                          {item.expandable && (
+                            <div className="expand-icon">
+                              {expandedItems[item.id] ? 
+                                <ChevronDown size={16} /> : 
+                                <ChevronRight size={16} />
+                              }
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </button>
+
+                {/* Sub-menu */}
+                {item.subItems && !isCollapsed && expandedItems[item.id] && (
+                  <ul className="sub-nav-list">
+                    {item.subItems.map((subItem, index) => (
+                      <li key={index} className="sub-nav-item">
+                        <button
+                          className="sub-nav-link"
                           onClick={() => handleSubItemClick(subItem)}
                         >
-                          <Dot className="sub-menu-arrow" /> {subItem}
-                        </ListGroup.Item>
-                      ))}
-                    </ListGroup>
-                  )}
-              </div>
+                          <Dot size={16} className="sub-nav-icon" />
+                          <span className="sub-nav-text">{subItem}</span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
             ))}
+          </ul>
+        </nav>
+
+        {/* Sidebar Footer */}
+        {!isCollapsed && (
+          <div className="sidebar-footer">
+            <div className="footer-content">
+              <div className="footer-stats">
+                <div className="stat-item">
+                  <div className="stat-number">{learningGoals.length}</div>
+                  <div className="stat-label">Courses</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-number">
+                    {learningGoals.filter(goal => goal.progress >= 100).length}
+                  </div>
+                  <div className="stat-label">Completed</div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="nav-footer">
-          <a
-            className={isCollapsed ? "menu-item menu-item-NX" : "menu-item"}
-            href="#"
-            onClick={handleLogout}
-          >
-            <img
-              className="menu-item-icon"
-              src="/icons/logout.svg"
-              alt="logout"
-            />
-            {!isCollapsed && <p>Logout</p>}
-          </a>
-        </div>
+        )}
       </div>
     </ResizableBox>
   );

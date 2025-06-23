@@ -1,0 +1,343 @@
+@import "../../../styles/variables";
+@import "../../../styles/themes";
+
+.dashboard-home {
+  background: var(--bg-primary);
+  min-height: calc(100vh - #{$navbar-height});
+  
+  .welcome-section {
+    padding: 2rem 0;
+    
+    .welcome-title {
+      font-size: 2.5rem;
+      font-weight: $font-weight-extrabold;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .welcome-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: 0;
+    }
+  }
+  
+  .progress-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: $border-radius-xl;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .progress-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: $border-radius-lg;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      
+      &.bg-primary {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+      }
+      
+      &.bg-warning {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+      }
+      
+      &.bg-success {
+        background: linear-gradient(135deg, #10b981, #059669);
+      }
+      
+      &.bg-info {
+        background: linear-gradient(135deg, #06b6d4, #0891b2);
+      }
+    }
+    
+    .progress-value {
+      font-size: 2rem;
+      font-weight: $font-weight-bold;
+      color: var(--text-primary);
+    }
+    
+    .progress-bar-container {
+      .custom-progress {
+        height: 6px;
+        border-radius: 3px;
+        background: var(--bg-tertiary);
+        
+        .progress-bar {
+          border-radius: 3px;
+        }
+      }
+    }
+  }
+  
+  .content-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: $border-radius-xl;
+    box-shadow: var(--shadow);
+    
+    .card-header {
+      background: transparent;
+      border-bottom: 1px solid var(--border-light);
+      padding: 1.5rem;
+      
+      h5 {
+        color: var(--text-primary);
+        font-weight: $font-weight-semibold;
+        display: flex;
+        align-items: center;
+        
+        svg {
+          color: var(--primary-color);
+        }
+      }
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+    }
+  }
+  
+  .course-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: $border-radius-lg;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .course-title {
+      font-weight: $font-weight-semibold;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+    }
+    
+    .course-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+  }
+  
+  .achievements-list {
+    .achievement-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: $border-radius-lg;
+      margin-bottom: 0.75rem;
+      transition: all 0.3s ease;
+      
+      &.earned {
+        background: var(--success-bg);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        
+        .achievement-icon {
+          background: var(--success-color);
+          color: white;
+        }
+        
+        .achievement-title {
+          color: var(--success-color);
+        }
+      }
+      
+      &.locked {
+        background: var(--bg-secondary);
+        opacity: 0.6;
+        
+        .achievement-icon {
+          background: var(--text-tertiary);
+          color: white;
+        }
+      }
+      
+      .achievement-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      
+      .achievement-content {
+        flex: 1;
+        
+        .achievement-title {
+          font-size: 0.9rem;
+          font-weight: $font-weight-semibold;
+          margin-bottom: 0.25rem;
+          color: var(--text-primary);
+        }
+        
+        .achievement-description {
+          font-size: 0.8rem;
+          color: var(--text-secondary);
+          margin-bottom: 0;
+        }
+      }
+      
+      .achievement-badge {
+        color: var(--warning-color);
+      }
+    }
+  }
+  
+  .recommended-course-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      
+      .course-overlay {
+        opacity: 1;
+      }
+    }
+    
+    .course-image {
+      position: relative;
+      height: 160px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      
+      img {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        filter: brightness(0) invert(1);
+        opacity: 0.8;
+      }
+      
+      .course-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+    }
+    
+    .course-title {
+      font-weight: $font-weight-semibold;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+    
+    .course-description {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+    
+    .course-stats {
+      .rating {
+        font-weight: $font-weight-semibold;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .dashboard-home {
+    .welcome-section {
+      padding: 1rem 0;
+      
+      .welcome-title {
+        font-size: 2rem;
+      }
+      
+      .welcome-subtitle {
+        font-size: 1rem;
+      }
+    }
+    
+    .progress-card {
+      margin-bottom: 1rem;
+      
+      .progress-value {
+        font-size: 1.5rem;
+      }
+    }
+    
+    .content-card {
+      .card-header,
+      .card-body {
+        padding: 1rem;
+      }
+    }
+    
+    .recommended-course-card {
+      .course-image {
+        height: 120px;
+        
+        img {
+          width: 60px;
+          height: 60px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-home {
+    .welcome-title {
+      font-size: 1.75rem;
+    }
+    
+    .progress-card {
+      .card-body {
+        padding: 1rem;
+      }
+      
+      .progress-icon {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .progress-value {
+        font-size: 1.25rem;
+      }
+    }
+  }
+}
