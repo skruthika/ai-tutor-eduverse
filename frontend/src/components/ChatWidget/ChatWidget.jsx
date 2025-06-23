@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Form, Button, InputGroup } from 'react-bootstrap';
-import { X, Send, MessageSquare } from 'react-bootstrap-icons';
+import { X, Send, ChatSquare } from 'react-bootstrap-icons';
 import './ChatWidget.scss';
 
 const ChatWidget = ({ onClose }) => {
@@ -50,7 +50,7 @@ const ChatWidget = ({ onClose }) => {
     <Card className="chat-widget">
       <Card.Header className="chat-widget-header">
         <div className="d-flex align-items-center">
-          <MessageSquare size={20} className="me-2" />
+          <ChatSquare size={20} className="me-2" />
           <span className="fw-semibold">AI Tutor</span>
         </div>
         <Button variant="ghost" size="sm" onClick={onClose} className="close-btn">

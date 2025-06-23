@@ -10,7 +10,7 @@ import {
   ArrowRight,
   Plus,
   Fire,
-  MessageSquare
+  ChatSquare
 } from "react-bootstrap-icons";
 import { getUserStats, getAllLearningGoals } from "../../../api";
 import ChatWidget from "../../../components/ChatWidget/ChatWidget";
@@ -351,7 +351,7 @@ const DashboardHome = () => {
           onClick={() => setShowChatWidget(!showChatWidget)}
           title="Open AI Chat"
         >
-          <MessageSquare size={24} />
+          <ChatSquare size={24} />
         </Button>
         
         {showChatWidget && (
