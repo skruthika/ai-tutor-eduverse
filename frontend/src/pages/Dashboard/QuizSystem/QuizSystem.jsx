@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button, Badge, Modal, Form, Alert, ProgressBar, Timer } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Badge, Modal, Form, Alert, ProgressBar } from "react-bootstrap";
 import { 
   Trophy, 
   Plus, 
