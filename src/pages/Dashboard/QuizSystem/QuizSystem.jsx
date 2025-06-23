@@ -353,8 +353,8 @@ const QuizSystem = () => {
                     Generate Quiz
                   </Button>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         ) : (
           <div className="results-grid">

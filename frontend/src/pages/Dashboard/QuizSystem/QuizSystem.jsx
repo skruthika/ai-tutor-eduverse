@@ -10,7 +10,7 @@ import {
   CheckCircle,
   XCircle,
   Award,
-  Target
+  Bullseye
 } from "react-bootstrap-icons";
 import "./QuizSystem.scss";
 
@@ -251,7 +251,7 @@ const QuizSystem = () => {
               className="me-2"
               onClick={() => handleGenerateQuiz("Python Programming")}
             >
-              <Target size={16} className="me-2" />
+              <Bullseye size={16} className="me-2" />
               Generate Quiz
             </Button>
             <Button 
@@ -349,7 +349,7 @@ const QuizSystem = () => {
                     variant="outline-primary"
                     onClick={() => handleGenerateQuiz("General Knowledge")}
                   >
-                    <Target size={16} className="me-2" />
+                    <Bullseye size={16} className="me-2" />
                     Generate Quiz
                   </Button>
                 </div>
