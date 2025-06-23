@@ -4,7 +4,7 @@ import {
   TrophyFill, 
   BookHalf, 
   ClockHistory, 
-  Target,
+  Bullseye,
   PlayCircleFill,
   StarFill,
   ArrowRight,
@@ -48,7 +48,7 @@ const DashboardHome = () => {
       title: "Learning Goals",
       value: userStats?.totalGoals || 0,
       subtitle: `${userStats?.completedGoals || 0} completed`,
-      icon: <Target size={24} />,
+      icon: <Bullseye size={24} />,
       color: "primary",
       progress: userStats?.totalGoals > 0 ? (userStats.completedGoals / userStats.totalGoals) * 100 : 0
     },
