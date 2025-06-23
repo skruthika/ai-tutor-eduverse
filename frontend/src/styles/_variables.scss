@@ -128,11 +128,10 @@ $glass-bg: rgba(255, 255, 255, 0.1);
 $glass-border: rgba(255, 255, 255, 0.2);
 $glass-backdrop: blur(10px);
 
-// Component specific
-$navbar-height: 80px;
-$sidebar-width: 320px;
-$footer-height: 80px; // Updated to match specification
-$footer-height-minimal: 60px; // For post-login minimal footer
+// Component specific - Simplified
+$navbar-height: 70px; // Reduced from 80px
+$sidebar-width: 280px; // Reduced from 320px
+$footer-height: 60px; // One line footer
 
 // Enhanced Buttons
 $btn-border-radius: $border-radius-md;
