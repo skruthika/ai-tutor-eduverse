@@ -272,15 +272,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-## 📞 Support & Contact
-
-- 📧 **Email**: sourabhraj311@gmail.com
-- 🌐 **Website**: [AI Tutor Platform](https://eduverse-backend-lqj5.onrender.com/)
-- 📚 **Documentation**: [API Docs](https://eduverse-backend-lqj5.onrender.com/docs)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/your-username/ai-tutor/issues)
-
----
-
 ## 🙏 Acknowledgments
 
 - **Groq** for providing access to LLaMA 3 70B API
