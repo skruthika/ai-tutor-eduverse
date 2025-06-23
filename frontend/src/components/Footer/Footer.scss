@@ -1,16 +1,70 @@
 @import "../../styles/variables";
 @import "../../styles/themes";
 
+// Minimal footer for post-login pages
+.minimal-footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-light);
+  padding: 1rem 0;
+  margin-top: auto;
+  color: var(--text-secondary);
+  max-height: $footer-height-minimal;
+  
+  .copyright {
+    color: var(--text-tertiary);
+    font-size: 0.875rem;
+  }
+  
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    
+    .footer-link {
+      color: var(--text-tertiary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.3s ease;
+      
+      &:hover {
+        color: var(--primary-color);
+      }
+    }
+    
+    .separator {
+      color: var(--border-color);
+      font-size: 0.8rem;
+    }
+  }
+  
+  .social-links-minimal {
+    display: flex;
+    gap: 0.75rem;
+    
+    .social-link-minimal {
+      color: var(--text-tertiary);
+      transition: color 0.3s ease;
+      
+      &:hover {
+        color: var(--primary-color);
+      }
+    }
+  }
+}
+
+// Full footer for welcome page
 .modern-footer {
   background: var(--bg-secondary);
   border-top: 1px solid var(--border-light);
-  padding: 3rem 0 1rem;
+  padding: 4rem 0 1rem;
   margin-top: auto;
   color: var(--text-secondary);
   
   .footer-content {
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--border-light);
+    gap: 2rem;
   }
   
   .footer-section {
@@ -55,6 +109,16 @@
           color: var(--primary-color);
           margin-right: 0.75rem;
           flex-shrink: 0;
+        }
+        
+        .contact-link {
+          color: var(--text-secondary);
+          text-decoration: none;
+          transition: color 0.3s ease;
+          
+          &:hover {
+            color: var(--primary-color);
+          }
         }
         
         span {
@@ -241,9 +305,9 @@
 }
 
 // Responsive design
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-tablet) {
   .modern-footer {
-    padding: 2rem 0 1rem;
+    padding: 3rem 0 1rem;
     
     .footer-content {
       text-align: center;
@@ -275,9 +339,22 @@
       }
     }
   }
+  
+  .minimal-footer {
+    text-align: center;
+    
+    .footer-links {
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .social-links-minimal {
+      justify-content: center;
+    }
+  }
 }
 
-@media (max-width: 576px) {
+@media (max-width: $breakpoint-mobile) {
   .modern-footer {
     .footer-brand {
       justify-content: center;
@@ -303,11 +380,23 @@
       }
     }
   }
+  
+  .minimal-footer {
+    .footer-links {
+      flex-direction: column;
+      gap: 0.5rem;
+      
+      .separator {
+        display: none;
+      }
+    }
+  }
 }
 
 // Dark mode enhancements
 [data-theme="dark"] {
-  .modern-footer {
+  .modern-footer,
+  .minimal-footer {
     .footer-logo {
       filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.4));
     }

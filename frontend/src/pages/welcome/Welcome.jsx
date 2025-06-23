@@ -79,56 +79,52 @@ const Welcome = () => {
 
   return (
     <div className="welcome-container">
-      {/* Hero Section */}
+      {/* Hero Section - Full width */}
       <section className="hero-section">
-        <Container>
+        <Container fluid>
           <Row className="align-items-center min-vh-100">
             <Col lg={6} className="hero-content">
-              <div className="brand-logo mb-4">
-                <img
-                  src="/icons/aitutor-short-no-bg.png"
-                  alt="AI Tutor Logo"
-                  className="logo-image"
-                />
-              </div>
-              <h1 className="hero-title">
-                Welcome to <span className="brand-highlight">AI Tutor</span>
-              </h1>
-              <p className="hero-subtitle">
-                Transform your learning journey with AI-powered personalized education. 
-                Get instant help, create custom study plans, and achieve your goals faster.
-              </p>
-              <div className="hero-actions">
-                <Button 
-                  variant="primary" 
-                  size="lg" 
-                  className="cta-button me-3"
-                  onClick={() => setShowModal(true)}
-                >
-                  Start Learning Today
-                </Button>
-                <Button 
-                  variant="outline-primary" 
-                  size="lg"
-                  onClick={() => setShowModal(true)}
-                >
-                  Sign In
-                </Button>
-              </div>
-              
-              {/* Stats */}
-              <div className="hero-stats mt-5">
-                <div className="stat-item">
-                  <div className="stat-number">10K+</div>
-                  <div className="stat-label">Students</div>
+              <div className="content-wrapper">
+                <h1 className="hero-title">
+                  Transform Your Learning with <span className="brand-highlight">AI Tutor</span>
+                </h1>
+                <p className="hero-subtitle">
+                  Experience personalized education powered by artificial intelligence. 
+                  Create custom study plans, get instant help, and achieve your learning goals faster than ever.
+                </p>
+                <div className="hero-actions">
+                  <Button 
+                    variant="primary" 
+                    size="lg" 
+                    className="cta-button"
+                    onClick={() => setShowModal(true)}
+                  >
+                    Start Learning Today
+                  </Button>
+                  <Button 
+                    variant="outline-light" 
+                    size="lg"
+                    className="secondary-button"
+                    onClick={() => setShowModal(true)}
+                  >
+                    Sign In
+                  </Button>
                 </div>
-                <div className="stat-item">
-                  <div className="stat-number">500+</div>
-                  <div className="stat-label">Courses</div>
-                </div>
-                <div className="stat-item">
-                  <div className="stat-number">95%</div>
-                  <div className="stat-label">Success Rate</div>
+                
+                {/* Stats */}
+                <div className="hero-stats">
+                  <div className="stat-item">
+                    <div className="stat-number">10K+</div>
+                    <div className="stat-label">Active Students</div>
+                  </div>
+                  <div className="stat-item">
+                    <div className="stat-number">500+</div>
+                    <div className="stat-label">Learning Paths</div>
+                  </div>
+                  <div className="stat-item">
+                    <div className="stat-number">95%</div>
+                    <div className="stat-label">Success Rate</div>
+                  </div>
                 </div>
               </div>
             </Col>
@@ -164,15 +160,15 @@ const Welcome = () => {
       <section className="features-section" id="features">
         <Container>
           <Row>
-            <Col lg={12} className="text-center mb-5">
+            <Col lg={12} className="text-center section-header">
               <h2 className="section-title">Why Choose AI Tutor?</h2>
               <p className="section-subtitle">
                 Experience the future of learning with our advanced AI technology
               </p>
             </Col>
           </Row>
-          <Row className="g-4">
-            <Col md={4}>
+          <Row className="features-grid">
+            <Col lg={4} md={6} className="feature-col">
               <div className="feature-card">
                 <div className="feature-icon">
                   <FaUserGraduate />
@@ -184,7 +180,7 @@ const Welcome = () => {
                 </p>
               </div>
             </Col>
-            <Col md={4}>
+            <Col lg={4} md={6} className="feature-col">
               <div className="feature-card">
                 <div className="feature-icon">
                   <FaRocket />
@@ -196,7 +192,7 @@ const Welcome = () => {
                 </p>
               </div>
             </Col>
-            <Col md={4}>
+            <Col lg={4} md={6} className="feature-col">
               <div className="feature-card">
                 <div className="feature-icon">
                   <FaChartLine />

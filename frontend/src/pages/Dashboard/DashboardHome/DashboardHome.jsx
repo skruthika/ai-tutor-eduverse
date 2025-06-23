@@ -9,15 +9,18 @@ import {
   StarFill,
   ArrowRight,
   Plus,
-  Fire
+  Fire,
+  MessageSquare
 } from "react-bootstrap-icons";
 import { getUserStats, getAllLearningGoals } from "../../../api";
+import ChatWidget from "../../../components/ChatWidget/ChatWidget";
 import "./DashboardHome.scss";
 
 const DashboardHome = () => {
   const [userStats, setUserStats] = useState(null);
   const [learningGoals, setLearningGoals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showChatWidget, setShowChatWidget] = useState(false);
 
   useEffect(() => {
     fetchDashboardData();
@@ -127,7 +130,7 @@ const DashboardHome = () => {
   if (loading) {
     return (
       <div className="dashboard-home">
-        <Container fluid className="p-4">
+        <Container fluid className="dashboard-container">
           <div className="d-flex justify-content-center align-items-center" style={{ height: "400px" }}>
             <div className="text-center">
               <div className="spinner-border text-primary mb-3" role="status">
@@ -143,9 +146,9 @@ const DashboardHome = () => {
 
   return (
     <div className="dashboard-home">
-      <Container fluid className="p-4">
+      <Container fluid className="dashboard-container">
         {/* Welcome Section */}
-        <Row className="mb-4">
+        <Row className="welcome-row">
           <Col>
             <div className="welcome-section">
               <h1 className="welcome-title">
@@ -158,10 +161,10 @@ const DashboardHome = () => {
           </Col>
         </Row>
 
-        {/* Progress Overview Cards */}
-        <Row className="mb-4">
+        {/* Progress Overview Cards - Grid Layout */}
+        <Row className="progress-row">
           {progressCards.map((card, index) => (
-            <Col lg={3} md={6} className="mb-3" key={index}>
+            <Col xl={3} lg={6} md={6} className="progress-col" key={index}>
               <Card className="progress-card h-100">
                 <Card.Body>
                   <div className="d-flex align-items-center justify-content-between mb-3">
@@ -187,14 +190,14 @@ const DashboardHome = () => {
           ))}
         </Row>
 
-        <Row>
-          {/* Recent Courses */}
-          <Col lg={8} className="mb-4">
+        <Row className="content-row">
+          {/* My Courses Section - 3 columns on desktop, 2 on tablet, 1 on mobile */}
+          <Col lg={8} className="courses-col">
             <Card className="content-card">
               <Card.Header className="d-flex justify-content-between align-items-center">
                 <h5 className="mb-0">
                   <BookHalf className="me-2" />
-                  Continue Learning
+                  My Courses
                 </h5>
                 <Button variant="outline-primary" size="sm">
                   View All <ArrowRight size={16} />
@@ -202,9 +205,9 @@ const DashboardHome = () => {
               </Card.Header>
               <Card.Body>
                 {recentCourses.length > 0 ? (
-                  <Row>
+                  <Row className="courses-grid">
                     {recentCourses.map((course, index) => (
-                      <Col md={4} className="mb-3" key={index}>
+                      <Col xl={4} md={6} className="course-col" key={index}>
                         <Card className="course-card h-100">
                           <Card.Body>
                             <h6 className="course-title">{course.title}</h6>
@@ -250,7 +253,7 @@ const DashboardHome = () => {
           </Col>
 
           {/* Achievements */}
-          <Col lg={4} className="mb-4">
+          <Col lg={4} className="achievements-col">
             <Card className="content-card">
               <Card.Header>
                 <h5 className="mb-0">
@@ -286,7 +289,7 @@ const DashboardHome = () => {
         </Row>
 
         {/* Recommended Courses */}
-        <Row>
+        <Row className="recommendations-row">
           <Col>
             <Card className="content-card">
               <Card.Header className="d-flex justify-content-between align-items-center">
@@ -299,9 +302,9 @@ const DashboardHome = () => {
                 </Button>
               </Card.Header>
               <Card.Body>
-                <Row>
+                <Row className="recommendations-grid">
                   {recommendedCourses.map((course) => (
-                    <Col lg={4} md={6} className="mb-3" key={course.id}>
+                    <Col lg={4} md={6} className="recommendation-col" key={course.id}>
                       <Card className="recommended-course-card h-100">
                         <div className="course-image">
                           <img src={course.image} alt={course.title} />
@@ -340,6 +343,21 @@ const DashboardHome = () => {
           </Col>
         </Row>
       </Container>
+
+      {/* Chat Widget - Fixed bottom-right position */}
+      <div className="chat-widget-container">
+        <Button 
+          className="chat-toggle-btn"
+          onClick={() => setShowChatWidget(!showChatWidget)}
+          title="Open AI Chat"
+        >
+          <MessageSquare size={24} />
+        </Button>
+        
+        {showChatWidget && (
+          <ChatWidget onClose={() => setShowChatWidget(false)} />
+        )}
+      </div>
     </div>
   );
 };

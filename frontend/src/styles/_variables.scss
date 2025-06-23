@@ -86,22 +86,22 @@ $font-weight-semibold: 600;
 $font-weight-bold: 700;
 $font-weight-extrabold: 800;
 
-// Enhanced Spacing System
+// Enhanced Spacing System (24px minimum)
 $spacer: 1rem;
 $spacers: (
   0: 0,
-  1: $spacer * 0.25,    // 4px
-  2: $spacer * 0.5,     // 8px
-  3: $spacer * 0.75,    // 12px
-  4: $spacer * 1,       // 16px
-  5: $spacer * 1.25,    // 20px
-  6: $spacer * 1.5,     // 24px
-  7: $spacer * 2,       // 32px
-  8: $spacer * 2.5,     // 40px
-  9: $spacer * 3,       // 48px
-  10: $spacer * 4,      // 64px
-  11: $spacer * 5,      // 80px
-  12: $spacer * 6       // 96px
+  1: 0.25rem,    // 4px
+  2: 0.5rem,     // 8px
+  3: 0.75rem,    // 12px
+  4: 1rem,       // 16px
+  5: 1.25rem,    // 20px
+  6: 1.5rem,     // 24px - minimum spacing
+  7: 2rem,       // 32px
+  8: 2.5rem,     // 40px
+  9: 3rem,       // 48px
+  10: 4rem,      // 64px
+  11: 5rem,      // 80px
+  12: 6rem       // 96px
 );
 
 // Enhanced Border Radius
@@ -131,7 +131,8 @@ $glass-backdrop: blur(10px);
 // Component specific
 $navbar-height: 80px;
 $sidebar-width: 320px;
-$footer-height: 60px;
+$footer-height: 80px; // Updated to match specification
+$footer-height-minimal: 60px; // For post-login minimal footer
 
 // Enhanced Buttons
 $btn-border-radius: $border-radius-md;
@@ -159,6 +160,15 @@ $transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 $transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 $transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
+// Responsive Breakpoints
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1200px;
+$breakpoint-desktop: 1200px;
+
+// Grid System
+$grid-columns: 12;
+$grid-gutter-width: 24px; // Minimum spacing requirement
+
 // Z-index scale
 $z-dropdown: 1000;
 $z-sticky: 1020;
@@ -167,5 +177,6 @@ $z-modal-backdrop: 1040;
 $z-modal: 1050;
 $z-popover: 1060;
 $z-tooltip: 1070;
+$z-chat-widget: 1080;
 
 @import "bootstrap/scss/bootstrap";
