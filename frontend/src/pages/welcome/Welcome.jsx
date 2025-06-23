@@ -1,8 +1,2137 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
-import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-import { login, signup, googleLogin } from "../../api";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+
+</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
+                </Button>
+                </Button>
+
+<search>1|                </Button>
+                </Button>
+
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
+import "./welcome.scss";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";</search>
+import { useState } from "react";
+import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { login, signup } from "../../api";
 import "./welcome.scss";
 import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb } from "react-icons/fa";
 
@@ -15,16 +2144,6 @@ const Welcome = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  // Initialize Google OAuth
-  useEffect(() => {
-    if (window.google) {
-      window.google.accounts.id.initialize({
-        client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID || "your-google-client-id",
-        callback: handleGoogleResponse,
-      });
-    }
-  }, []);
 
   const clearForm = () => {
     setName("");
@@ -69,26 +2188,6 @@ const Welcome = () => {
     }
   };
 
-  const handleGoogleResponse = async (response) => {
-    setLoading(true);
-    try {
-      const data = await googleLogin(response.credential);
-      console.log("Google Login Success:", data);
-      navigate("/dashboard");
-    } catch (err) {
-      setError(err.message || "Google login failed. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleGoogleLogin = () => {
-    if (window.google) {
-      window.google.accounts.id.prompt();
-    } else {
-      setError("Google OAuth not loaded. Please refresh and try again.");
-    }
-  };
 
   return (
     <div className="welcome-container">
@@ -301,20 +2400,6 @@ const Welcome = () => {
                   {loading ? <Spinner size="sm" animation="border" className="me-2" /> : null}
                   Sign In
                 </Button>
-                
-                <div className="oauth-divider">
-                  <span>or continue with</span>
-                </div>
-                
-                <Button 
-                  variant="outline-secondary" 
-                  className="w-100 oauth-button"
-                  onClick={handleGoogleLogin}
-                  disabled={loading}
-                >
-                  <FcGoogle className="me-2" size={20} />
-                  Continue with Google
-                </Button>
               </Form>
             </Tab>
 
@@ -359,20 +2444,6 @@ const Welcome = () => {
                 >
                   {loading ? <Spinner size="sm" animation="border" className="me-2" /> : null}
                   Create Account
-                </Button>
-                
-                <div className="oauth-divider">
-                  <span>or continue with</span>
-                </div>
-                
-                <Button 
-                  variant="outline-secondary" 
-                  className="w-100 oauth-button"
-                  onClick={handleGoogleLogin}
-                  disabled={loading}
-                >
-                  <FcGoogle className="me-2" size={20} />
-                  Continue with Google
                 </Button>
               </Form>
             </Tab>

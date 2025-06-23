@@ -1,43 +1,44 @@
 // themes.scss
+@use "variables" as v;
 
 // Light Theme
 [data-theme="light"] {
-  --bg-primary: #{$light-bg};
-  --bg-secondary: #{$light-surface};
-  --text-primary: #{$light-text};
-  --text-secondary: #{$light-text-muted};
-  --border-color: #{$light-border};
-  --shadow: #{$box-shadow};
-  --primary-color: #{$primary-light};
-  --secondary-color: #{$secondary-light};
+  --bg-primary: #{v.$light-bg};
+  --bg-secondary: #{v.$light-surface};
+  --text-primary: #{v.$light-text};
+  --text-secondary: #{v.$light-text-muted};
+  --border-color: #{v.$light-border};
+  --shadow: #{v.$box-shadow};
+  --primary-color: #{v.$primary-light};
+  --secondary-color: #{v.$secondary-light};
   
   // Component specific
-  --navbar-bg: #{$light-bg};
-  --sidebar-bg: #{$light-surface};
-  --card-bg: #{$light-bg};
-  --modal-bg: #{$light-bg};
-  --input-bg: #{$light-bg};
-  --button-bg: #{$primary-light};
+  --navbar-bg: #{v.$light-bg};
+  --sidebar-bg: #{v.$light-surface};
+  --card-bg: #{v.$light-bg};
+  --modal-bg: #{v.$light-bg};
+  --input-bg: #{v.$light-bg};
+  --button-bg: #{v.$primary-light};
 }
 
 // Dark Theme
 [data-theme="dark"] {
-  --bg-primary: #{$dark-bg};
-  --bg-secondary: #{$dark-surface};
-  --text-primary: #{$dark-text};
-  --text-secondary: #{$dark-text-muted};
-  --border-color: #{$dark-border};
+  --bg-primary: #{v.$dark-bg};
+  --bg-secondary: #{v.$dark-surface};
+  --text-primary: #{v.$dark-text};
+  --text-secondary: #{v.$dark-text-muted};
+  --border-color: #{v.$dark-border};
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-  --primary-color: #{$primary-dark};
-  --secondary-color: #{$secondary-dark};
+  --primary-color: #{v.$primary-dark};
+  --secondary-color: #{v.$secondary-dark};
   
   // Component specific
-  --navbar-bg: #{$dark-surface};
-  --sidebar-bg: #{$dark-bg};
-  --card-bg: #{$dark-surface};
-  --modal-bg: #{$dark-surface};
-  --input-bg: #{$dark-surface};
-  --button-bg: #{$primary-dark};
+  --navbar-bg: #{v.$dark-surface};
+  --sidebar-bg: #{v.$dark-bg};
+  --card-bg: #{v.$dark-surface};
+  --modal-bg: #{v.$dark-surface};
+  --input-bg: #{v.$dark-surface};
+  --button-bg: #{v.$primary-dark};
 }
 
 // Global theme application

@@ -38,27 +38,6 @@ export const signup = async (name, username, password) => {
   }
 };
 
-// OAuth Google Login
-export const googleLogin = async (credential) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/auth/google-login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ credential }),
-    });
-
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.detail || "Google login failed");
-
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("username", data.username);
-    if (data.name) localStorage.setItem("name", data.name);
-
-    return data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
 
 // OAuth GitHub Login
 export const githubLogin = async (code) => {
