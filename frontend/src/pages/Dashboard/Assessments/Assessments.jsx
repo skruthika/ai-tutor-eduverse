@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
-import { ChevronRight, ChevronLeft, Trophy, Clock, BookOpen } from "react-bootstrap-icons";
+import { ChevronRight, ChevronLeft, Trophy, Clock, Book } from "react-bootstrap-icons";
 import { ResizableBox } from "react-resizable";
 import { getAssessments } from "../../../api";
 import "./Assessments.scss";
@@ -39,7 +39,7 @@ const Assessments = ({ isCollapsed, togglePreferences, width, setWidth }) => {
     return (
       <div className={`contest-image ${colorClass}`}>
         <div className="cube-decoration">
-          <BookOpen size={24} className="assessment-icon" />
+          <Book size={24} className="assessment-icon" />
         </div>
       </div>
     );
@@ -159,7 +159,7 @@ const Assessments = ({ isCollapsed, togglePreferences, width, setWidth }) => {
               <div className="contest-rows">
                 {assessments.length === 0 ? (
                   <div className="text-center py-5">
-                    <BookOpen size={48} className="text-muted mb-3" />
+                    <Book size={48} className="text-muted mb-3" />
                     <h5 className="text-muted">No Assessments Yet</h5>
                     <p className="text-muted">
                       Complete learning paths and take quizzes to see your assessment history here.
