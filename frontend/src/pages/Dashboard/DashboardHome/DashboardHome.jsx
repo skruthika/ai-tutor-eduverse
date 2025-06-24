@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button, ProgressBar, Badge } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, ProgressBar, Badge, Spinner, Alert } from "react-bootstrap";
 import { 
   TrophyFill, 
   BookHalf, 
@@ -19,7 +19,9 @@ import "./DashboardHome.scss";
 const DashboardHome = () => {
   const [userStats, setUserStats] = useState(null);
   const [learningGoals, setLearningGoals] = useState([]);
+  const [recentActivity, setRecentActivity] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [showMyCoursesOnly, setShowMyCoursesOnly] = useState(false);
   const [currentGreeting, setCurrentGreeting] = useState("");
 
@@ -52,14 +54,35 @@ const DashboardHome = () => {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      const [stats, goals] = await Promise.all([
-        getUserStats(),
-        getAllLearningGoals()
-      ]);
+      setError(null);
+      
+      // Fetch dashboard stats
+      const statsResponse = await fetch('/api/dashboard/stats');
+      const stats = statsResponse.ok ? await statsResponse.json() : await getUserStats();
+      
+      // Fetch learning goals
+      const goals = await getAllLearningGoals();
+      
+      // Fetch recent activity
+      const activityResponse = await fetch('/api/dashboard/recent-activity');
+      const activity = activityResponse.ok ? await activityResponse.json() : [];
+      
       setUserStats(stats);
       setLearningGoals(goals);
+      setRecentActivity(activity);
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
+      setError("Failed to load dashboard data. Please try again.");
+      
+      // Fallback to basic data
+      try {
+        const fallbackStats = await getUserStats();
+        const fallbackGoals = await getAllLearningGoals();
+        setUserStats(fallbackStats);
+        setLearningGoals(fallbackGoals);
+      } catch (fallbackError) {
+        console.error("Fallback data fetch failed:", fallbackError);
+      }
     } finally {
       setLoading(false);
     }
@@ -154,9 +177,7 @@ const DashboardHome = () => {
       <div className="enhanced-dashboard-home">
         <Container fluid className="dashboard-container">
           <div className="loading-state">
-            <div className="spinner-border text-primary mb-3" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
+            <Spinner animation="border" variant="primary" className="mb-3" />
             <p className="text-muted">Loading your dashboard...</p>
           </div>
         </Container>
@@ -167,6 +188,13 @@ const DashboardHome = () => {
   return (
     <div className="enhanced-dashboard-home">
       <Container fluid className="dashboard-container">
+        {/* Error Alert */}
+        {error && (
+          <Alert variant="warning" dismissible onClose={() => setError(null)} className="mb-4">
+            {error}
+          </Alert>
+        )}
+
         {/* Enhanced Welcome Section with Dynamic Greeting */}
         <div className="welcome-section">
           <div className="welcome-content">

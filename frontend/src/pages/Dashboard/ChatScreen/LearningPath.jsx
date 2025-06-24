@@ -3,13 +3,14 @@ import { Card, Container, Button } from "react-bootstrap";
 import { saveLearningPath, getAllLearningGoals, askQuestion } from "../../../api";
 import { useSelector, useDispatch } from "react-redux";
 import { setChatHistory, setIsGenerating, setIsLearningPathQuery, setLearningGoals, setStreamChat } from "../../../globalSlice";
-import { PlusCircle, Repeat } from "react-bootstrap-icons";
+import { FaPlus, FaRedo, FaCheck } from "react-icons/fa";
 
 const LearningPath = ({ content, refreshChat }) => {
   const [isSaved, setIsSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const learningGoals = useSelector((state) => state.global.learningGoals);
   const dispatch = useDispatch();
-  const isSelfyQuiz = useSelector((state) => state.global.isQuizQuery);
+  const isQuizQuery = useSelector((state) => state.global.isQuizQuery);
   const isLearningPathQuery = useSelector((state) => state.global.isLearningPathQuery);
   const chatHistory = useSelector((state) => state.global.chatHistory);
 
@@ -37,41 +38,45 @@ const LearningPath = ({ content, refreshChat }) => {
 
   const handleSave = async () => {
     try {
-      await saveLearningPath(content, content.name); // Using content.name as learning goal name
+      setIsSaving(true);
+      await saveLearningPath(content, content.name);
       const goals = await getAllLearningGoals();
       dispatch(setLearningGoals(goals));
       setIsSaved(true);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsSaving(false);
     }
   };
 
-  const handleRegenrate = async () => {
-      const updatedHistory = [
-        ...chatHistory,
-        { role: "user", content: "Regenrate", type: "content", isLearningPathQuery },
-        { role: "assistant", content: "", type: "streaming" }
-      ];
-      const message = localStorage.getItem("lastMessage");
-      dispatch(setChatHistory(updatedHistory));
-      dispatch(setIsGenerating(true));
-      try {
-        await askQuestion(
-          message,
-          (partialResponse) => {
-            dispatch(setStreamChat(partialResponse));
-          },
-          () => {
-            refreshChat(); 
-            dispatch(setIsGenerating(false));
-            dispatch(setIsLearningPathQuery(false));
-          },isSelfyQuiz, true
-  
-        );
-      } catch (error) {
-        console.error("Error sending message:", error);
-      }
-  }
+  const handleRegenerate = async () => {
+    const updatedHistory = [
+      ...chatHistory,
+      { role: "user", content: "Regenerate", type: "content", isLearningPathQuery },
+      { role: "assistant", content: "", type: "streaming" }
+    ];
+    const message = localStorage.getItem("lastMessage");
+    dispatch(setChatHistory(updatedHistory));
+    dispatch(setIsGenerating(true));
+    try {
+      await askQuestion(
+        message,
+        (partialResponse) => {
+          dispatch(setStreamChat(partialResponse));
+        },
+        () => {
+          refreshChat(); 
+          dispatch(setIsGenerating(false));
+          dispatch(setIsLearningPathQuery(false));
+        },
+        isQuizQuery, 
+        true
+      );
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+  };
 
   if (!content || !content.topics) return null;
 
@@ -86,7 +91,7 @@ const LearningPath = ({ content, refreshChat }) => {
         </Card.Body>
       </Card>
 
-      <div className="d-flex flex-column " style={{ maxWidth: "700px" }}>
+      <div className="d-flex flex-column" style={{ maxWidth: "700px" }}>
         {content.topics.map((topic, index) => (
           <Card key={index} className="mb-3 bg-light w-100">
             <Card.Body>
@@ -134,51 +139,57 @@ const LearningPath = ({ content, refreshChat }) => {
         ))}
       </div>
 
-      {/* Conditional Rendering for Save or Saved */}
+      {/* Action Buttons */}
       {isSaved ? (
         <div className="mx-2" style={{marginTop: '-15px'}}>
-          <span style={{fontSize: "0.85rem", color: "green" }}>Saved</span>
+          <div className="d-flex align-items-center text-success">
+            <FaCheck className="me-2" />
+            <span style={{fontSize: "0.85rem"}}>Study Plan Saved</span>
+          </div>
         </div>
       ) : (
         <Card className="bg-white p-3 mb-3 border-0" style={{
           width: "47%",
-          // border: "2px solid 'grey'",
-          // borderRadius: '25px',
           display: 'flex',
           flexDirection: 'row',
           position: 'relative',
           top: '-15px',
           left: '-20px'
         }}>
-        <Button
-          variant="outline-primary"
-          className="mt-0 mx-1 rounded-pill"
-          style={{ height: '32px', minWidth: "160px", fontSize: "0.75rem", borderWidth: "2px", maxWidth: "200px", margin: "auto" }}
-          onClick={handleSave}
-        >
-          <PlusCircle size={15  } className="mx-2 mb-1"/>
-          Save Study Plan
-        </Button>
-        <Button
-          variant="outline-primary"
-          className="mt-0 mx-1  rounded-pill"
-          style={{ height: '32px', minWidth: "130px", fontSize: "0.75rem", borderWidth: "2px", maxWidth: "200px", margin: "-10px auto 0" }}
-          onClick={handleRegenrate}
-        >
-          <Repeat size={15} className="mx-2 mb-1"/>
-          Regenrate
-        </Button>
-        {/* <Button
-          variant="outline-primary"
-          className="mt-0 mx-1  rounded-pill"
-          style={{ height: '32px', minWidth: "130px", fontSize: "0.75rem", borderWidth: "2px", maxWidth: "200px", margin: "-10px auto 0" }}
-          onClick={handleSave}
-        >
-          <Repeat size={15} className="mx-2 mb-1"/>
-          
-        </Button> */}
+          <Button
+            variant="outline-primary"
+            className="mt-0 mx-1 rounded-pill"
+            style={{ 
+              height: '32px', 
+              minWidth: "160px", 
+              fontSize: "0.75rem", 
+              borderWidth: "2px", 
+              maxWidth: "200px", 
+              margin: "auto" 
+            }}
+            onClick={handleSave}
+            disabled={isSaving}
+          >
+            <FaPlus size={15} className="mx-2 mb-1"/>
+            {isSaving ? 'Saving...' : 'Save Study Plan'}
+          </Button>
+          <Button
+            variant="outline-primary"
+            className="mt-0 mx-1 rounded-pill"
+            style={{ 
+              height: '32px', 
+              minWidth: "130px", 
+              fontSize: "0.75rem", 
+              borderWidth: "2px", 
+              maxWidth: "200px", 
+              margin: "-10px auto 0" 
+            }}
+            onClick={handleRegenerate}
+          >
+            <FaRedo size={15} className="mx-2 mb-1"/>
+            Regenerate
+          </Button>
         </Card>
-          
       )}
     </Container>
   );

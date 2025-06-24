@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { Send, Paperclip, Mic } from "react-bootstrap-icons";
+import { FaPaperPlane, FaPaperclip, FaMicrophone } from "react-icons/fa";
 import { askQuestion } from "../../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { setChatHistory, setIsGenerating, setIsLearningPathQuery, setStreamChat } from "../../../globalSlice";
@@ -71,7 +71,7 @@ const ChatInput = ({ refreshChat }) => {
           className="attachment-btn"
           disabled={isGenerating}
         >
-          <Paperclip size={20} />
+          <FaPaperclip size={20} />
         </Button>
         
         <Form.Control
@@ -102,7 +102,7 @@ const ChatInput = ({ refreshChat }) => {
             className="voice-btn"
             disabled={isGenerating}
           >
-            <Mic size={20} />
+            <FaMicrophone size={20} />
           </Button>
           
           <Button 
@@ -118,7 +118,7 @@ const ChatInput = ({ refreshChat }) => {
                 <div className="dot"></div>
               </div>
             ) : (
-              <Send size={20} />
+              <FaPaperPlane size={16} />
             )}
           </Button>
         </div>

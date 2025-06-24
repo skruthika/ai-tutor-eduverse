@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Welcome from "./pages/Welcome/Welcome";
 import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
 import { ThemeProvider } from "./context/ThemeContext";
 import "./App.scss";
 
@@ -58,7 +57,6 @@ const App = () => {
               />
             </Routes>
           </main>
-          <Footer />
         </Router>
       </div>
     </ThemeProvider>

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Navbar, Container, Button, Dropdown, Badge } from "react-bootstrap";
-import { Person, Bell, BoxArrowRight } from "react-bootstrap-icons";
+import React from "react";
+import { Navbar, Container, Button, Dropdown } from "react-bootstrap";
+import { Person, BoxArrowRight } from "react-bootstrap-icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { logout } from "../../api";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
@@ -9,11 +9,6 @@ import './Header.scss';
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [notifications] = useState([
-    { id: 1, title: "New learning path available", time: "2 hours ago", unread: true },
-    { id: 2, title: "Quiz completed successfully", time: "1 day ago", unread: true },
-    { id: 3, title: "Weekly progress report", time: "3 days ago", unread: false }
-  ]);
 
   const isAuthenticated = () => {
     const token = localStorage.getItem("token");
@@ -22,7 +17,6 @@ const Header = () => {
   };
 
   const isWelcomePage = location.pathname === '/welcome' || location.pathname === '/';
-  const unreadCount = notifications.filter(n => n.unread).length;
 
   const handleLogout = async () => {
     try {
@@ -88,51 +82,6 @@ const Header = () => {
         </Navbar.Brand>
 
         <div className="header-actions">
-          {/* Enhanced Notification Button */}
-          <Dropdown align="end">
-            <Dropdown.Toggle variant="ghost" className="notification-btn">
-              <Bell size={18} />
-              {unreadCount > 0 && (
-                <Badge bg="danger" className="notification-badge">
-                  {unreadCount > 9 ? '9+' : unreadCount}
-                </Badge>
-              )}
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu className="notification-menu">
-              <div className="notification-header">
-                <h6 className="mb-0">Notifications</h6>
-                <small className="text-muted">{unreadCount} unread</small>
-              </div>
-              <Dropdown.Divider />
-              
-              {notifications.length > 0 ? (
-                notifications.map((notification) => (
-                  <Dropdown.Item 
-                    key={notification.id} 
-                    className={`notification-item ${notification.unread ? 'unread' : ''}`}
-                  >
-                    <div className="notification-content">
-                      <div className="notification-title">{notification.title}</div>
-                      <div className="notification-time">{notification.time}</div>
-                    </div>
-                    {notification.unread && <div className="unread-indicator"></div>}
-                  </Dropdown.Item>
-                ))
-              ) : (
-                <div className="no-notifications">
-                  <Bell size={24} className="text-muted mb-2" />
-                  <p className="text-muted mb-0">No notifications</p>
-                </div>
-              )}
-              
-              <Dropdown.Divider />
-              <Dropdown.Item className="view-all-notifications">
-                View All Notifications
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-
           <ThemeToggle />
 
           <Dropdown align="end">
