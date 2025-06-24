@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Spinner, Alert, Row, Col } from 'react-bootstrap';
-import { BarChart, TrendingUp, MessageSquare, Clock } from 'react-bootstrap-icons';
+import { BarChart, TrendingUp, ChatSquare, Clock } from 'react-bootstrap-icons';
 import { getChatAnalytics } from '../../api';
 import './AnalyticsWidget.scss';
 
@@ -134,7 +134,7 @@ const AnalyticsWidget = () => {
       <Card.Body className="analytics-body">
         {totalMessages === 0 ? (
           <div className="no-data">
-            <MessageSquare size={48} className="mb-3" />
+            <ChatSquare size={48} className="mb-3" />
             <p>No chat data available for the selected period</p>
           </div>
         ) : (
@@ -143,7 +143,7 @@ const AnalyticsWidget = () => {
               <Col md={4}>
                 <div className="stat-card">
                   <div className="stat-icon">
-                    <MessageSquare size={20} />
+                    <ChatSquare size={20} />
                   </div>
                   <div className="stat-content">
                     <div className="stat-value">{totalMessages}</div>
