@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Spinner, Alert, Row, Col } from 'react-bootstrap';
-import { BarChart, TrendingUp, ChatSquare, Clock } from 'react-bootstrap-icons';
+import { BarChart, GraphUp, ChatSquare, Clock } from 'react-bootstrap-icons';
 import { getChatAnalytics } from '../../api';
 import './AnalyticsWidget.scss';
 
@@ -154,7 +154,7 @@ const AnalyticsWidget = () => {
               <Col md={4}>
                 <div className="stat-card">
                   <div className="stat-icon">
-                    <TrendingUp size={20} />
+                    <GraphUp size={20} />
                   </div>
                   <div className="stat-content">
                     <div className="stat-value">{messagesByRole.user || 0}</div>
