@@ -220,7 +220,7 @@ async def options_handler(request):
 if __name__ == "__main__":
     import uvicorn
     print("🚀 Starting AI Tutor Backend Server v4.0...")
-    print("📡 CORS enabled for origins:", origins)
+    print("📡 CORS enabled for all origins")
     print("🔗 Server will be available at: http://localhost:8000")
     print("📚 API Documentation: http://localhost:8000/docs")
     print("🛡️ Admin Dashboard: Enabled")
