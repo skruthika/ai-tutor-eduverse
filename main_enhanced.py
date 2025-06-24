@@ -86,7 +86,7 @@ app.add_middleware(
 )
 
 # Health check endpoints
-@app.get("/")
+@app.get("/api/status")
 async def root():
     return {
         "message": "AI Tutor - Enhanced Learning Management System",
@@ -235,41 +235,106 @@ async def get_all_goals_legacy(username: str):
         logger.error(f"Learning goals error: {e}")
         return {"learning_goals": []}
 
-# Mount frontend build directory
+# Mount frontend build directory (after API routes)
 FRONTEND_BUILD_DIR = os.path.join(os.getcwd(), "frontend", "dist")
 
 if os.path.exists(FRONTEND_BUILD_DIR):
-    app.mount("/", StaticFiles(directory=FRONTEND_BUILD_DIR, html=True), name="frontend")
+    # Mount frontend at the end to avoid conflicts with API routes
+    app.mount("/static", StaticFiles(directory=FRONTEND_BUILD_DIR), name="static")
+    
+    # Handle favicon.ico specifically
+    @app.get("/favicon.ico")
+    async def favicon():
+        """Serve favicon.ico"""
+        favicon_path = os.path.join(FRONTEND_BUILD_DIR, "favicon.ico")
+        if os.path.exists(favicon_path):
+            from fastapi.responses import FileResponse
+            return FileResponse(favicon_path)
+        else:
+            # Return a 204 No Content instead of 404 for favicon
+            from fastapi.responses import Response
+            return Response(status_code=204)
+    
+    # Serve static assets
+    @app.get("/assets/{path:path}")
+    async def serve_assets(path: str):
+        """Serve static assets"""
+        asset_path = os.path.join(FRONTEND_BUILD_DIR, "assets", path)
+        if os.path.exists(asset_path):
+            from fastapi.responses import FileResponse
+            return FileResponse(asset_path)
+        else:
+            raise HTTPException(status_code=404, detail="Asset not found")
+    
+    # Serve frontend SPA - catch-all route for all paths
+    @app.get("/{path:path}")
+    async def serve_frontend(path: str = ""):
+        """Serve frontend SPA for all routes"""
+        from fastapi.responses import FileResponse
+        
+        # Skip API routes and static assets
+        if path.startswith(("api/", "auth/", "chat/", "upload/", "lessons/", "admin/", "docs", "health", "openapi.json", "static/")):
+            raise HTTPException(status_code=404, detail="API endpoint not found")
+        
+        # Handle root path or empty path
+        if not path or path == "":
+            index_path = os.path.join(FRONTEND_BUILD_DIR, "index.html")
+            if os.path.exists(index_path):
+                return FileResponse(index_path)
+            else:
+                raise HTTPException(status_code=404, detail="Frontend not found")
+        
+        # Check if it's a static file first
+        file_path = os.path.join(FRONTEND_BUILD_DIR, path)
+        if os.path.exists(file_path) and os.path.isfile(file_path):
+            return FileResponse(file_path)
+        
+        # Otherwise serve index.html for SPA routing
+        index_path = os.path.join(FRONTEND_BUILD_DIR, "index.html")
+        if os.path.exists(index_path):
+            return FileResponse(index_path)
+        else:
+            raise HTTPException(status_code=404, detail="Frontend not found")
+    
+    
     logger.info(f"✅ Frontend mounted from: {FRONTEND_BUILD_DIR}")
 else:
     logger.warning(f"⚠️  Frontend build directory not found: {FRONTEND_BUILD_DIR}")
 
 # Enhanced error handlers
+from fastapi.responses import JSONResponse
+
 @app.exception_handler(404)
 async def not_found_handler(request, exc):
-    return {
-        "error": "Endpoint not found",
-        "message": "The requested endpoint does not exist",
-        "status_code": 404,
-        "available_endpoints": [
-            "/auth/login", "/auth/signup", "/auth/profile",
-            "/chat/ask", "/chat/history", "/chat/search",
-            "/upload/image", "/upload/audio", "/upload/video",
-            "/lessons/generate-avatar", "/lessons/status/{lesson_id}",
-            "/admin/migrate", "/admin/initialize-db",
-            "/docs", "/health"
-        ]
-    }
+    return JSONResponse(
+        status_code=404,
+        content={
+            "error": "Endpoint not found",
+            "message": "The requested endpoint does not exist",
+            "status_code": 404,
+            "available_endpoints": [
+                "/auth/login", "/auth/signup", "/auth/profile",
+                "/chat/ask", "/chat/history", "/chat/search",
+                "/upload/image", "/upload/audio", "/upload/video",
+                "/lessons/generate-avatar", "/lessons/status/{lesson_id}",
+                "/admin/migrate", "/admin/initialize-db",
+                "/docs", "/health"
+            ]
+        }
+    )
 
 @app.exception_handler(500)
 async def internal_error_handler(request, exc):
-    return {
-        "error": "Internal server error",
-        "message": "An unexpected error occurred. Please try again later.",
-        "status_code": 500,
-        "support": "Contact support if the issue persists",
-        "version": "5.0.0"
-    }
+    return JSONResponse(
+        status_code=500,
+        content={
+            "error": "Internal server error",
+            "message": "An unexpected error occurred. Please try again later.",
+            "status_code": 500,
+            "support": "Contact support if the issue persists",
+            "version": "5.0.0"
+        }
+    )
 
 @app.options("/{full_path:path}")
 async def options_handler(request):
