@@ -31,6 +31,46 @@ const ChatScreen = () => {
     dispatch(setIsQuizQuery(!isQuizQuery));
   };
 
+  const handleExplainConcept = () => {
+    const conceptPrompt = "I need help understanding a concept. Please explain it in simple terms with examples.";
+    handleQuickAction(conceptPrompt);
+  };
+
+  const handleHomeworkHelp = () => {
+    const homeworkPrompt = "I need help with my homework. Can you guide me through the problem step by step?";
+    handleQuickAction(homeworkPrompt);
+  };
+
+  const handleQuickAction = async (prompt) => {
+    const updatedHistory = [
+      ...chatHistory,
+      { role: "user", content: prompt, type: "content" },
+      { role: "assistant", content: "", type: "streaming" }
+    ];
+    
+    dispatch(setChatHistory(updatedHistory));
+    dispatch(setIsGenerating(true));
+    
+    try {
+      const { askQuestion } = await import("../../../api");
+      await askQuestion(
+        prompt,
+        (partialResponse) => {
+          dispatch(setStreamChat(partialResponse));
+        },
+        () => {
+          refreshChat(); 
+          dispatch(setIsGenerating(false));
+        },
+        false, 
+        false
+      );
+    } catch (error) {
+      console.error("Error sending quick action:", error);
+      dispatch(setIsGenerating(false));
+    }
+  };
+
   const handleClearChat = () => {
     setShowConfirmModal(true);
   };
@@ -117,7 +157,7 @@ const ChatScreen = () => {
                 />
                 <h2 className="welcome-title">How can I help you today?</h2>
                 
-                {/* Optimized Action Buttons - Single Horizontal Row */}
+                {/* Optimized Action Options - Single Horizontal Row */}
                 <div className="action-options">
                   <button 
                     className="action-option"
@@ -133,11 +173,17 @@ const ChatScreen = () => {
                     Generate a quiz
                   </button>
                   <span className="separator">|</span>
-                  <button className="action-option">
+                  <button 
+                    className="action-option"
+                    onClick={handleExplainConcept}
+                  >
                     📚 Explain a concept
                   </button>
                   <span className="separator">|</span>
-                  <button className="action-option">
+                  <button 
+                    className="action-option"
+                    onClick={handleHomeworkHelp}
+                  >
                     💡 Get homework help
                   </button>
                 </div>
@@ -180,6 +226,22 @@ const ChatScreen = () => {
               >
                 <List size={16} className="me-2" />
                 Quiz
+              </Button>
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                onClick={handleExplainConcept}
+                className="action-btn"
+              >
+                📚 Explain
+              </Button>
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                onClick={handleHomeworkHelp}
+                className="action-btn"
+              >
+                💡 Help
               </Button>
               <Button
                 variant="outline-danger"

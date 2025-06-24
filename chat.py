@@ -70,6 +70,34 @@ def update_user_stats(username, stat_type, increment=1):
     except Exception as e:
         print(f"Error updating user stats: {e}")
 
+def enhance_prompt_for_concept_explanation(user_prompt):
+    """Enhance prompts for concept explanation requests"""
+    concept_enhancement = """
+    Please provide a clear, detailed explanation of this concept. Structure your response as follows:
+    1. **Definition**: Start with a simple, clear definition
+    2. **Key Points**: Break down the main components or aspects
+    3. **Examples**: Provide practical, real-world examples
+    4. **Applications**: Explain where and how this concept is used
+    5. **Common Misconceptions**: Address any frequent misunderstandings
+    
+    Make the explanation accessible and engaging, using analogies where helpful.
+    """
+    return f"{user_prompt}\n\n{concept_enhancement}"
+
+def enhance_prompt_for_homework_help(user_prompt):
+    """Enhance prompts for homework help requests"""
+    homework_enhancement = """
+    Please provide step-by-step guidance for this homework problem. Structure your response as follows:
+    1. **Understanding the Problem**: Break down what's being asked
+    2. **Approach**: Explain the method or strategy to solve it
+    3. **Step-by-Step Solution**: Walk through each step clearly
+    4. **Key Concepts**: Highlight the important principles involved
+    5. **Tips**: Provide helpful hints for similar problems
+    
+    Focus on teaching the process rather than just giving the answer, so the student can learn and apply the method to other problems.
+    """
+    return f"{user_prompt}\n\n{homework_enhancement}"
+
 @chat_router.post("/ask")
 async def chat(user_prompt: str, username: str, isQuiz: bool = False, isLearningPath: bool = False):
     """Handles chat requests (both normal and streaming responses)"""
@@ -81,9 +109,17 @@ async def chat(user_prompt: str, username: str, isQuiz: bool = False, isLearning
         chat_session = chats_collection.find_one({"username": username}) or {}
         prev_5_messages = chat_session.get("messages", [])[-10:] if "messages" in chat_session else []
         prev_5_messages = [msg for msg in prev_5_messages if msg.get("type") != "learning_path"]
+        
+        # Enhance prompts based on content type
+        enhanced_prompt = user_prompt
+        if "explain" in user_prompt.lower() and "concept" in user_prompt.lower():
+            enhanced_prompt = enhance_prompt_for_concept_explanation(user_prompt)
+        elif "homework" in user_prompt.lower() or "help" in user_prompt.lower():
+            enhanced_prompt = enhance_prompt_for_homework_help(user_prompt)
+        
         user_message = {
             "role": "user",
-            "content": user_prompt,
+            "content": enhanced_prompt,
             "type": "content",
             "timestamp": user_timestamp
         }
@@ -93,7 +129,7 @@ async def chat(user_prompt: str, username: str, isQuiz: bool = False, isLearning
         prev_5_messages.append(user_message)
 
         if isQuiz:
-            user_prompt = f"{user_prompt} {CALCULATE_SCORE}"
+            enhanced_prompt = f"{enhanced_prompt} {CALCULATE_SCORE}"
             # Update quiz stats
             update_user_stats(username, "totalQuizzes")
         
@@ -109,15 +145,15 @@ async def chat(user_prompt: str, username: str, isQuiz: bool = False, isLearning
 
             user_message = {
                 "role": "user",
-                "content": user_prompt,
+                "content": enhanced_prompt,
                 "type": "learning_path",
                 "timestamp": user_timestamp
             }
             store_chat_history(username, user_message)
-            return process_learning_path_query(user_prompt, username, generate_response, extract_json, store_chat_history, REGENRATE_OR_FILTER_JSON, prompt_with_preference)
+            return process_learning_path_query(enhanced_prompt, username, generate_response, extract_json, store_chat_history, REGENRATE_OR_FILTER_JSON, prompt_with_preference)
 
         # Case 2 : Stream prompt
-        user_prompt = f"{user_prompt} {BASIC_ENVIRONMENT_PROMPT}"
+        enhanced_prompt = f"{enhanced_prompt} {BASIC_ENVIRONMENT_PROMPT}"
 
         async def chat_stream():
             response_content = ""

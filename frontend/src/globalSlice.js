@@ -45,10 +45,6 @@ const globalSlice = createSlice({
 
       state.learningGoals[goalIndex].study_plans[0].topics[index].completed = true;
       state.learningGoals[goalIndex].progress = state.learningGoals[goalIndex].progress ? Number(state.learningGoals[goalIndex].progress) + 20 : 20;
-
-      // if (state.selectedLearningGoal?.name === goal.name) {
-      //   state.selectedLearningGoal = { ...state.learningGoals[goalIndex] };
-      // }
     },
     addMessage: (state, action) => {
       state.chatHistory.push(action.payload);
@@ -58,6 +54,10 @@ const globalSlice = createSlice({
       if (action.payload.isLearningPathQuery) {
         state.isLearningPathQuery = true;
       }
+    },
+    addTemporaryMessage: (state, action) => {
+      // Add a temporary message for quick actions
+      state.chatHistory.push(action.payload);
     },
     updateLatestMessage: (state, action) => {
       const lastMessage = state.chatHistory[state.chatHistory.length - 1];
@@ -82,6 +82,7 @@ export const {
   setLearningGoals,
   setChatHistory,
   addMessage,
+  addTemporaryMessage,
   updateLatestMessage,
   setIsGenerating,
   setIsLearningPathQuery,
@@ -92,4 +93,3 @@ export const {
 } = globalSlice.actions;
 
 export default globalSlice.reducer;
- 
