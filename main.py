@@ -1,6 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse
 from auth import auth_router
 from chat import chat_router
 from learning_paths import learning_paths_router
@@ -31,23 +32,19 @@ origins = [
 # Enable CORS with comprehensive settings
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],  # Allow all origins for development
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allow_headers=[
-        "Accept",
-        "Accept-Language",
-        "Content-Language",
-        "Content-Type",
-        "Authorization",
-        "X-Requested-With",
-        "Origin",
-        "Access-Control-Request-Method",
-        "Access-Control-Request-Headers",
-    ],
-    expose_headers=["*"],
-    max_age=3600,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
 )
+
+# Exception handler for HTTPException
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.detail},
+    )
 
 # Health check endpoint
 @app.get("/")
@@ -215,34 +212,6 @@ else:
     print(f"⚠️  Frontend build directory not found: {FRONTEND_BUILD_DIR}")
     print("   Run 'npm run build' in the frontend directory to create the build.")
 
-# Enhanced error handlers with CORS support
-@app.exception_handler(404)
-async def not_found_handler(request, exc):
-    return {
-        "error": "Endpoint not found",
-        "message": "The requested endpoint does not exist",
-        "status_code": 404,
-        "available_endpoints": [
-            "/auth/login", "/auth/signup", "/auth/profile",
-            "/chat/ask", "/chat/history", "/chat/save-path", "/chat/user-stats",
-            "/api/learning-paths/create", "/api/learning-paths/list",
-            "/api/quiz/create", "/api/quiz/list", "/api/quiz/submit",
-            "/api/dashboard/stats", "/api/dashboard/recent-activity",
-            "/lessons/lessons", "/lessons/admin/lessons",
-            "/docs", "/health"
-        ]
-    }
-
-@app.exception_handler(500)
-async def internal_error_handler(request, exc):
-    return {
-        "error": "Internal server error",
-        "message": "An unexpected error occurred. Please try again later.",
-        "status_code": 500,
-        "support": "Contact support if the issue persists",
-        "version": "4.0.0"
-    }
-
 # Add OPTIONS handler for preflight requests
 @app.options("/{full_path:path}")
 async def options_handler(request):
@@ -251,7 +220,7 @@ async def options_handler(request):
 if __name__ == "__main__":
     import uvicorn
     print("🚀 Starting AI Tutor Backend Server v4.0...")
-    print("📡 CORS enabled for origins:", origins)
+    print("📡 CORS enabled for all origins")
     print("🔗 Server will be available at: http://localhost:8000")
     print("📚 API Documentation: http://localhost:8000/docs")
     print("🛡️ Admin Dashboard: Enabled")

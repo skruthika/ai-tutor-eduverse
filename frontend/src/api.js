@@ -1,5 +1,5 @@
-// Enhanced API configuration with new backend integration
-const API_BASE_URL = "http://localhost:8000";
+// Enhanced API configuration with better error handling and CORS support
+const API_BASE_URL = "http://localhost:8000"; // Updated to point to FastAPI backend
 
 // Enhanced fetch wrapper with better error handling
 const apiRequest = async (url, options = {}) => {
@@ -9,7 +9,7 @@ const apiRequest = async (url, options = {}) => {
       "Accept": "application/json",
       ...options.headers,
     },
-    credentials: "include",
+    credentials: "include", // Include credentials for CORS
     ...options,
   };
 
@@ -17,8 +17,10 @@ const apiRequest = async (url, options = {}) => {
     console.log(`🔗 API Request: ${options.method || 'GET'} ${url}`);
     const response = await fetch(url, defaultOptions);
     
+    // Log response status for debugging
     console.log(`📡 API Response: ${response.status} ${response.statusText}`);
     
+    // Handle different response types
     const contentType = response.headers.get("content-type");
     let data;
     
@@ -38,6 +40,7 @@ const apiRequest = async (url, options = {}) => {
   } catch (error) {
     console.error(`🚨 API Request Failed: ${error.message}`);
     
+    // Handle specific error types
     if (error.name === 'TypeError' && error.message.includes('fetch')) {
       throw new Error('Unable to connect to server. Please check if the backend is running on http://localhost:8000');
     }
@@ -50,7 +53,6 @@ const apiRequest = async (url, options = {}) => {
   }
 };
 
-// Enhanced Authentication with new backend
 export const login = async (username, password) => {
   try {
     const data = await apiRequest(`${API_BASE_URL}/auth/login`, {
@@ -66,6 +68,7 @@ export const login = async (username, password) => {
         localStorage.setItem("name", data.name);
       }
       
+      // Log admin status for debugging
       if (data.isAdmin) {
         console.log(`🛡️ Admin privileges granted to ${username}`);
       }
@@ -79,6 +82,7 @@ export const login = async (username, password) => {
 
 export const signup = async (name, username, password, isAdmin = false) => {
   try {
+    // Check if this is the default admin email
     const isDefaultAdmin = username.toLowerCase() === "blackboxgenai@gmail.com";
     
     const data = await apiRequest(`${API_BASE_URL}/auth/signup`, {
@@ -86,12 +90,12 @@ export const signup = async (name, username, password, isAdmin = false) => {
       body: JSON.stringify({ 
         name, 
         username, 
-        email: username, // Backend expects email field
         password, 
-        is_admin: isAdmin || isDefaultAdmin 
+        isAdmin: isAdmin || isDefaultAdmin 
       }),
     });
 
+    // Log admin status for debugging
     if (data.isAdmin) {
       console.log(`🛡️ Admin account created for ${username}`);
     }
@@ -102,8 +106,10 @@ export const signup = async (name, username, password, isAdmin = false) => {
   }
 };
 
+// Logout function
 export const logout = async () => {
   try {
+    // Clear all authentication data
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("name");
@@ -118,6 +124,7 @@ export const logout = async () => {
   }
 };
 
+// Check admin status
 export const checkAdminStatus = async () => {
   const username = localStorage.getItem("username");
   if (!username) return { isAdmin: false };
@@ -127,8 +134,10 @@ export const checkAdminStatus = async () => {
       `${API_BASE_URL}/auth/check-admin?username=${encodeURIComponent(username)}`
     );
     
+    // Update local storage
     localStorage.setItem("isAdmin", data.isAdmin);
     
+    // Log admin status changes
     if (data.isAdmin) {
       console.log(`🛡️ Admin status confirmed for ${username}`);
     }
@@ -140,6 +149,7 @@ export const checkAdminStatus = async () => {
   }
 };
 
+// Get admin configuration info
 export const getAdminInfo = async () => {
   try {
     const data = await apiRequest(`${API_BASE_URL}/auth/admin-info`);
@@ -150,7 +160,6 @@ export const getAdminInfo = async () => {
   }
 };
 
-// Enhanced Chat API with new backend
 export const fetchChatHistory = async () => {
   const username = localStorage.getItem("username");
   if (!username) throw new Error("No username found. Please log in.");
@@ -184,13 +193,6 @@ export const askQuestion = async (
     const url = `${API_BASE_URL}/chat/ask`;
     console.log(`🔗 Chat Request: ${url}`);
 
-    const requestBody = {
-      user_prompt,
-      username,
-      isQuiz: isQuiz || false,
-      isLearningPath: isLearningPathQuery || false
-    };
-
     if (!isLearningPathQuery) {
       // Streaming API Call (For non-learning-path queries)
       const response = await fetch(url, {
@@ -201,7 +203,12 @@ export const askQuestion = async (
           "Accept": "text/plain",
         },
         credentials: "include",
-        body: JSON.stringify(requestBody),
+        body: JSON.stringify({
+          user_prompt,
+          username,
+          isQuiz: isQuiz || false,
+          isLearningPath: isLearningPathQuery || false
+        }),
       });
 
       if (!response.ok) {
@@ -233,7 +240,12 @@ export const askQuestion = async (
           "Accept": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify(requestBody),
+        body: JSON.stringify({
+          user_prompt,
+          username,
+          isQuiz: isQuiz || false,
+          isLearningPath: isLearningPathQuery || false
+        }),
       });
 
       if (!response.ok) {
@@ -251,32 +263,7 @@ export const askQuestion = async (
   }
 };
 
-// Enhanced Learning Goals API
-export const getAllLearningGoals = async () => {
-  const username = localStorage.getItem("username");
-  const token = localStorage.getItem("token");
-
-  if (!username || !token) throw new Error("User not authenticated");
-
-  try {
-    // Use legacy endpoint for backward compatibility
-    const data = await apiRequest(
-      `${API_BASE_URL}/chat/get-all-goals?username=${encodeURIComponent(username)}`,
-      {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
-      }
-    );
-
-    return data.learning_goals || [];
-  } catch (error) {
-    console.error("Error fetching learning goals:", error);
-    throw error;
-  }
-};
-
+// Save Learning Path API Call
 export const saveLearningPath = async (learningPath, learningGoalName) => {
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
@@ -299,6 +286,31 @@ export const saveLearningPath = async (learningPath, learningGoalName) => {
     return data;
   } catch (error) {
     console.error("Error saving learning path:", error);
+    throw error;
+  }
+};
+
+// Get All Learning Goals API Call
+export const getAllLearningGoals = async () => {
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("token");
+
+  if (!username || !token) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/chat/get-all-goals?username=${encodeURIComponent(username)}`,
+      {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      }
+    );
+
+    return data.learning_goals || [];
+  } catch (error) {
+    console.error("Error fetching learning goals:", error);
     throw error;
   }
 };
@@ -334,7 +346,7 @@ export const savePreferencesAPI = async (preferences) => {
   if (!username || !token) throw new Error("User not authenticated");
 
   try {
-    const data = await apiRequest(`${API_BASE_URL}/auth/update-preferences`, {
+    const data = await apiRequest(`${API_BASE_URL}/chat/save-preferences`, {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -349,7 +361,7 @@ export const savePreferencesAPI = async (preferences) => {
   }
 };
 
-// Enhanced User Profile API
+// Get User Profile API Call
 export const getUserProfile = async () => {
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
@@ -367,6 +379,7 @@ export const getUserProfile = async () => {
       }
     );
 
+    // Update local admin status if it changed
     if (data.isAdmin !== undefined) {
       localStorage.setItem("isAdmin", data.isAdmin);
     }
@@ -374,6 +387,7 @@ export const getUserProfile = async () => {
     return data;
   } catch (error) {
     console.error("Error fetching user profile:", error);
+    // Return default data if API fails
     return {
       name: localStorage.getItem("name") || "User",
       username: username,
@@ -388,7 +402,7 @@ export const getUserProfile = async () => {
   }
 };
 
-// Enhanced User Statistics API
+// Get User Statistics API Call
 export const getUserStats = async () => {
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
@@ -396,7 +410,6 @@ export const getUserStats = async () => {
   if (!username || !token) throw new Error("User not authenticated");
 
   try {
-    // Use legacy endpoint for backward compatibility
     const data = await apiRequest(
       `${API_BASE_URL}/chat/user-stats?username=${encodeURIComponent(username)}`,
       {
@@ -410,6 +423,7 @@ export const getUserStats = async () => {
     return data;
   } catch (error) {
     console.error("Error fetching user stats:", error);
+    // Return default stats if API fails
     return {
       totalGoals: 0,
       completedGoals: 0,
@@ -421,57 +435,7 @@ export const getUserStats = async () => {
   }
 };
 
-// Enhanced Search API
-export const searchMessages = async (query) => {
-  const username = localStorage.getItem("username");
-  const token = localStorage.getItem("token");
-
-  if (!username || !token) throw new Error("User not authenticated");
-
-  try {
-    const data = await apiRequest(
-      `${API_BASE_URL}/chat/search?username=${encodeURIComponent(username)}&query=${encodeURIComponent(query)}`,
-      {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
-      }
-    );
-
-    return data.messages || [];
-  } catch (error) {
-    console.error("Error searching messages:", error);
-    return [];
-  }
-};
-
-// Enhanced Analytics API
-export const getChatAnalytics = async (days = 30) => {
-  const username = localStorage.getItem("username");
-  const token = localStorage.getItem("token");
-
-  if (!username || !token) throw new Error("User not authenticated");
-
-  try {
-    const data = await apiRequest(
-      `${API_BASE_URL}/chat/analytics?username=${encodeURIComponent(username)}&days=${days}`,
-      {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
-      }
-    );
-
-    return data.analytics || [];
-  } catch (error) {
-    console.error("Error fetching chat analytics:", error);
-    return [];
-  }
-};
-
-// Legacy endpoints for backward compatibility
+// Get Assessments API Call
 export const getAssessments = async () => {
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
@@ -496,6 +460,7 @@ export const getAssessments = async () => {
   }
 };
 
+// Delete Learning Goal API Call
 export const deleteLearningGoal = async (goalName) => {
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
@@ -518,6 +483,7 @@ export const deleteLearningGoal = async (goalName) => {
   }
 };
 
+// Update Learning Goal API Call
 export const updateLearningGoal = async (goalName, updatedGoal) => {
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
@@ -556,7 +522,160 @@ export const testConnection = async () => {
   }
 };
 
-// Enhanced Admin API
+// Search messages
+export const searchMessages = async (query) => {
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("token");
+
+  if (!username || !token) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/chat/search?username=${encodeURIComponent(username)}&query=${encodeURIComponent(query)}`,
+      {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      }
+    );
+
+    return data.messages || [];
+  } catch (error) {
+    console.error("Error searching messages:", error);
+    return [];
+  }
+};
+
+// Get chat analytics
+export const getChatAnalytics = async (days = 30) => {
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("token");
+
+  if (!username || !token) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/chat/analytics?username=${encodeURIComponent(username)}&days=${days}`,
+      {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      }
+    );
+
+    return data.analytics || [];
+  } catch (error) {
+    console.error("Error fetching chat analytics:", error);
+    return [];
+  }
+};
+
+// Lesson Management API Calls
+
+// Get lessons for user (admin + personal)
+export const getLessons = async () => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/lessons/lessons?username=${encodeURIComponent(username)}`
+    );
+    return data;
+  } catch (error) {
+    console.error("Error fetching lessons:", error);
+    throw error;
+  }
+};
+
+// Get lesson details
+export const getLessonDetail = async (lessonId) => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/lessons/lessons/${lessonId}?username=${encodeURIComponent(username)}`
+    );
+    return data;
+  } catch (error) {
+    console.error("Error fetching lesson detail:", error);
+    throw error;
+  }
+};
+
+// Enroll in lesson
+export const enrollInLesson = async (lessonId) => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(`${API_BASE_URL}/lessons/lessons/enroll`, {
+      method: "POST",
+      body: JSON.stringify({ username, lesson_id: lessonId }),
+    });
+    return data;
+  } catch (error) {
+    console.error("Error enrolling in lesson:", error);
+    throw error;
+  }
+};
+
+// Admin API Calls
+
+// Get admin lessons
+export const getAdminLessons = async () => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/lessons/admin/lessons?username=${encodeURIComponent(username)}`
+    );
+    return data;
+  } catch (error) {
+    console.error("Error fetching admin lessons:", error);
+    throw error;
+  }
+};
+
+// Create admin lesson
+export const createAdminLesson = async (lessonData) => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(`${API_BASE_URL}/lessons/admin/lessons`, {
+      method: "POST",
+      body: JSON.stringify({ username, lesson_data: lessonData }),
+    });
+    return data;
+  } catch (error) {
+    console.error("Error creating admin lesson:", error);
+    throw error;
+  }
+};
+
+// Delete admin lesson
+export const deleteAdminLesson = async (lessonId) => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/lessons/admin/lessons/${lessonId}?username=${encodeURIComponent(username)}`,
+      { method: "DELETE" }
+    );
+    return data;
+  } catch (error) {
+    console.error("Error deleting admin lesson:", error);
+    throw error;
+  }
+};
+
+// Get admin dashboard stats
 export const getAdminDashboardStats = async () => {
   const username = localStorage.getItem("username");
   if (!username) throw new Error("User not authenticated");
@@ -572,53 +691,18 @@ export const getAdminDashboardStats = async () => {
   }
 };
 
+// Get users overview (admin only)
 export const getUsersOverview = async () => {
   const username = localStorage.getItem("username");
   if (!username) throw new Error("User not authenticated");
 
   try {
     const data = await apiRequest(
-      `${API_BASE_URL}/auth/users-overview`,
-      {
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
+      `${API_BASE_URL}/lessons/admin/users?username=${encodeURIComponent(username)}`
     );
     return data;
   } catch (error) {
     console.error("Error fetching users overview:", error);
-    throw error;
-  }
-};
-
-// Migration and Database Management
-export const triggerMigration = async () => {
-  try {
-    const data = await apiRequest(`${API_BASE_URL}/admin/migrate`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    return data;
-  } catch (error) {
-    console.error("Error triggering migration:", error);
-    throw error;
-  }
-};
-
-export const initializeDatabase = async () => {
-  try {
-    const data = await apiRequest(`${API_BASE_URL}/admin/initialize-db`, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    return data;
-  } catch (error) {
-    console.error("Error initializing database:", error);
     throw error;
   }
 };

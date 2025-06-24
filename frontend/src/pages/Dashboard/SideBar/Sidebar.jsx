@@ -5,6 +5,7 @@ import {
   ChatSquare, 
   BookHalf, 
   TrophyFill, 
+  Person,
   ChevronLeft,
   ChevronRight,
   QuestionCircle,
