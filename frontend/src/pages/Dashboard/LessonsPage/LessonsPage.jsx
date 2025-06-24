@@ -7,7 +7,7 @@ import {
   Award,
   CheckCircle,
   Star,
-  Users,
+  People,
   Eye
 } from "react-bootstrap-icons";
 import "./LessonsPage.scss";
@@ -183,7 +183,7 @@ const LessonsPage = () => {
                           <span>{lesson.subject}</span>
                         </div>
                         <div className="meta-item">
-                          <Users size={14} />
+                          <People size={14} />
                           <span>{lesson.enrollments || 0} enrolled</span>
                         </div>
                       </div>
