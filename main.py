@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse
 from auth import auth_router
 from chat import chat_router
 from learning_paths import learning_paths_router
@@ -134,7 +135,7 @@ else:
 # Enhanced error handlers with CORS support
 @app.exception_handler(404)
 async def not_found_handler(request, exc):
-    return {
+    return JSONResponse(status_code=404, content={
         "error": "Endpoint not found",
         "message": "The requested endpoint does not exist",
         "status_code": 404,
@@ -146,22 +147,22 @@ async def not_found_handler(request, exc):
             "/lessons/lessons", "/lessons/admin/lessons", "/lessons/admin/dashboard",
             "/docs", "/health"
         ]
-    }
+    })
 
 @app.exception_handler(500)
 async def internal_error_handler(request, exc):
-    return {
+    return JSONResponse(status_code=500, content={
         "error": "Internal server error",
         "message": "An unexpected error occurred. Please try again later.",
         "status_code": 500,
         "support": "Contact support if the issue persists",
         "version": "4.0.0"
-    }
+    })
 
 # Add OPTIONS handler for preflight requests
 @app.options("/{full_path:path}")
 async def options_handler(request):
-    return {"message": "OK"}
+    return JSONResponse(status_code=200, content={"message": "OK"})
 
 if __name__ == "__main__":
     import uvicorn

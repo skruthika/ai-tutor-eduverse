@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col, Card, Button, Badge, Modal, ProgressBar, Alert } from "react-bootstrap";
 import { 
   BookHalf, 
@@ -20,11 +20,15 @@ const LessonsPage = () => {
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const hasFetched = useRef(false);
 
   const username = localStorage.getItem("username");
 
   useEffect(() => {
-    fetchLessons();
+    if (!hasFetched.current) {
+      fetchLessons();
+      hasFetched.current = true;
+    }
   }, []);
 
   const fetchLessons = async () => {
