@@ -17,23 +17,34 @@ class S3Service:
         self.aws_region = os.getenv("AWS_REGION", "us-east-1")
         self.bucket_name = os.getenv("AWS_S3_BUCKET_NAME")
         
-        # Initialize S3 client
-        self.s3_client = boto3.client(
-            's3',
-            aws_access_key_id=self.aws_access_key_id,
-            aws_secret_access_key=self.aws_secret_access_key,
-            region_name=self.aws_region
-        )
-        
         # Check if credentials are configured
         self.is_configured = all([
             self.aws_access_key_id,
             self.aws_secret_access_key,
             self.bucket_name
+        ]) and all([
+            self.aws_access_key_id != "your_aws_access_key_id",
+            self.aws_secret_access_key != "your_aws_secret_access_key",
+            self.bucket_name != "your-bucket-name"
         ])
         
-        if not self.is_configured:
-            logger.warning("⚠️ AWS S3 credentials not fully configured")
+        if self.is_configured:
+            try:
+                # Initialize S3 client
+                self.s3_client = boto3.client(
+                    's3',
+                    aws_access_key_id=self.aws_access_key_id,
+                    aws_secret_access_key=self.aws_secret_access_key,
+                    region_name=self.aws_region
+                )
+                logger.info("✅ AWS S3 client initialized successfully")
+            except Exception as e:
+                logger.error(f"❌ Failed to initialize S3 client: {e}")
+                self.is_configured = False
+                self.s3_client = None
+        else:
+            logger.info("ℹ️ AWS S3 credentials not configured - file upload features will be disabled")
+            self.s3_client = None
     
     def upload_file(self, 
                    file_obj: BinaryIO, 
@@ -57,7 +68,7 @@ class S3Service:
                 logger.error("❌ AWS S3 not configured")
                 return {
                     "success": False,
-                    "error": "AWS S3 not configured",
+                    "error": "AWS S3 not configured. Please set up your AWS credentials in the environment variables.",
                     "url": None,
                     "key": None
                 }

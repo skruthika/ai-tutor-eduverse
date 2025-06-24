@@ -1,200 +1,124 @@
-# AI Tutor - Comprehensive Learning Management System
-
-**AI Tutor** is an advanced AI-powered learning platform that creates personalized study plans, offers intelligent tutoring assistance, and includes a comprehensive **Admin Dashboard** for managing educational content. Built with modern web technologies and powered by **LLaMA 3 70B** via the **Groq API**, it offers a seamless and feature-rich learning experience.
-
-## 🌟 Key Features
-
-✅ **AI-Powered Learning Paths** - Generate structured, personalized study plans.  
-✅ **Intelligent Chat Interface** - Real-time streaming responses with markdown support.  
-✅ **Admin Dashboard** - Manage lessons, users, and view platform analytics.  
-✅ **Personalized Lesson Management** - Create, edit, and assign lessons to users.  
-✅ **User Authentication & Profiles** - Secure login with personalized preferences.  
-✅ **Progress Tracking** - Comprehensive statistics and achievement system.  
-✅ **Interactive Assessments** - AI-powered quiz generation and auto-grading.  
-✅ **Responsive Design** - Optimized for all devices.  
-✅ **Dark/Light Theme** - Modern UI with theme switching.  
-
----
-
-## 🛠 Tech Stack
-
-| Component | Technology | Version |
-|---|---|---|
-| **Frontend** | React.js + Vite | 19.0.0 |
-| **Backend** | FastAPI (Python) | 4.0.0 |
-| **Database** | MongoDB | 4.6.0 |
-| **AI Model** | LLaMA 3 70B (Groq API) | 0.28.0 |
-| **Styling** | Bootstrap + SCSS | 5.3.3 |
-| **State Management** | Redux Toolkit | 2.6.1 |
-| **Authentication** | JWT + bcrypt | - |
-| **Deployment** | Render (Backend) + Vercel (Frontend) | - |
-
----
-
-## 🏗 Architecture Overview
-
-```
-┌───────────────────┐   ┌───────────────────┐   ┌──────────────────┐
-│   React Frontend  │   │   FastAPI Backend   │   │   MongoDB Atlas  │
-│                   │   │                   │   │                  │
-│ • Admin Dashboard │◄─►│ • Authentication  │◄─►│ • User Data      │
-│ • Chat Interface  │   │ • Lesson Management │   │ • Lesson Content │
-│ • Learning Paths  │   │ • Chat & Quiz API   │   │ • Chat History   │
-│ • Progress Track  │   │ • User Statistics │   │ • Learning Goals │
-└───────────────────┘   └───────────────────┘   └──────────────────┘
-         │                        │
-         │                        ▼
-         │               ┌──────────────────┐
-         │               │     Groq API     │
-         │               │                  │
-         └───────────────┤ • LLaMA 3 70B    │
-                         │ • JSON Generation│
-                         │ • Streaming Chat │
-                         └──────────────────┘
-```
-
-### Data Flow
-
-1.  **User Interaction** → User interacts with the React frontend (student or admin).
-2.  **Authentication** → JWT token validation determines user role and permissions.
-3.  **Admin Actions** → Admins manage lessons, view analytics, and oversee users.
-4.  **AI Processing** → Student queries are enhanced and sent to the LLaMA 3 70B API.
-5.  **Response Handling** → Streaming chat, quizzes, or structured learning paths are returned.
-6.  **Data Persistence** → All data is stored in MongoDB Atlas.
-
----
+# AI Tutor - Enhanced Learning Management System
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- **Node.js** 18+ and npm/yarn
-- **Python** 3.9+ with pip
-- **MongoDB** instance (local or cloud)
-- **Groq API Key**
+### Running the Backend
 
-### 1️⃣ Clone Repository
-'''bash
-git clone https://github.com/your-username/ai-tutor.git
-cd ai-tutor
-'''
+**Option 1: Using the startup script (Recommended)**
+```bash
+python start_server.py
+```
 
-### 2️⃣ Backend Setup
-'''bash
-pip install -r requirements.txt
-cp .env.example .env 
-# Edit .env with your credentials
-uvicorn main:app --reload
-'''
+**Option 2: Using uvicorn directly**
+```bash
+uvicorn main_enhanced:app --host 0.0.0.0 --port 8000 --reload
+```
 
-### 3️⃣ Frontend Setup
-'''bash
-cd frontend
-npm install
-npm run dev
-'''
+**Option 3: Using the main file (Not recommended for development)**
+```bash
+python main_enhanced.py
+```
 
----
+### Environment Setup
 
-## 👑 Admin Dashboard Features
+1. **Copy the environment template:**
+```bash
+cp .env.example .env
+```
 
-The new Admin Dashboard provides centralized control over the platform:
+2. **Configure your environment variables in `.env`:**
 
--   **Lesson Management**: Create, edit, and delete global lessons for all users.
--   **User Overview**: View a list of all registered users and their statistics.
--   **Platform Analytics**: See real-time statistics on user activity, lesson creation, and more.
--   **Role-Based Access**: Secure endpoints ensure only authorized admins can perform administrative tasks.
+**Required:**
+```env
+# MongoDB Configuration
+MONGO_URI=your_mongodb_connection_string_here
+DATABASE_NAME=ai_tutor_enhanced
 
----
+# Groq API Configuration
+API_KEY=your_groq_api_key_here
+MODEL_NAME=llama3-70b-8192
 
-## 🔧 API Endpoints
+# JWT Configuration
+JWT_SECRET=your_jwt_secret_key_here
+```
 
-### Authentication
-'''http
-POST /auth/signup
-POST /auth/login
-GET  /auth/profile
-'''
+**Optional (for file upload features):**
+```env
+# AWS S3 Configuration
+AWS_ACCESS_KEY_ID=your_aws_access_key_id
+AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
+AWS_REGION=us-east-1
+AWS_S3_BUCKET_NAME=your-bucket-name
+```
 
-### Chat, Learning & Quizzes
-'''http
-POST   /chat/ask
-GET    /chat/history
-POST   /api/learning-paths/create
-GET    /api/learning-paths/list
-POST   /api/quiz/create
-POST   /api/quiz/submit
-'''
+### AWS S3 Setup (Optional)
 
-### Lesson Management (Admin & User)
-'''http
-GET    /lessons/admin/dashboard  # Admin: Get platform stats
-GET    /lessons/admin/users      # Admin: Get all users
-GET    /lessons/admin/lessons    # Admin: Get all lessons
-POST   /lessons/admin/lessons    # Admin: Create a lesson
-DELETE /lessons/admin/lessons/{id} # Admin: Delete a lesson
-GET    /lessons/lessons          # User: Get available lessons
-POST   /lessons/enroll           # User: Enroll in a lesson
-PUT    /lessons/{id}/progress    # User: Update progress
-'''
----
+If you want to enable file upload and avatar generation features:
 
-## 🎨 UI/UX Improvements
+1. **Create an AWS S3 bucket**
+2. **Create an IAM user with S3 permissions**
+3. **Add the credentials to your `.env` file**
 
--   ✅ **Comprehensive UI Overhaul**: Fixed dozens of UI inconsistencies, icon import errors, and layout issues.
--   ✅ **Polished Landing Page & Dashboard**: Redesigned for a cleaner, more intuitive user experience.
--   ✅ **Optimized Responsiveness**: Enhanced compatibility for mobile and tablet devices.
--   ✅ **Improved Navigation**: Simplified sidebar and header for better usability.
--   ✅ **Consistent Theming**: Ensured dark/light mode themes are applied consistently.
+**Required S3 Permissions:**
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:DeleteObject"
+            ],
+            "Resource": "arn:aws:s3:::your-bucket-name/*"
+        }
+    ]
+}
+```
 
----
+### Features
 
-## 🔮 Roadmap
+✅ **Core Features (Always Available):**
+- AI-powered chat and learning paths
+- User authentication and profiles
+- Learning goals management
+- Quiz system
+- Progress tracking
 
-### Phase 1 (Completed)
-- ✅ Core AI Chat & Learning Path Generation
-- ✅ User Authentication & Profile Management
-- ✅ Interactive Quizzes & Progress Tracking
-- ✅ Admin Dashboard & Lesson Management
+✅ **Enhanced Features (Requires AWS S3):**
+- File upload (images, audio, video)
+- Avatar image upload
+- Avatar video generation
+- Cloud storage for user content
 
-### Phase 2 (Next)
-- 🔄 Multi-Language Support
-- 🔄 Collaborative Learning Features (Group Study)
-- 🔄 Advanced Analytics & Reporting
-- 🔄 Mobile App (React Native)
+### Troubleshooting
 
-### Phase 3 (Future)
-- 📋 Integration with External Learning Platforms (e.g., Coursera)
-- 📋 AI-Powered Content Recommendations
-- 📋 Voice-to-Text and Text-to-Voice Interaction
-- 📋 Gamification and Rewards System
+**Warning: "You must pass the application as an import string"**
+- Use `python start_server.py` instead of `python main_enhanced.py`
 
----
+**Warning: "AWS S3 credentials not fully configured"**
+- This is normal if you haven't set up AWS S3 yet
+- File upload features will be disabled but the app will work normally
+- Set up AWS S3 credentials in `.env` to enable file uploads
 
-## 🤝 Contributing
+**Database Connection Issues:**
+- Make sure MongoDB is running
+- Check your `MONGO_URI` in the `.env` file
+- Ensure the database name is correct
 
-Contributions are welcome! Please fork the repo, create a feature branch, and open a pull request.
+### API Documentation
 
----
+Once the server is running, visit:
+- **API Docs:** http://localhost:8000/docs
+- **Health Check:** http://localhost:8000/health
+- **API Info:** http://localhost:8000/api
 
-## 📄 License
+### Development
 
-This project is licensed under the **MIT License**.
+For development with auto-reload:
+```bash
+python start_server.py
+```
 
----
-
-## 🙏 Acknowledgments
-
-- **Groq** for LLaMA 3 70B API access.
-- **MongoDB Atlas** for reliable database hosting.
-- **Render & Vercel** for seamless deployment.
-- **React & FastAPI** communities for excellent documentation.
-
----
-
-<div align="center">
-
-**Built with ❤️ for learners worldwide**
-
-[⭐ Star this repo](https://github.com/your-username/ai-tutor) | [🐛 Report Bug](https://github.com/your-username/ai-tutor/issues) | [💡 Request Feature](https://github.com/your-username/ai-tutor/issues)
-
-</div>
+The server will automatically restart when you make changes to the code.

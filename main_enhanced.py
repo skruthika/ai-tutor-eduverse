@@ -280,4 +280,4 @@ if __name__ == "__main__":
     print("📈 Real-time Analytics & Search")
     print("🗄️ AWS S3 File Storage Integration")
     print("🎬 Avatar Video Generation")
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main_enhanced:app", host="0.0.0.0", port=8000, reload=True)
