@@ -1,4 +1,3 @@
-# chat.py
 import json
 import datetime
 import asyncio
@@ -15,34 +14,74 @@ from learning_path import process_learning_path_query
 # Router for chat
 chat_router = APIRouter()
 
-client = groq.Client(api_key=os.getenv("API_KEY"))
+# Enhanced Groq client with error handling
+def get_groq_client():
+    """Get Groq client with proper error handling"""
+    api_key = os.getenv("API_KEY")
+    if not api_key:
+        raise HTTPException(status_code=500, detail="Groq API key not configured")
+    
+    try:
+        return groq.Client(api_key=api_key)
+    except Exception as e:
+        print(f"Error initializing Groq client: {e}")
+        raise HTTPException(status_code=500, detail="Failed to initialize AI service")
 
 def generate_response(prompt):
-    """Generates a response using Groq's model"""
+    """Generates a response using Groq's model with enhanced error handling"""
     try:
+        client = get_groq_client()
+        model_name = os.getenv("MODEL_NAME", "llama3-70b-8192")  # Default fallback
+        
         response = client.chat.completions.create(
-            model=os.getenv("MODEL_NAME"),
+            model=model_name,
             messages=[{"role": "user", "content": prompt}],
+            max_tokens=8000,  # Limit tokens to prevent timeout
+            temperature=0.7,
+            timeout=30  # 30 second timeout
         )
         return response.choices[0].message.content
+    except groq.RateLimitError:
+        print("Rate limit exceeded")
+        return "I'm currently experiencing high demand. Please try again in a moment."
+    except groq.APIConnectionError:
+        print("API connection error")
+        return "I'm having trouble connecting to my AI service. Please check your internet connection and try again."
+    except groq.APITimeoutError:
+        print("API timeout error")
+        return "The request took too long to process. Please try with a shorter message."
     except Exception as e:
         print(f"Error generating response: {e}")
-        return "Error generating response. Please try again."
+        return "I'm experiencing technical difficulties. Please try again later."
 
 async def generate_chat_stream(messages):
-    """Streams chat responses from Groq asynchronously"""
+    """Streams chat responses from Groq asynchronously with enhanced error handling"""
     try:
+        client = get_groq_client()
+        model_name = os.getenv("MODEL_NAME", "llama3-70b-8192")
+        
         response_stream = client.chat.completions.create(
-            model=os.getenv("MODEL_NAME"),
+            model=model_name,
             messages=messages,
             stream=True,
+            max_tokens=4000,  # Reduced for streaming
+            temperature=0.7,
+            timeout=30
         )
 
         for chunk in response_stream:
-            yield chunk.choices[0].delta.content
+            if chunk.choices[0].delta.content:
+                yield chunk.choices[0].delta.content
+                
+    except groq.RateLimitError:
+        yield "I'm currently experiencing high demand. Please try again in a moment."
+    except groq.APIConnectionError:
+        yield "Connection error. Please check your internet connection and try again."
+    except groq.APITimeoutError:
+        yield "Request timeout. Please try with a shorter message."
     except Exception as e:
         print(f"Error in chat stream: {e}")
-        yield "Error in chat stream. Please try again."
+        yield "I'm experiencing technical difficulties. Please try again later."
 
 def store_chat_history(username, messages):
     """Stores chat history in MongoDB"""
@@ -178,12 +217,12 @@ async def chat(user_prompt: str, username: str, isQuiz: bool = False, isLearning
         response_timestamp = datetime.datetime.utcnow().isoformat() + "Z"
         response_message = {
             "role": "assistant",
-            "content": "There seems to be some error on our side, Please try again later.",
+            "content": "I'm experiencing technical difficulties. Please try again in a moment.",
             "type": "content",
             "timestamp": response_timestamp
         }
         store_chat_history(username, response_message)
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Chat service temporarily unavailable")
 
 @chat_router.get("/history")
 async def get_chat_history(username: str):
