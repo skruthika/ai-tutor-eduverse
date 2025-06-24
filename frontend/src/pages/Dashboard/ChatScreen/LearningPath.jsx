@@ -56,7 +56,7 @@ const LearningPath = ({ content, refreshChat }) => {
       { role: "user", content: "Regenerate", type: "content", isLearningPathQuery },
       { role: "assistant", content: "", type: "streaming" }
     ];
-    const message = localStorage.getItem("lastMessage");
+    const message = localStorage.getItem("lastMessage") || "Create a learning path";
     dispatch(setChatHistory(updatedHistory));
     dispatch(setIsGenerating(true));
     try {
@@ -75,6 +75,7 @@ const LearningPath = ({ content, refreshChat }) => {
       );
     } catch (error) {
       console.error("Error sending message:", error);
+      dispatch(setIsGenerating(false));
     }
   };
 

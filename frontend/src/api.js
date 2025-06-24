@@ -9,7 +9,6 @@ const apiRequest = async (url, options = {}) => {
       "Accept": "application/json",
       ...options.headers,
     },
-    credentials: "include", // Include credentials for CORS
     ...options,
   };
 
@@ -202,7 +201,6 @@ export const askQuestion = async (
           "Content-Type": "application/json",
           "Accept": "text/plain",
         },
-        credentials: "include",
         body: JSON.stringify({
           user_prompt,
           username,
@@ -239,7 +237,6 @@ export const askQuestion = async (
           "Content-Type": "application/json",
           "Accept": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify({
           user_prompt,
           username,

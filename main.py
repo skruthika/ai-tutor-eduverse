@@ -32,10 +32,10 @@ origins = [
 # Enable CORS with comprehensive settings
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for development
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all methods
-    allow_headers=["*"],  # Allow all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Exception handler for HTTPException
@@ -220,7 +220,7 @@ async def options_handler(request):
 if __name__ == "__main__":
     import uvicorn
     print("🚀 Starting AI Tutor Backend Server v4.0...")
-    print("📡 CORS enabled for all origins")
+    print("📡 CORS enabled for origins:", origins)
     print("🔗 Server will be available at: http://localhost:8000")
     print("📚 API Documentation: http://localhost:8000/docs")
     print("🛡️ Admin Dashboard: Enabled")

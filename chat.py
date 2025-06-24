@@ -1,8 +1,9 @@
+# chat.py
 import json
 import datetime
 import asyncio
 import groq
-from fastapi import APIRouter, HTTPException, Query, Body
+from fastapi import APIRouter, HTTPException, Body
 from fastapi.responses import StreamingResponse, JSONResponse
 from database import chats_collection, users_collection
 from constants import LEARNING_PATH_PROMPT, BASIC_ENVIRONMENT_PROMPT, REGENRATE_OR_FILTER_JSON, CALCULATE_SCORE
@@ -13,74 +14,36 @@ from learning_path import process_learning_path_query
 # Router for chat
 chat_router = APIRouter()
 
-# Enhanced Groq client with error handling
-def get_groq_client():
-    """Get Groq client with proper error handling"""
-    api_key = os.getenv("API_KEY")
-    if not api_key:
-        raise HTTPException(status_code=500, detail="Groq API key not configured")
-    
-    try:
-        return groq.Client(api_key=api_key)
-    except Exception as e:
-        print(f"Error initializing Groq client: {e}")
-        raise HTTPException(status_code=500, detail="Failed to initialize AI service")
+# Initialize Groq client
+client = groq.Client(api_key=os.getenv("API_KEY"))
 
 def generate_response(prompt):
-    """Generates a response using Groq's model with enhanced error handling"""
+    """Generates a response using Groq's model"""
     try:
-        client = get_groq_client()
-        model_name = os.getenv("MODEL_NAME", "llama3-70b-8192")  # Default fallback
-        
         response = client.chat.completions.create(
-            model=model_name,
+            model=os.getenv("MODEL_NAME", "llama3-70b-8192"),
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=8000,  # Limit tokens to prevent timeout
-            temperature=0.7,
-            timeout=30  # 30 second timeout
         )
         return response.choices[0].message.content
-    except groq.RateLimitError:
-        print("Rate limit exceeded")
-        return "I'm currently experiencing high demand. Please try again in a moment."
-    except groq.APIConnectionError:
-        print("API connection error")
-        return "I'm having trouble connecting to my AI service. Please check your internet connection and try again."
-    except groq.APITimeoutError:
-        print("API timeout error")
-        return "The request took too long to process. Please try with a shorter message."
     except Exception as e:
         print(f"Error generating response: {e}")
-        return "I'm experiencing technical difficulties. Please try again later."
+        return "Error generating response. Please try again."
 
 async def generate_chat_stream(messages):
-    """Streams chat responses from Groq asynchronously with enhanced error handling"""
+    """Streams chat responses from Groq asynchronously"""
     try:
-        client = get_groq_client()
-        model_name = os.getenv("MODEL_NAME", "llama3-70b-8192")
-        
         response_stream = client.chat.completions.create(
-            model=model_name,
+            model=os.getenv("MODEL_NAME", "llama3-70b-8192"),
             messages=messages,
             stream=True,
-            max_tokens=4000,  # Reduced for streaming
-            temperature=0.7,
-            timeout=30
         )
 
         for chunk in response_stream:
             if chunk.choices[0].delta.content:
                 yield chunk.choices[0].delta.content
-                
-    except groq.RateLimitError:
-        yield "I'm currently experiencing high demand. Please try again in a moment."
-    except groq.APIConnectionError:
-        yield "Connection error. Please check your internet connection and try again."
-    except groq.APITimeoutError:
-        yield "Request timeout. Please try with a shorter message."
     except Exception as e:
         print(f"Error in chat stream: {e}")
-        yield "I'm experiencing technical difficulties. Please try again later."
+        yield "Error in chat stream. Please try again."
 
 def store_chat_history(username, messages):
     """Stores chat history in MongoDB"""
@@ -108,34 +71,6 @@ def update_user_stats(username, stat_type, increment=1):
     except Exception as e:
         print(f"Error updating user stats: {e}")
 
-def enhance_prompt_for_concept_explanation(user_prompt):
-    """Enhance prompts for concept explanation requests"""
-    concept_enhancement = """
-    Please provide a clear, detailed explanation of this concept. Structure your response as follows:
-    1. **Definition**: Start with a simple, clear definition
-    2. **Key Points**: Break down the main components or aspects
-    3. **Examples**: Provide practical, real-world examples
-    4. **Applications**: Explain where and how this concept is used
-    5. **Common Misconceptions**: Address any frequent misunderstandings
-    
-    Make the explanation accessible and engaging, using analogies where helpful.
-    """
-    return f"{user_prompt}\n\n{concept_enhancement}"
-
-def enhance_prompt_for_homework_help(user_prompt):
-    """Enhance prompts for homework help requests"""
-    homework_enhancement = """
-    Please provide step-by-step guidance for this homework problem. Structure your response as follows:
-    1. **Understanding the Problem**: Break down what's being asked
-    2. **Approach**: Explain the method or strategy to solve it
-    3. **Step-by-Step Solution**: Walk through each step clearly
-    4. **Key Concepts**: Highlight the important principles involved
-    5. **Tips**: Provide helpful hints for similar problems
-    
-    Focus on teaching the process rather than just giving the answer, so the student can learn and apply the method to other problems.
-    """
-    return f"{user_prompt}\n\n{homework_enhancement}"
-
 @chat_router.post("/ask")
 async def chat(
     user_prompt: str = Body(...),
@@ -152,17 +87,9 @@ async def chat(
         chat_session = chats_collection.find_one({"username": username}) or {}
         prev_5_messages = chat_session.get("messages", [])[-10:] if "messages" in chat_session else []
         prev_5_messages = [msg for msg in prev_5_messages if msg.get("type") != "learning_path"]
-        
-        # Enhance prompts based on content type
-        enhanced_prompt = user_prompt
-        if "explain" in user_prompt.lower() and "concept" in user_prompt.lower():
-            enhanced_prompt = enhance_prompt_for_concept_explanation(user_prompt)
-        elif "homework" in user_prompt.lower() or "help" in user_prompt.lower():
-            enhanced_prompt = enhance_prompt_for_homework_help(user_prompt)
-        
         user_message = {
             "role": "user",
-            "content": enhanced_prompt,
+            "content": user_prompt,
             "type": "content",
             "timestamp": user_timestamp
         }
@@ -172,7 +99,7 @@ async def chat(
         prev_5_messages.append(user_message)
 
         if isQuiz:
-            enhanced_prompt = f"{enhanced_prompt} {CALCULATE_SCORE}"
+            user_prompt = f"{user_prompt} {CALCULATE_SCORE}"
             # Update quiz stats
             update_user_stats(username, "totalQuizzes")
         
@@ -188,15 +115,15 @@ async def chat(
 
             user_message = {
                 "role": "user",
-                "content": enhanced_prompt,
+                "content": user_prompt,
                 "type": "learning_path",
                 "timestamp": user_timestamp
             }
             store_chat_history(username, user_message)
-            return process_learning_path_query(enhanced_prompt, username, generate_response, extract_json, store_chat_history, REGENRATE_OR_FILTER_JSON, prompt_with_preference)
+            return process_learning_path_query(user_prompt, username, generate_response, extract_json, store_chat_history, REGENRATE_OR_FILTER_JSON, prompt_with_preference)
 
         # Case 2 : Stream prompt
-        enhanced_prompt = f"{enhanced_prompt} {BASIC_ENVIRONMENT_PROMPT}"
+        user_prompt = f"{user_prompt} {BASIC_ENVIRONMENT_PROMPT}"
 
         async def chat_stream():
             response_content = ""
@@ -221,12 +148,12 @@ async def chat(
         response_timestamp = datetime.datetime.utcnow().isoformat() + "Z"
         response_message = {
             "role": "assistant",
-            "content": "I'm experiencing technical difficulties. Please try again in a moment.",
+            "content": "There seems to be some error on our side, Please try again later.",
             "type": "content",
             "timestamp": response_timestamp
         }
         store_chat_history(username, response_message)
-        raise HTTPException(status_code=500, detail="Chat service temporarily unavailable")
+        return JSONResponse(status_code=500, content={"detail": str(e)})
 
 @chat_router.get("/history")
 async def get_chat_history(username: str):
@@ -235,7 +162,7 @@ async def get_chat_history(username: str):
     chat_session = chats_collection.find_one({"username": username})
     
     if not chat_session:
-        return JSONResponse(content={"history": []})
+        return {"history": []}
     
     messages = chat_session.get("messages", [])
     return {"history": messages}
@@ -285,7 +212,7 @@ async def save_path(
         return {"message": f"Learning path saved successfully under '{learning_goal_name}'"}
     except Exception as e:
         print(f"❌ Error: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        return JSONResponse(status_code=500, content={"detail": str(e)})
 
 @chat_router.get("/get-all-goals")
 async def get_all_goals(username: str):
@@ -365,7 +292,7 @@ async def update_learning_goal(
         raise HTTPException(status_code=500, detail=str(e))
 
 @chat_router.get("/user-stats")
-async def get_user_stats(username: str = Query(...)):
+async def get_user_stats(username: str):
     """Retrieves user statistics."""
     try:
         print(f"📊 Fetching user stats for: {username}")
@@ -461,7 +388,7 @@ async def get_user_stats(username: str = Query(...)):
         return default_stats
 
 @chat_router.get("/assessments")
-async def get_assessments(username: str = Query(...)):
+async def get_assessments(username: str):
     """Retrieves user assessments/quiz history."""
     try:
         chat_session = chats_collection.find_one({"username": username})
@@ -545,7 +472,7 @@ async def clear_chat(username: str):
         )
 
         if result.matched_count == 0:
-            raise HTTPException(status_code=404, detail="No chat history found for this user.")
+            return {"message": "No chat history found for this user."}
 
         return {"message": "Chat history cleared successfully."}
     except Exception as e:
@@ -579,7 +506,7 @@ async def save_preferences(username: str = Body(...), preferences: dict = Body(.
         raise HTTPException(status_code=500, detail=str(e))
 
 @chat_router.get("/analytics")
-async def get_chat_analytics(username: str = Query(...), days: int = Query(30)):
+async def get_chat_analytics(username: str, days: int = 30):
     """Get chat analytics for user"""
     try:
         # This is a placeholder implementation - in a real app, you'd query the database
@@ -626,7 +553,7 @@ async def get_chat_analytics(username: str = Query(...), days: int = Query(30)):
         return {"analytics": []}
 
 @chat_router.get("/search")
-async def search_messages(username: str = Query(...), query: str = Query(...)):
+async def search_messages(username: str, query: str):
     """Search messages using simple text matching"""
     try:
         chat_session = chats_collection.find_one({"username": username})
