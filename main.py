@@ -14,7 +14,7 @@ app = FastAPI(
     version="3.0.0"
 )
 
-# Allowed frontend origins
+# Enhanced CORS configuration for development and production
 origins = [
     "http://localhost:5173",  # Vite Frontend
     "http://127.0.0.1:5173",  # Alternative local Vite
@@ -23,15 +23,29 @@ origins = [
     "http://localhost:8000",  # Local backend
     "http://127.0.0.1:8000",
     "https://eduverse-ai.vercel.app",  # Deployed frontend on Vercel
+    "http://localhost:5174",  # Alternative Vite port
+    "http://127.0.0.1:5174",
 ]
 
-# Enable CORS
+# Enable CORS with comprehensive settings
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allow_headers=[
+        "Accept",
+        "Accept-Language",
+        "Content-Language",
+        "Content-Type",
+        "Authorization",
+        "X-Requested-With",
+        "Origin",
+        "Access-Control-Request-Method",
+        "Access-Control-Request-Headers",
+    ],
+    expose_headers=["*"],
+    max_age=3600,
 )
 
 # Health check endpoint
@@ -41,6 +55,8 @@ async def root():
         "message": "AI Tutor - Comprehensive Learning Management System",
         "version": "3.0.0",
         "status": "healthy",
+        "server": "running",
+        "cors_enabled": True,
         "features": [
             "User Authentication & Profiles",
             "AI-Powered Chat & Learning Paths", 
@@ -69,7 +85,8 @@ async def health_check():
             "ai_model": "available",
             "learning_paths": "active",
             "quiz_system": "active",
-            "api": "running"
+            "api": "running",
+            "cors": "enabled"
         },
         "version": "3.0.0"
     }
@@ -78,6 +95,8 @@ async def health_check():
 async def api_info():
     return {
         "message": "Welcome to AI Tutor Comprehensive LMS API v3.0",
+        "cors_status": "enabled",
+        "allowed_origins": origins,
         "new_features": [
             "Learning Path Management System",
             "Advanced Quiz Creation & Taking",
@@ -89,7 +108,7 @@ async def api_info():
         "documentation": "/docs"
     }
 
-# Include all routers
+# Include all routers with proper error handling
 app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 app.include_router(chat_router, prefix="/chat", tags=["Chat & Learning"])
 app.include_router(learning_paths_router, prefix="/api/learning-paths", tags=["Learning Path Management"])
@@ -105,15 +124,16 @@ else:
     print(f"⚠️  Frontend build directory not found: {FRONTEND_BUILD_DIR}")
     print("   Run 'npm run build' in the frontend directory to create the build.")
 
-# Enhanced error handlers
+# Enhanced error handlers with CORS support
 @app.exception_handler(404)
 async def not_found_handler(request, exc):
     return {
         "error": "Endpoint not found",
         "message": "The requested endpoint does not exist",
+        "status_code": 404,
         "available_endpoints": [
             "/auth/login", "/auth/signup", "/auth/profile",
-            "/chat/ask", "/chat/history", "/chat/save-path",
+            "/chat/ask", "/chat/history", "/chat/save-path", "/chat/user-stats",
             "/api/learning-paths/create", "/api/learning-paths/list",
             "/api/quiz/create", "/api/quiz/list", "/api/quiz/submit",
             "/docs", "/health"
@@ -125,10 +145,20 @@ async def internal_error_handler(request, exc):
     return {
         "error": "Internal server error",
         "message": "An unexpected error occurred. Please try again later.",
+        "status_code": 500,
         "support": "Contact support if the issue persists",
         "version": "3.0.0"
     }
 
+# Add OPTIONS handler for preflight requests
+@app.options("/{full_path:path}")
+async def options_handler(request):
+    return {"message": "OK"}
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    print("🚀 Starting AI Tutor Backend Server...")
+    print("📡 CORS enabled for origins:", origins)
+    print("🔗 Server will be available at: http://localhost:8000")
+    print("📚 API Documentation: http://localhost:8000/docs")
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)

@@ -1,40 +1,89 @@
+// Enhanced API configuration with better error handling and CORS support
 const API_BASE_URL = "http://localhost:8000"; // Updated to point to FastAPI backend
 
-export const login = async (username, password) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.detail || "Login failed");
+// Enhanced fetch wrapper with better error handling
+const apiRequest = async (url, options = {}) => {
+  const defaultOptions = {
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      ...options.headers,
+    },
+    credentials: "include", // Include credentials for CORS
+    ...options,
+  };
 
-    localStorage.setItem("token", data.token); // Store token
-    localStorage.setItem("username", username); // Store username
-    if (data.name)
-      localStorage.setItem("name", data.name);
+  try {
+    console.log(`🔗 API Request: ${options.method || 'GET'} ${url}`);
+    const response = await fetch(url, defaultOptions);
+    
+    // Log response status for debugging
+    console.log(`📡 API Response: ${response.status} ${response.statusText}`);
+    
+    // Handle different response types
+    const contentType = response.headers.get("content-type");
+    let data;
+    
+    if (contentType && contentType.includes("application/json")) {
+      data = await response.json();
+    } else {
+      data = await response.text();
+    }
+
+    if (!response.ok) {
+      const errorMessage = data?.detail || data?.message || `HTTP ${response.status}: ${response.statusText}`;
+      console.error(`❌ API Error: ${errorMessage}`);
+      throw new Error(errorMessage);
+    }
 
     return data;
   } catch (error) {
-    throw new Error(error.message);
+    console.error(`🚨 API Request Failed: ${error.message}`);
+    
+    // Handle specific error types
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      throw new Error('Unable to connect to server. Please check if the backend is running on http://localhost:8000');
+    }
+    
+    if (error.message.includes('CORS')) {
+      throw new Error('CORS error: Please check server configuration');
+    }
+    
+    throw error;
+  }
+};
+
+export const login = async (username, password) => {
+  try {
+    const data = await apiRequest(`${API_BASE_URL}/auth/login`, {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("username", username);
+      if (data.name) {
+        localStorage.setItem("name", data.name);
+      }
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error(error.message || "Login failed");
   }
 };
 
 export const signup = async (name, username, password) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/auth/signup`, {
+    const data = await apiRequest(`${API_BASE_URL}/auth/signup`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, username, password }),
     });
 
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.detail || "Signup failed");
-
     return data;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.message || "Signup failed");
   }
 };
 
@@ -45,11 +94,7 @@ export const logout = async () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("name");
-    
-    // Clear any other app-specific data
     localStorage.removeItem("preferences");
-    
-    // Clear session storage as well
     sessionStorage.clear();
     
     return { success: true };
@@ -64,21 +109,15 @@ export const fetchChatHistory = async () => {
   if (!username) throw new Error("No username found. Please log in.");
 
   try {
-    const response = await fetch(
+    const data = await apiRequest(
       `${API_BASE_URL}/chat/history?username=${encodeURIComponent(username)}`,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
+      { method: "GET" }
     );
 
-    const data = await response.json();
-    if (!response.ok)
-      throw new Error(data.detail || "Failed to fetch chat history");
-
-    return data.history;
+    return data.history || [];
   } catch (error) {
-    throw new Error(error.message);
+    console.error("Error fetching chat history:", error);
+    throw new Error(error.message || "Failed to fetch chat history");
   }
 };
 
@@ -101,18 +140,26 @@ export const askQuestion = async (
       isQuiz: isQuiz || false, 
       isLearningPath: isLearningPathQuery || false
     }).toString();
+    
     const url = `${API_BASE_URL}/chat/ask?${queryParams}`;
+    console.log(`🔗 Chat Request: ${url}`);
 
     if (!isLearningPathQuery) {
-      // 🔥 Streaming API Call (For non-learning-path queries)
+      // Streaming API Call (For non-learning-path queries)
       const response = await fetch(url, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "Accept": "text/plain",
         },
+        credentials: "include",
       });
 
-      if (!response.ok) throw new Error("Failed to fetch response");
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -122,38 +169,40 @@ export const askQuestion = async (
         const { value, done } = await reader.read();
         if (done) break;
 
-        // ✅ FIX: Treat response as plain text, not JSON
         const chunk = decoder.decode(value, { stream: true });
-
-        // ✅ Accumulate message and update UI
         accumulatedMessage += chunk;
         onMessageReceived(accumulatedMessage);
       }
 
       onComplete();
     } else {
-      // 🔥 Standard API Call (For learning path queries - Non-streaming)
+      // Standard API Call (For learning path queries - Non-streaming)
       const response = await fetch(url, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "Accept": "application/json",
         },
+        credentials: "include",
       });
 
-      if (!response.ok) throw new Error("Failed to fetch response");
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
 
-      // Learning path response is plain text (not streamed)
       const responseText = await response.text();
       onMessageReceived(responseText);
-
       onComplete();
     }
   } catch (error) {
-    console.error("Error:", error);
+    console.error("❌ Chat Error:", error);
+    throw error;
   }
 };
 
-/// Save Learning Path API Call
+// Save Learning Path API Call
 export const saveLearningPath = async (learningPath, learningGoalName) => {
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
@@ -161,11 +210,10 @@ export const saveLearningPath = async (learningPath, learningGoalName) => {
   if (!username || !token) throw new Error("User not authenticated");
 
   try {
-    const response = await fetch(`${API_BASE_URL}/chat/save-path`, {
+    const data = await apiRequest(`${API_BASE_URL}/chat/save-path`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify({
         username: username,
@@ -174,10 +222,10 @@ export const saveLearningPath = async (learningPath, learningGoalName) => {
       }),
     });
 
-    if (!response.ok) throw new Error("Failed to save learning path");
-    return await response.json();
+    return data;
   } catch (error) {
     console.error("Error saving learning path:", error);
+    throw error;
   }
 };
 
@@ -189,22 +237,20 @@ export const getAllLearningGoals = async () => {
   if (!username || !token) throw new Error("User not authenticated");
 
   try {
-    const response = await fetch(
+    const data = await apiRequest(
       `${API_BASE_URL}/chat/get-all-goals?username=${encodeURIComponent(username)}`,
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
       }
     );
 
-    if (!response.ok) throw new Error("Failed to fetch learning goals");
-    const data = await response.json();
-    return data.learning_goals; // Return the learning_goals array
+    return data.learning_goals || [];
   } catch (error) {
     console.error("Error fetching learning goals:", error);
-    throw error; // Re-throw the error so the caller can handle it
+    throw error;
   }
 };
 
@@ -215,20 +261,17 @@ export const clearChat = async () => {
   if (!username || !token) throw new Error("User not authenticated");
 
   try {
-    const response = await fetch(
+    const data = await apiRequest(
       `${API_BASE_URL}/chat/clear?username=${encodeURIComponent(username)}`,
       {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
       }
     );
 
-    if (!response.ok) throw new Error("Failed to clear chat history");
-
-    return await response.json();
+    return data;
   } catch (error) {
     console.error("Error clearing chat history:", error);
     throw error;
@@ -242,21 +285,15 @@ export const savePreferencesAPI = async (preferences) => {
   if (!username || !token) throw new Error("User not authenticated");
 
   try {
-    const response = await fetch(`${API_BASE_URL}/chat/save-preferences`, {
+    const data = await apiRequest(`${API_BASE_URL}/chat/save-preferences`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify({ username, preferences }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.detail || "Failed to save preferences");
-    }
-
-    return await response.json();
+    return data;
   } catch (error) {
     console.error("Error saving preferences:", error);
     throw error;
@@ -271,31 +308,17 @@ export const getUserProfile = async () => {
   if (!username || !token) throw new Error("User not authenticated");
 
   try {
-    const response = await fetch(
+    const data = await apiRequest(
       `${API_BASE_URL}/auth/profile?username=${encodeURIComponent(username)}`,
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
       }
     );
 
-    if (!response.ok) {
-      // If profile endpoint doesn't exist, return default data
-      return {
-        name: localStorage.getItem("name") || "User",
-        username: username,
-        preferences: {
-          timeValue: 15,
-          ageGroup: "Above 18",
-          language: "English",
-          userRole: "Student",
-        }
-      };
-    }
-
-    return await response.json();
+    return data;
   } catch (error) {
     console.error("Error fetching user profile:", error);
     // Return default data if API fails
@@ -320,29 +343,17 @@ export const getUserStats = async () => {
   if (!username || !token) throw new Error("User not authenticated");
 
   try {
-    const response = await fetch(
+    const data = await apiRequest(
       `${API_BASE_URL}/chat/user-stats?username=${encodeURIComponent(username)}`,
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
       }
     );
 
-    if (!response.ok) {
-      // Return default stats if endpoint doesn't exist
-      return {
-        totalGoals: 0,
-        completedGoals: 0,
-        totalQuizzes: 0,
-        averageScore: 0,
-        streakDays: 0,
-        totalStudyTime: 0
-      };
-    }
-
-    return await response.json();
+    return data;
   } catch (error) {
     console.error("Error fetching user stats:", error);
     // Return default stats if API fails
@@ -365,26 +376,19 @@ export const getAssessments = async () => {
   if (!username || !token) throw new Error("User not authenticated");
 
   try {
-    const response = await fetch(
+    const data = await apiRequest(
       `${API_BASE_URL}/chat/assessments?username=${encodeURIComponent(username)}`,
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
       }
     );
 
-    if (!response.ok) {
-      // Return empty array if endpoint doesn't exist
-      return [];
-    }
-
-    const data = await response.json();
     return data.assessments || [];
   } catch (error) {
     console.error("Error fetching assessments:", error);
-    // Return empty array if API fails
     return [];
   }
 };
@@ -397,18 +401,15 @@ export const deleteLearningGoal = async (goalName) => {
   if (!username || !token) throw new Error("User not authenticated");
 
   try {
-    const response = await fetch(`${API_BASE_URL}/chat/delete-goal`, {
+    const data = await apiRequest(`${API_BASE_URL}/chat/delete-goal`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify({ username, goal_name: goalName }),
     });
 
-    if (!response.ok) throw new Error("Failed to delete learning goal");
-
-    return await response.json();
+    return data;
   } catch (error) {
     console.error("Error deleting learning goal:", error);
     throw error;
@@ -423,11 +424,10 @@ export const updateLearningGoal = async (goalName, updatedGoal) => {
   if (!username || !token) throw new Error("User not authenticated");
 
   try {
-    const response = await fetch(`${API_BASE_URL}/chat/update-goal`, {
+    const data = await apiRequest(`${API_BASE_URL}/chat/update-goal`, {
       method: "PUT",
       headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify({ 
         username, 
@@ -436,11 +436,21 @@ export const updateLearningGoal = async (goalName, updatedGoal) => {
       }),
     });
 
-    if (!response.ok) throw new Error("Failed to update learning goal");
-
-    return await response.json();
+    return data;
   } catch (error) {
     console.error("Error updating learning goal:", error);
+    throw error;
+  }
+};
+
+// Test API connectivity
+export const testConnection = async () => {
+  try {
+    const data = await apiRequest(`${API_BASE_URL}/health`);
+    console.log("✅ Backend connection successful:", data);
+    return data;
+  } catch (error) {
+    console.error("❌ Backend connection failed:", error);
     throw error;
   }
 };
