@@ -11,6 +11,7 @@ import {
   People,
   Eye
 } from "react-bootstrap-icons";
+import { getAllLearningGoals } from "../../../api";
 import "./Learning.scss";
 
 const Learning = () => {
@@ -33,20 +34,20 @@ const Learning = () => {
     try {
       setLoading(true);
       
-      // Fetch both featured lessons and user's learning paths
-      const [lessonsResponse, pathsResponse] = await Promise.all([
-        fetch(`http://localhost:8000/lessons/lessons?username=${username}`),
-        fetch(`http://localhost:8000/chat/get-all-goals?username=${username}`)
-      ]);
+      // Fetch user's learning paths
+      const learningGoals = await getAllLearningGoals();
+      setMyLearningPaths(learningGoals || []);
       
-      if (lessonsResponse.ok) {
-        const lessonsData = await lessonsResponse.json();
-        setFeaturedLessons(lessonsData.adminLessons || []);
-      }
-      
-      if (pathsResponse.ok) {
-        const pathsData = await pathsResponse.json();
-        setMyLearningPaths(pathsData.learning_goals || []);
+      // Fetch featured lessons (if available)
+      try {
+        const response = await fetch(`http://localhost:8000/lessons/lessons?username=${username}`);
+        if (response.ok) {
+          const lessonsData = await response.json();
+          setFeaturedLessons(lessonsData.adminLessons || []);
+        }
+      } catch (error) {
+        console.log("Featured lessons not available");
+        setFeaturedLessons([]);
       }
       
     } catch (error) {
@@ -83,10 +84,7 @@ const Learning = () => {
 
   const handleViewContent = async (contentId, contentType) => {
     try {
-      let response;
-      if (contentType === "lesson") {
-        response = await fetch(`http://localhost:8000/lessons/lessons/${contentId}?username=${username}`);
-      } else {
+      if (contentType === "learning_path") {
         // Handle learning path details
         const pathData = myLearningPaths.find(path => path.name === contentId);
         if (pathData) {
@@ -101,15 +99,18 @@ const Learning = () => {
           setShowDetailModal(true);
           return;
         }
+      } else if (contentType === "lesson") {
+        // Handle lesson details
+        const response = await fetch(`http://localhost:8000/lessons/lessons/${contentId}?username=${username}`);
+        if (response.ok) {
+          const data = await response.json();
+          setSelectedContent(data.lesson);
+          setShowDetailModal(true);
+          return;
+        }
       }
       
-      if (response && response.ok) {
-        const data = await response.json();
-        setSelectedContent(data.lesson);
-        setShowDetailModal(true);
-      } else {
-        setError("Failed to load content details");
-      }
+      setError("Failed to load content details");
     } catch (error) {
       console.error("Error fetching content details:", error);
       setError("Failed to load content details");

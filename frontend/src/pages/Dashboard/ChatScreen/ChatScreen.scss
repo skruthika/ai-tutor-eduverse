@@ -222,6 +222,30 @@
     background: var(--bg-primary);
     border-top: 1px solid var(--border-light);
   }
+  
+  // Analytics Overlay
+  .analytics-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    
+    .analytics-container {
+      width: 100%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: fadeIn 0.3s ease-out;
+    }
+  }
 }
 
 // Animations
@@ -233,6 +257,17 @@
   30% {
     transform: translateY(-10px);
     opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -291,6 +326,14 @@
     
     .chat-input-section {
       padding: 1rem 1rem 1.5rem;
+    }
+    
+    .analytics-overlay {
+      padding: 1rem;
+      
+      .analytics-container {
+        max-height: 85vh;
+      }
     }
   }
 }
@@ -381,6 +424,10 @@
           }
         }
       }
+    }
+    
+    .analytics-overlay {
+      background: rgba(0, 0, 0, 0.7);
     }
   }
 }

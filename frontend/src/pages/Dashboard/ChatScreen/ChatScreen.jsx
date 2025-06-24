@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ChatInput from "./ChatInput";
 import AIMessage from "./AIMessage";
-import { fetchChatHistory, clearChat } from "../../../api";
+import { fetchChatHistory, clearChat, searchMessages } from "../../../api";
 import { formatDistanceToNow } from "date-fns";
 import { Container, Row, Card, Spinner, Button, Modal } from "react-bootstrap";
 import {
@@ -10,9 +10,12 @@ import {
   setIsGenerating,
   setIsLearningPathQuery,
   setIsQuizQuery,
+  addTemporaryMessage
 } from "../../../globalSlice";
 import "./ChatScreen.scss";
-import { Book, List, X } from "react-bootstrap-icons";
+import { Book, List, X, Search, BarChart } from "react-bootstrap-icons";
+import SearchWidget from "../../../components/SearchWidget/SearchWidget";
+import AnalyticsWidget from "../../../components/AnalyticsWidget/AnalyticsWidget";
 
 const ChatScreen = () => {
   const dispatch = useDispatch();
@@ -22,6 +25,8 @@ const ChatScreen = () => {
   const hasFetched = useRef(false);
   const messagesEndRef = useRef(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showSearchWidget, setShowSearchWidget] = useState(false);
+  const [showAnalyticsWidget, setShowAnalyticsWidget] = useState(false);
 
   const handleStudyPlan = () => {
     dispatch(setIsLearningPathQuery(!isLearningPathQuery));
@@ -83,6 +88,14 @@ const ChatScreen = () => {
       console.error("Error clearing chat history:", error.message);
     }
     setShowConfirmModal(false);
+  };
+
+  const handleToggleSearch = () => {
+    setShowSearchWidget(!showSearchWidget);
+  };
+
+  const handleToggleAnalytics = () => {
+    setShowAnalyticsWidget(!showAnalyticsWidget);
   };
 
   useEffect(() => {
@@ -230,18 +243,20 @@ const ChatScreen = () => {
               <Button
                 variant="outline-secondary"
                 size="sm"
-                onClick={handleExplainConcept}
+                onClick={handleToggleSearch}
                 className="action-btn"
               >
-                📚 Explain
+                <Search size={16} className="me-2" />
+                Search
               </Button>
               <Button
                 variant="outline-secondary"
                 size="sm"
-                onClick={handleHomeworkHelp}
+                onClick={handleToggleAnalytics}
                 className="action-btn"
               >
-                💡 Help
+                <BarChart size={16} className="me-2" />
+                Analytics
               </Button>
               <Button
                 variant="outline-danger"
@@ -279,6 +294,20 @@ const ChatScreen = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* Search Widget */}
+      {showSearchWidget && (
+        <SearchWidget onClose={() => setShowSearchWidget(false)} />
+      )}
+
+      {/* Analytics Widget */}
+      {showAnalyticsWidget && (
+        <div className="analytics-overlay" onClick={() => setShowAnalyticsWidget(false)}>
+          <div className="analytics-container" onClick={e => e.stopPropagation()}>
+            <AnalyticsWidget />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
