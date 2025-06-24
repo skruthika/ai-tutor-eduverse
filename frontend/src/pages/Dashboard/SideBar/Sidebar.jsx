@@ -7,10 +7,9 @@ import {
   TrophyFill, 
   ChevronLeft,
   ChevronRight,
-  Map,
   QuestionCircle,
   Shield,
-  Collection
+  GraduationCap
 } from "react-bootstrap-icons";
 
 const Sidebar = ({
@@ -35,16 +34,10 @@ const Sidebar = ({
       screen: "chat",
     },
     {
-      id: "lessons",
-      text: "Lessons",
-      icon: <Collection size={20} />,
-      screen: "lessons",
-    },
-    {
-      id: "learning-paths",
-      text: "Learning Paths",
-      icon: <Map size={20} />,
-      screen: "learning-paths",
+      id: "learning",
+      text: "Learning",
+      icon: <GraduationCap size={20} />,
+      screen: "learning-paths", // Keep existing routing
     },
     {
       id: "quiz-system",
