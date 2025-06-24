@@ -21,6 +21,7 @@ class SignupRequest(BaseModel):
     name: str
     username: str
     password: str
+    isAdmin: bool = False  # Added admin flag
 
 class LoginRequest(BaseModel):
     username: str
@@ -39,6 +40,17 @@ def create_jwt_token(username: str):
     expiration = datetime.utcnow() + timedelta(days=1)
     payload = {"sub": username, "exp": expiration}
     return jwt.encode(payload, JWT_SECRET, algorithm="HS256")
+
+# Get current user from token
+def get_current_user(token: str):
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        username = payload.get("sub")
+        if username is None:
+            raise HTTPException(status_code=401, detail="Invalid token")
+        return username
+    except jwt.JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 # Signup Endpoint
 @auth_router.post("/signup")
@@ -64,6 +76,7 @@ async def signup(request: SignupRequest):
         "name": request.name,
         "username": request.username,
         "password": hashed_password,
+        "isAdmin": request.isAdmin,  # Store admin status
         "preferences": default_preferences,
         "created_at": datetime.utcnow().isoformat() + "Z",
         "stats": {
@@ -124,7 +137,8 @@ async def login(request: LoginRequest):
         "token": token, 
         "username": request.username, 
         "preferences": user["preferences"], 
-        "name": user["name"]
+        "name": user["name"],
+        "isAdmin": user.get("isAdmin", False)  # Include admin status in response
     }
 
 # Get User Profile Endpoint
@@ -146,7 +160,7 @@ async def get_user_profile(username: str = Query(...)):
         
         # Count quiz messages in chat history
         messages = chat_session.get("messages", []) if chat_session else []
-        quiz_messages = [msg for msg in messages if "quiz" in msg.get("content", "").lower()]
+        quiz_messages = [msg for msg in messages if isinstance(msg.get("content", ""), str) and "quiz" in msg.get("content", "").lower()]
         total_quizzes = len(quiz_messages)
         
         # Update user stats
@@ -167,6 +181,7 @@ async def get_user_profile(username: str = Query(...)):
         return {
             "name": user["name"],
             "username": user["username"],
+            "isAdmin": user.get("isAdmin", False),
             "preferences": user.get("preferences", {}),
             "stats": updated_stats,
             "created_at": user.get("created_at")
@@ -174,3 +189,43 @@ async def get_user_profile(username: str = Query(...)):
     except Exception as e:
         print(f"Error fetching user profile: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch user profile")
+
+# Admin check endpoint
+@auth_router.get("/check-admin")
+async def check_admin_status(username: str = Query(...)):
+    """Check if user has admin privileges"""
+    try:
+        user = users_collection.find_one({"username": username})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        return {"isAdmin": user.get("isAdmin", False)}
+    except Exception as e:
+        print(f"Error checking admin status: {e}")
+        raise HTTPException(status_code=500, detail="Failed to check admin status")
+
+# Promote user to admin (for development/testing)
+@auth_router.post("/promote-admin")
+async def promote_to_admin(username: str = Query(...), admin_username: str = Query(...)):
+    """Promote a user to admin (admin only)"""
+    try:
+        # Check if requesting user is admin
+        admin_user = users_collection.find_one({"username": admin_username})
+        if not admin_user or not admin_user.get("isAdmin", False):
+            raise HTTPException(status_code=403, detail="Admin access required")
+        
+        # Promote user
+        result = users_collection.update_one(
+            {"username": username},
+            {"$set": {"isAdmin": True}}
+        )
+        
+        if result.matched_count == 0:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        return {"message": f"User {username} promoted to admin successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error promoting user to admin: {e}")
+        raise HTTPException(status_code=500, detail="Failed to promote user")

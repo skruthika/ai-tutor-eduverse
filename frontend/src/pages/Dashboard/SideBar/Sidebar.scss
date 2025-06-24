@@ -87,6 +87,42 @@
     padding: 0;
     overflow: hidden;
     
+    &.admin-item {
+      .nav-content {
+        background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(239, 68, 68, 0.1));
+        border: 1px solid rgba(220, 38, 38, 0.2);
+        
+        .nav-icon {
+          color: var(--danger-color);
+        }
+        
+        .nav-text {
+          color: var(--danger-color);
+          font-weight: $font-weight-semibold;
+        }
+      }
+      
+      &:hover:not(.active) {
+        .nav-content {
+          background: linear-gradient(135deg, rgba(220, 38, 38, 0.15), rgba(239, 68, 68, 0.15));
+          border-color: rgba(220, 38, 38, 0.3);
+        }
+      }
+      
+      &.active {
+        .nav-content {
+          background: linear-gradient(135deg, var(--danger-color), #dc2626);
+          border-color: var(--danger-color);
+          color: white;
+          
+          .nav-icon,
+          .nav-text {
+            color: white;
+          }
+        }
+      }
+    }
+    
     .nav-content {
       display: flex;
       align-items: center;
@@ -95,9 +131,10 @@
       width: 100%;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       border-radius: $border-radius-xl;
+      border: 1px solid transparent;
     }
     
-    &:hover:not(.active) {
+    &:hover:not(.active):not(.admin-item) {
       .nav-content {
         background: var(--bg-secondary);
         color: var(--text-primary);
@@ -110,7 +147,7 @@
       }
     }
     
-    &.active {
+    &.active:not(.admin-item) {
       .nav-content {
         background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         color: white;
@@ -153,7 +190,7 @@
   }
 }
 
-// Optimized Sidebar Footer
+// Enhanced Sidebar Footer
 .sidebar-footer {
   padding: 1.5rem;
   border-top: 1px solid var(--border-light);
@@ -163,6 +200,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    margin-bottom: 1rem;
     
     .stat-item {
       text-align: center;
@@ -190,6 +228,21 @@
       height: 40px;
       background: linear-gradient(180deg, transparent, var(--border-light), transparent);
     }
+  }
+  
+  .admin-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(239, 68, 68, 0.1));
+    border: 1px solid rgba(220, 38, 38, 0.2);
+    border-radius: $border-radius-lg;
+    padding: 0.5rem 1rem;
+    color: var(--danger-color);
+    font-size: 0.8rem;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 }
 
@@ -265,9 +318,15 @@
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
     
     .nav-item {
-      &.active {
+      &.active:not(.admin-item) {
         .nav-content {
           box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+      }
+      
+      &.admin-item.active {
+        .nav-content {
+          box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
         }
       }
     }

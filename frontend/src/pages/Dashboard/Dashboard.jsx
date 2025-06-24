@@ -4,11 +4,16 @@ import Sidebar from './SideBar/Sidebar';
 import DashboardHome from "./DashboardHome/DashboardHome";
 import LearningPaths from "./LearningPaths/LearningPaths";
 import QuizSystem from "./QuizSystem/QuizSystem";
+import AdminDashboard from "./AdminDashboard/AdminDashboard";
+import LessonsPage from "./LessonsPage/LessonsPage";
 import './Dashboard.scss';
 
 const Dashboard = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeScreen, setActiveScreen] = useState("dashboard");
+
+  // Check if user is admin
+  const isAdmin = localStorage.getItem("isAdmin") === "true";
 
   const renderMainContent = () => {
     switch (activeScreen) {
@@ -18,8 +23,12 @@ const Dashboard = () => {
         return <ChatScreen />;
       case "learning-paths":
         return <LearningPaths />;
+      case "lessons":
+        return <LessonsPage />;
       case "quiz-system":
         return <QuizSystem />;
+      case "admin":
+        return isAdmin ? <AdminDashboard /> : <DashboardHome />;
       case "courses":
         return <LearningPaths />; // Redirect courses to learning paths
       case "achievements":
@@ -39,6 +48,7 @@ const Dashboard = () => {
         toggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
         setActiveScreen={setActiveScreen}
         activeScreen={activeScreen}
+        isAdmin={isAdmin}
       />
 
       {/* Main Content Area */}

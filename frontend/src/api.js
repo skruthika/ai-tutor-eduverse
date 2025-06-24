@@ -63,6 +63,7 @@ export const login = async (username, password) => {
     if (data.token) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", username);
+      localStorage.setItem("isAdmin", data.isAdmin || false);
       if (data.name) {
         localStorage.setItem("name", data.name);
       }
@@ -74,11 +75,11 @@ export const login = async (username, password) => {
   }
 };
 
-export const signup = async (name, username, password) => {
+export const signup = async (name, username, password, isAdmin = false) => {
   try {
     const data = await apiRequest(`${API_BASE_URL}/auth/signup`, {
       method: "POST",
-      body: JSON.stringify({ name, username, password }),
+      body: JSON.stringify({ name, username, password, isAdmin }),
     });
 
     return data;
@@ -94,6 +95,7 @@ export const logout = async () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("name");
+    localStorage.removeItem("isAdmin");
     localStorage.removeItem("preferences");
     sessionStorage.clear();
     
@@ -101,6 +103,25 @@ export const logout = async () => {
   } catch (error) {
     console.error("Logout error:", error);
     throw new Error("Logout failed");
+  }
+};
+
+// Check admin status
+export const checkAdminStatus = async () => {
+  const username = localStorage.getItem("username");
+  if (!username) return { isAdmin: false };
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/auth/check-admin?username=${encodeURIComponent(username)}`
+    );
+    
+    // Update local storage
+    localStorage.setItem("isAdmin", data.isAdmin);
+    return data;
+  } catch (error) {
+    console.error("Error checking admin status:", error);
+    return { isAdmin: false };
   }
 };
 
@@ -325,6 +346,7 @@ export const getUserProfile = async () => {
     return {
       name: localStorage.getItem("name") || "User",
       username: username,
+      isAdmin: localStorage.getItem("isAdmin") === "true",
       preferences: {
         timeValue: 15,
         ageGroup: "Above 18",
@@ -451,6 +473,141 @@ export const testConnection = async () => {
     return data;
   } catch (error) {
     console.error("❌ Backend connection failed:", error);
+    throw error;
+  }
+};
+
+// Lesson Management API Calls
+
+// Get lessons for user (admin + personal)
+export const getLessons = async () => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/lessons/lessons?username=${encodeURIComponent(username)}`
+    );
+    return data;
+  } catch (error) {
+    console.error("Error fetching lessons:", error);
+    throw error;
+  }
+};
+
+// Get lesson details
+export const getLessonDetail = async (lessonId) => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/lessons/lessons/${lessonId}?username=${encodeURIComponent(username)}`
+    );
+    return data;
+  } catch (error) {
+    console.error("Error fetching lesson detail:", error);
+    throw error;
+  }
+};
+
+// Enroll in lesson
+export const enrollInLesson = async (lessonId) => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(`${API_BASE_URL}/lessons/lessons/enroll`, {
+      method: "POST",
+      body: JSON.stringify({ username, lesson_id: lessonId }),
+    });
+    return data;
+  } catch (error) {
+    console.error("Error enrolling in lesson:", error);
+    throw error;
+  }
+};
+
+// Admin API Calls
+
+// Get admin lessons
+export const getAdminLessons = async () => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/lessons/admin/lessons?username=${encodeURIComponent(username)}`
+    );
+    return data;
+  } catch (error) {
+    console.error("Error fetching admin lessons:", error);
+    throw error;
+  }
+};
+
+// Create admin lesson
+export const createAdminLesson = async (lessonData) => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(`${API_BASE_URL}/lessons/admin/lessons`, {
+      method: "POST",
+      body: JSON.stringify({ username, lesson_data: lessonData }),
+    });
+    return data;
+  } catch (error) {
+    console.error("Error creating admin lesson:", error);
+    throw error;
+  }
+};
+
+// Delete admin lesson
+export const deleteAdminLesson = async (lessonId) => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/lessons/admin/lessons/${lessonId}?username=${encodeURIComponent(username)}`,
+      { method: "DELETE" }
+    );
+    return data;
+  } catch (error) {
+    console.error("Error deleting admin lesson:", error);
+    throw error;
+  }
+};
+
+// Get admin dashboard stats
+export const getAdminDashboardStats = async () => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/lessons/admin/dashboard?username=${encodeURIComponent(username)}`
+    );
+    return data;
+  } catch (error) {
+    console.error("Error fetching admin dashboard stats:", error);
+    throw error;
+  }
+};
+
+// Get users overview (admin only)
+export const getUsersOverview = async () => {
+  const username = localStorage.getItem("username");
+  if (!username) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/lessons/admin/users?username=${encodeURIComponent(username)}`
+    );
+    return data;
+  } catch (error) {
+    console.error("Error fetching users overview:", error);
     throw error;
   }
 };

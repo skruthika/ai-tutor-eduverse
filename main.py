@@ -5,13 +5,14 @@ from auth import auth_router
 from chat import chat_router
 from learning_paths import learning_paths_router
 from quiz_system import quiz_router
+from lessons import lessons_router  # Import the new lessons router
 import os
 
 # Initialize FastAPI app
 app = FastAPI(
     title="AI Tutor - Comprehensive Learning Management System",
-    description="Advanced AI-powered learning platform with personalized paths, quiz system, and progress tracking",
-    version="3.0.0"
+    description="Advanced AI-powered learning platform with personalized paths, quiz system, lesson management, and admin dashboard",
+    version="4.0.0"
 )
 
 # Enhanced CORS configuration for development and production
@@ -53,7 +54,7 @@ app.add_middleware(
 async def root():
     return {
         "message": "AI Tutor - Comprehensive Learning Management System",
-        "version": "3.0.0",
+        "version": "4.0.0",
         "status": "healthy",
         "server": "running",
         "cors_enabled": True,
@@ -62,6 +63,8 @@ async def root():
             "AI-Powered Chat & Learning Paths", 
             "Comprehensive Learning Path Management",
             "Advanced Quiz System with Auto-Grading",
+            "Admin Dashboard & Lesson Management",
+            "Personalized User Lessons",
             "Progress Tracking & Analytics",
             "Real-time Updates & Notifications"
         ],
@@ -70,6 +73,7 @@ async def root():
             "chat": "/chat",
             "learning_paths": "/api/learning-paths",
             "quiz_system": "/api/quiz",
+            "lesson_management": "/lessons",
             "docs": "/docs",
             "health": "/health"
         }
@@ -85,25 +89,27 @@ async def health_check():
             "ai_model": "available",
             "learning_paths": "active",
             "quiz_system": "active",
+            "lesson_management": "active",
+            "admin_dashboard": "active",
             "api": "running",
             "cors": "enabled"
         },
-        "version": "3.0.0"
+        "version": "4.0.0"
     }
 
 @app.get("/api")
 async def api_info():
     return {
-        "message": "Welcome to AI Tutor Comprehensive LMS API v3.0",
+        "message": "Welcome to AI Tutor Comprehensive LMS API v4.0",
         "cors_status": "enabled",
         "allowed_origins": origins,
         "new_features": [
-            "Learning Path Management System",
-            "Advanced Quiz Creation & Taking",
-            "Automated Grading & Feedback",
-            "Progress Analytics & Reporting",
-            "Real-time Learning Tracking",
-            "Enhanced User Experience"
+            "Admin Dashboard with Global Lesson Control",
+            "Personalized Lesson Management (Per-User Visibility)",
+            "Enhanced User Role Management",
+            "Lesson Enrollment & Progress Tracking",
+            "Advanced Analytics & Reporting",
+            "Real-time Learning Tracking"
         ],
         "documentation": "/docs"
     }
@@ -113,6 +119,7 @@ app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 app.include_router(chat_router, prefix="/chat", tags=["Chat & Learning"])
 app.include_router(learning_paths_router, prefix="/api/learning-paths", tags=["Learning Path Management"])
 app.include_router(quiz_router, prefix="/api/quiz", tags=["Quiz System"])
+app.include_router(lessons_router, prefix="/lessons", tags=["Lesson Management"])  # Add lessons router
 
 # Mount frontend build directory
 FRONTEND_BUILD_DIR = os.path.join(os.getcwd(), "frontend", "dist")
@@ -132,10 +139,11 @@ async def not_found_handler(request, exc):
         "message": "The requested endpoint does not exist",
         "status_code": 404,
         "available_endpoints": [
-            "/auth/login", "/auth/signup", "/auth/profile",
+            "/auth/login", "/auth/signup", "/auth/profile", "/auth/check-admin",
             "/chat/ask", "/chat/history", "/chat/save-path", "/chat/user-stats",
             "/api/learning-paths/create", "/api/learning-paths/list",
             "/api/quiz/create", "/api/quiz/list", "/api/quiz/submit",
+            "/lessons/lessons", "/lessons/admin/lessons", "/lessons/admin/dashboard",
             "/docs", "/health"
         ]
     }
@@ -147,7 +155,7 @@ async def internal_error_handler(request, exc):
         "message": "An unexpected error occurred. Please try again later.",
         "status_code": 500,
         "support": "Contact support if the issue persists",
-        "version": "3.0.0"
+        "version": "4.0.0"
     }
 
 # Add OPTIONS handler for preflight requests
@@ -157,8 +165,10 @@ async def options_handler(request):
 
 if __name__ == "__main__":
     import uvicorn
-    print("🚀 Starting AI Tutor Backend Server...")
+    print("🚀 Starting AI Tutor Backend Server v4.0...")
     print("📡 CORS enabled for origins:", origins)
     print("🔗 Server will be available at: http://localhost:8000")
     print("📚 API Documentation: http://localhost:8000/docs")
+    print("🛡️ Admin Dashboard: Enabled")
+    print("📖 Lesson Management: Active")
     uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)

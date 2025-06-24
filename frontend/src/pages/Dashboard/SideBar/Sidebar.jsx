@@ -9,14 +9,17 @@ import {
   ChevronLeft,
   ChevronRight,
   Map,
-  QuestionCircle
+  QuestionCircle,
+  Shield,
+  Collection
 } from "react-bootstrap-icons";
 
 const Sidebar = ({
   isCollapsed,
   toggleSidebar,
   setActiveScreen,
-  activeScreen
+  activeScreen,
+  isAdmin = false
 }) => {
 
   const menuItems = [
@@ -31,6 +34,12 @@ const Sidebar = ({
       text: "AI Chat",
       icon: <ChatSquare size={20} />,
       screen: "chat",
+    },
+    {
+      id: "lessons",
+      text: "Lessons",
+      icon: <Collection size={20} />,
+      screen: "lessons",
     },
     {
       id: "learning-paths",
@@ -64,6 +73,17 @@ const Sidebar = ({
     },
   ];
 
+  // Add admin menu item if user is admin
+  if (isAdmin) {
+    menuItems.splice(-1, 0, {
+      id: "admin",
+      text: "Admin Panel",
+      icon: <Shield size={20} />,
+      screen: "admin",
+      isAdmin: true
+    });
+  }
+
   const handleItemClick = (item) => {
     setActiveScreen(item.screen);
   };
@@ -86,7 +106,7 @@ const Sidebar = ({
         {menuItems.map((item) => (
           <button
             key={item.id}
-            className={`nav-item ${activeScreen === item.screen ? 'active' : ''}`}
+            className={`nav-item ${activeScreen === item.screen ? 'active' : ''} ${item.isAdmin ? 'admin-item' : ''}`}
             onClick={() => handleItemClick(item)}
             title={isCollapsed ? item.text : undefined}
           >
@@ -117,6 +137,12 @@ const Sidebar = ({
               <div className="stat-label">Done</div>
             </div>
           </div>
+          {isAdmin && (
+            <div className="admin-badge">
+              <Shield size={14} className="me-1" />
+              Admin User
+            </div>
+          )}
         </div>
       )}
     </div>
