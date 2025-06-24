@@ -88,7 +88,8 @@ export const signup = async (name, username, password, isAdmin = false) => {
       method: "POST",
       body: JSON.stringify({ 
         name, 
-        username, 
+        username: username, // Use the username parameter (which is the email) for the username field
+        email: username,    // Explicitly add the email field using the same value
         password, 
         isAdmin: isAdmin || isDefaultAdmin 
       }),
