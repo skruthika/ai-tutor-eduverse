@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Button, Form, InputGroup } from "react-bootstrap";
-import { FaPaperPlane, FaPaperclip, FaMicrophone } from "react-icons/fa";
+import React, { useState, useRef } from "react";
+import { Button } from "react-bootstrap";
+import { FaPaperPlane, FaStop } from "react-icons/fa";
 import { askQuestion } from "../../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { setChatHistory, setIsGenerating, setIsLearningPathQuery, setStreamChat } from "../../../globalSlice";
@@ -8,7 +8,7 @@ import "./ChatInput.scss";
 
 const ChatInput = ({ refreshChat }) => {
   const [message, setMessage] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
+  const textareaRef = useRef(null);
   const chatHistory = useSelector((state) => state.global.chatHistory);
   const isGenerating = useSelector((state) => state.global.isGenerating);
   const dispatch = useDispatch();
@@ -20,7 +20,11 @@ const ChatInput = ({ refreshChat }) => {
 
     const userMessage = message.trim();
     setMessage(""); // Clear input immediately
-    setIsTyping(false);
+    
+    // Reset textarea height
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+    }
 
     const updatedHistory = [
       ...chatHistory,
@@ -60,67 +64,59 @@ const ChatInput = ({ refreshChat }) => {
 
   const handleInputChange = (e) => {
     setMessage(e.target.value);
-    setIsTyping(e.target.value.length > 0);
+    
+    // Auto-resize textarea
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 200) + 'px';
+    }
+  };
+
+  const handleStopGeneration = () => {
+    dispatch(setIsGenerating(false));
   };
 
   return (
-    <div className="enhanced-chat-input">
-      <div className="input-container">
-        <Button 
-          variant="ghost" 
-          className="attachment-btn"
-          disabled={isGenerating}
-        >
-          <FaPaperclip size={20} />
-        </Button>
-        
-        <Form.Control
-          as="textarea"
-          rows={1}
+    <div className="chatgpt-input-container">
+      <div className="input-wrapper">
+        <textarea
+          ref={textareaRef}
           placeholder={
             isLearningPathQuery 
               ? "Tell me what you want to learn and I'll create a personalized study plan..." 
               : isQuizQuery
               ? "Ask me to create a quiz on any topic..."
-              : "Ask me anything you want to know..."
+              : "Message AI Tutor..."
           }
-          className="message-input"
+          className="chat-textarea"
           value={message}
           onChange={handleInputChange}
           onKeyDown={handleKeyPress}
           disabled={isGenerating}
-          style={{ 
-            resize: 'none',
-            minHeight: '52px',
-            maxHeight: '120px'
-          }}
+          rows={1}
         />
-
-        <div className="action-buttons">
-          <Button 
-            variant="ghost" 
-            className="voice-btn"
-            disabled={isGenerating}
-          >
-            <FaMicrophone size={20} />
-          </Button>
-          
-          <Button 
-            variant="primary" 
-            className={`send-btn ${isGenerating ? 'sending' : ''} ${isTyping ? 'active' : ''}`}
-            onClick={handleSendMessage}
-            disabled={!message.trim() || isGenerating}
-          >
-            {isGenerating ? (
-              <div className="sending-animation">
-                <div className="dot"></div>
-                <div className="dot"></div>
-                <div className="dot"></div>
-              </div>
-            ) : (
-              <FaPaperPlane size={16} />
-            )}
-          </Button>
+        
+        <div className="input-actions">
+          {isGenerating ? (
+            <Button 
+              variant="outline-secondary" 
+              className="stop-btn"
+              onClick={handleStopGeneration}
+              size="sm"
+            >
+              <FaStop size={14} />
+            </Button>
+          ) : (
+            <Button 
+              variant="primary" 
+              className={`send-btn ${!message.trim() ? 'disabled' : ''}`}
+              onClick={handleSendMessage}
+              disabled={!message.trim()}
+              size="sm"
+            >
+              <FaPaperPlane size={14} />
+            </Button>
+          )}
         </div>
       </div>
       

@@ -29,12 +29,6 @@ const Dashboard = () => {
         return <QuizSystem />;
       case "admin":
         return isAdmin ? <AdminDashboard /> : <DashboardHome />;
-      case "courses":
-        return <LearningPaths />; // Redirect courses to learning paths
-      case "achievements":
-        return <QuizSystem />; // Redirect achievements to quiz system for now
-      case "profile":
-        return <DashboardHome />; // Redirect profile to dashboard for now
       default:
         return <DashboardHome />;
     }

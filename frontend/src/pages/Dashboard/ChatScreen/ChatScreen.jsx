@@ -74,13 +74,8 @@ const ChatScreen = () => {
   }, [chatHistory]);
 
   return (
-    <div className="enhanced-chat-screen">
+    <div className="chatgpt-chat-screen">
       <Container fluid className="chat-container">
-        {/* Clean Header */}
-        <div className="chat-header">
-          <h2 className="chat-title">AI Tutor Chat</h2>
-        </div>
-
         {/* Chat Messages */}
         <div className="chat-messages">
           {chatHistory.length > 0 ? (
@@ -92,18 +87,16 @@ const ChatScreen = () => {
                 }`}
               >
                 {message.role === "user" ? (
-                  <Card className="user-message-card">
-                    <Card.Body>
-                      <Card.Text>{message.content}</Card.Text>
-                      {message.timestamp && (
-                        <small className="message-time">
-                          {formatDistanceToNow(new Date(message.timestamp), {
-                            addSuffix: true,
-                          })}
-                        </small>
-                      )}
-                    </Card.Body>
-                  </Card>
+                  <div className="user-message-bubble">
+                    <div className="message-content">{message.content}</div>
+                    {message.timestamp && (
+                      <div className="message-time">
+                        {formatDistanceToNow(new Date(message.timestamp), {
+                          addSuffix: true,
+                        })}
+                      </div>
+                    )}
+                  </div>
                 ) : (
                   <AIMessage
                     content={message.content}
@@ -116,36 +109,38 @@ const ChatScreen = () => {
             ))
           ) : (
             <div className="welcome-message">
-              <Card className="welcome-card">
-                <Card.Body className="text-center">
-                  <img 
-                    src="/icons/aitutor-short-no-bg.png" 
-                    alt="AI Tutor" 
-                    className="welcome-logo"
-                  />
-                  <h3 className="welcome-title">Welcome to AI Tutor</h3>
-                  <p className="welcome-subtitle">
-                    Your intelligent learning companion is ready to help!
-                  </p>
-                  <div className="welcome-actions">
-                    <Button 
-                      variant="primary" 
-                      onClick={handleStudyPlan}
-                      className="me-2"
-                    >
-                      <Book size={16} className="me-2" />
-                      Create Study Plan
-                    </Button>
-                    <Button 
-                      variant="outline-primary" 
-                      onClick={handleSelfyQuiz}
-                    >
-                      <List size={16} className="me-2" />
-                      Take a Quiz
-                    </Button>
-                  </div>
-                </Card.Body>
-              </Card>
+              <div className="welcome-content">
+                <img 
+                  src="/icons/aitutor-short-no-bg.png" 
+                  alt="AI Tutor" 
+                  className="welcome-logo"
+                />
+                <h2 className="welcome-title">How can I help you today?</h2>
+                <div className="suggestion-cards">
+                  <button 
+                    className="suggestion-card"
+                    onClick={handleStudyPlan}
+                  >
+                    <Book size={20} />
+                    <span>Create a study plan</span>
+                  </button>
+                  <button 
+                    className="suggestion-card"
+                    onClick={handleSelfyQuiz}
+                  >
+                    <List size={20} />
+                    <span>Generate a quiz</span>
+                  </button>
+                  <button className="suggestion-card">
+                    <span>📚</span>
+                    <span>Explain a concept</span>
+                  </button>
+                  <button className="suggestion-card">
+                    <span>💡</span>
+                    <span>Get homework help</span>
+                  </button>
+                </div>
+              </div>
             </div>
           )}
           <div ref={messagesEndRef} />
@@ -154,37 +149,37 @@ const ChatScreen = () => {
         {/* Typing Indicator */}
         {isGenerating && (
           <div className="typing-indicator">
-            <Spinner animation="grow" size="sm" className="me-2" />
-            <span>
-              {isLearningPathQuery
-                ? "Creating your personalized study plan..."
-                : "AI Tutor is thinking..."}
-            </span>
+            <div className="typing-dots">
+              <div className="dot"></div>
+              <div className="dot"></div>
+              <div className="dot"></div>
+            </div>
+            <span>AI Tutor is thinking...</span>
           </div>
         )}
 
-        {/* Action Buttons - Moved to bottom above input */}
-        <div className="chat-actions-section">
-          <div className="action-buttons-group">
-            <Button
-              variant={isLearningPathQuery ? 'primary' : 'outline-primary'}
-              size="sm"
-              onClick={handleStudyPlan}
-              className="action-btn"
-            >
-              <Book size={16} className="me-2" />
-              Study Plan
-            </Button>
-            <Button
-              variant={isQuizQuery ? "primary" : "outline-primary"}
-              size="sm"
-              onClick={handleSelfyQuiz}
-              className="action-btn"
-            >
-              <List size={16} className="me-2" />
-              Quiz
-            </Button>
-            {chatHistory.length > 0 && (
+        {/* Action Buttons - Only show when there's chat history */}
+        {chatHistory.length > 0 && (
+          <div className="chat-actions-section">
+            <div className="action-buttons-group">
+              <Button
+                variant={isLearningPathQuery ? 'primary' : 'outline-primary'}
+                size="sm"
+                onClick={handleStudyPlan}
+                className="action-btn"
+              >
+                <Book size={16} className="me-2" />
+                Study Plan
+              </Button>
+              <Button
+                variant={isQuizQuery ? "primary" : "outline-primary"}
+                size="sm"
+                onClick={handleSelfyQuiz}
+                className="action-btn"
+              >
+                <List size={16} className="me-2" />
+                Quiz
+              </Button>
               <Button
                 variant="outline-danger"
                 size="sm"
@@ -194,9 +189,9 @@ const ChatScreen = () => {
                 <X size={16} className="me-2" />
                 Clear
               </Button>
-            )}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Chat Input */}
         <div className="chat-input-section">

@@ -5,7 +5,6 @@ import {
   ChatSquare, 
   BookHalf, 
   TrophyFill, 
-  Person,
   ChevronLeft,
   ChevronRight,
   Map,
@@ -53,29 +52,11 @@ const Sidebar = ({
       icon: <QuestionCircle size={20} />,
       screen: "quiz-system",
     },
-    {
-      id: "courses",
-      text: "My Courses",
-      icon: <BookHalf size={20} />,
-      screen: "courses",
-    },
-    {
-      id: "achievements",
-      text: "Achievements",
-      icon: <TrophyFill size={20} />,
-      screen: "achievements",
-    },
-    {
-      id: "profile",
-      text: "Profile",
-      icon: <Person size={20} />,
-      screen: "profile",
-    },
   ];
 
   // Add admin menu item if user is admin
   if (isAdmin) {
-    menuItems.splice(-1, 0, {
+    menuItems.push({
       id: "admin",
       text: "Admin Panel",
       icon: <Shield size={20} />,
