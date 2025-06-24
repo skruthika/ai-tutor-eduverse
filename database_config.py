@@ -162,40 +162,22 @@ class DatabaseConfig:
         try:
             db = self.connect_sync()
             
-            # Users collection validation
-            users_validator = {
-                "$jsonSchema": {
-                    "bsonType": "object",
-                    "required": ["username", "email", "password_hash", "created_at"],
-                    "properties": {
-                        "username": {"bsonType": "string"},
-                        "email": {"bsonType": "string"},
-                        "password_hash": {"bsonType": "string"},
-                        "is_admin": {"bsonType": "bool"},
-                        "created_at": {"bsonType": "date"},
-                        "last_login": {"bsonType": "date"}
-                    }
-                }
-            }
-            
-            # Create collections with validation
+            # Create collections without validation for now
+            # This is simpler and more flexible for development
             collections_to_create = [
-                ("users", users_validator),
-                ("chat_messages", {}),
-                ("learning_goals", {}),
-                ("quizzes", {}),
-                ("quiz_attempts", {}),
-                ("lessons", {}),
-                ("user_enrollments", {}),
-                ("user_sessions", {})
+                "users",
+                "chat_messages",
+                "learning_goals",
+                "quizzes",
+                "quiz_attempts",
+                "lessons",
+                "user_enrollments",
+                "user_sessions"
             ]
             
-            for collection_name, validator in collections_to_create:
+            for collection_name in collections_to_create:
                 try:
-                    if validator:
-                        db.create_collection(collection_name, validator=validator)
-                    else:
-                        db.create_collection(collection_name)
+                    db.create_collection(collection_name)
                     logger.info(f"✅ Created collection: {collection_name}")
                 except CollectionInvalid:
                     logger.info(f"📝 Collection {collection_name} already exists")

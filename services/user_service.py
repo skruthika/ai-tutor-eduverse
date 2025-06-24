@@ -46,6 +46,7 @@ class UserService:
                 "email": user_data.email,
                 "password_hash": password_hash,
                 "is_admin": user_data.is_admin,
+                "name": user_data.name or user_data.username,
                 "preferences": {
                     "language": "en",
                     "user_role": "student",
@@ -66,7 +67,7 @@ class UserService:
                 },
                 "created_at": datetime.utcnow(),
                 "updated_at": datetime.utcnow(),
-                "last_login": None
+                "last_login": datetime.utcnow()  # Set to current time instead of None
             }
             
             result = self.users_collection.insert_one(user_doc)
