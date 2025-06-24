@@ -60,6 +60,7 @@ class UserCreate(BaseModel):
     password: str = Field(..., min_length=6)
     name: Optional[str] = Field(None, min_length=1, max_length=100)
     is_admin: bool = False
+    profile: Optional[UserProfile] = None
 
 class UserUpdate(BaseModel):
     name: Optional[str] = None

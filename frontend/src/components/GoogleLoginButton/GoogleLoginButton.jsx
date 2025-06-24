@@ -11,11 +11,17 @@ const GoogleLoginButton = ({ onSuccess, onError, buttonText = "Sign in with Goog
 
   const handleGoogleLoginSuccess = async (tokenResponse) => {
     try {
-      // Get the access token from the response
-      const accessToken = tokenResponse.access_token;
+      console.log('Google tokenResponse:', tokenResponse);
+      
+      // Check if we have access_token or credential (id_token)
+      const credential = tokenResponse.access_token || tokenResponse.credential;
+      
+      if (!credential) {
+        throw new Error('No valid credential received from Google');
+      }
       
       // Call our backend API with the token
-      const data = await googleLogin(accessToken);
+      const data = await googleLogin(credential);
       
       if (onSuccess) {
         onSuccess(data);
@@ -40,6 +46,7 @@ const GoogleLoginButton = ({ onSuccess, onError, buttonText = "Sign in with Goog
       }
     },
     flow: 'implicit',
+    scope: 'openid email profile', // Request profile scope for picture
   });
 
   return (

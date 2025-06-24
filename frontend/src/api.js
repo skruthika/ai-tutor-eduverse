@@ -66,6 +66,9 @@ export const login = async (username, password) => {
       if (data.name) {
         localStorage.setItem("name", data.name);
       }
+      if (data.avatarUrl) {
+        localStorage.setItem("avatarUrl", data.avatarUrl);
+      }
       
       // Log admin status for debugging
       if (data.isAdmin) {
@@ -109,6 +112,8 @@ export const signup = async (name, username, password, isAdmin = false) => {
 // Google login function
 export const googleLogin = async (credential) => {
   try {
+    console.log(`Sending Google credential to backend (length: ${credential.length})`);
+    
     const data = await apiRequest(`${API_BASE_URL}/auth/google-login`, {
       method: "POST",
       body: JSON.stringify({ credential }),
@@ -121,10 +126,18 @@ export const googleLogin = async (credential) => {
       if (data.name) {
         localStorage.setItem("name", data.name);
       }
+      if (data.avatarUrl) {
+        localStorage.setItem("avatarUrl", data.avatarUrl);
+      }
       
       // Log admin status for debugging
       if (data.isAdmin) {
         console.log(`🛡️ Admin privileges granted to ${data.username}`);
+      }
+      
+      // Log avatar URL if present
+      if (data.avatarUrl) {
+        console.log(`🖼️ Avatar URL set: ${data.avatarUrl}`);
       }
     }
 
@@ -143,6 +156,7 @@ export const logout = async () => {
     localStorage.removeItem("name");
     localStorage.removeItem("isAdmin");
     localStorage.removeItem("preferences");
+    localStorage.removeItem("avatarUrl");
     sessionStorage.clear();
     
     return { success: true };
@@ -409,6 +423,12 @@ export const getUserProfile = async () => {
     if (data.isAdmin !== undefined) {
       localStorage.setItem("isAdmin", data.isAdmin);
     }
+    
+    // Update avatar URL if it exists
+    if (data.avatarUrl || data.profile?.avatar_url) {
+      const avatarUrl = data.avatarUrl || data.profile?.avatar_url;
+      localStorage.setItem("avatarUrl", avatarUrl);
+    }
 
     return data;
   } catch (error) {
@@ -423,8 +443,40 @@ export const getUserProfile = async () => {
         ageGroup: "Above 18",
         language: "English",
         userRole: "Student",
-      }
+      },
+      avatarUrl: localStorage.getItem("avatarUrl")
     };
+  }
+};
+
+// Update User Profile API Call
+export const updateUserProfile = async (profileData) => {
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("token");
+
+  if (!username || !token) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(`${API_BASE_URL}/auth/update-profile`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify({ 
+        username, 
+        profile: profileData 
+      }),
+    });
+
+    // Update avatar URL in localStorage if it was updated
+    if (profileData.avatar_url) {
+      localStorage.setItem("avatarUrl", profileData.avatar_url);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    throw error;
   }
 };
 

@@ -3,7 +3,7 @@ Enhanced Authentication API with new database structure
 """
 from fastapi import APIRouter, HTTPException, Depends, Query, Body
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from models.schemas import UserCreate, UserUpdate, APIResponse
+from models.schemas import UserCreate, UserUpdate, UserProfile, APIResponse
 from services.user_service import user_service
 from services.chat_service import chat_service
 import bcrypt
@@ -103,12 +103,16 @@ async def login(username: str = Body(...), password: str = Body(...)):
         # Create JWT token
         token = create_jwt_token(username)
         
+        # Get avatar URL
+        avatar_url = user.get("profile", {}).get("avatar_url")
+        
         return {
             "token": token,
             "username": username,
             "preferences": user.get("preferences", {}),
             "name": user.get("name", username),
-            "isAdmin": current_admin_status
+            "isAdmin": current_admin_status,
+            "avatarUrl": avatar_url
         }
         
     except HTTPException:
@@ -121,15 +125,27 @@ async def login(username: str = Body(...), password: str = Body(...)):
 async def google_login(credential: str = Body(...)):
     """Google login endpoint"""
     try:
-        # Verify the Google token with Google's API
-        google_response = requests.get(
-            f"https://www.googleapis.com/oauth2/v3/tokeninfo?access_token={credential}"
-        )
+        logger.info(f"Received Google login request with credential length: {len(credential)}")
+        
+        # Determine if this is an access_token or id_token based on length and format
+        if len(credential) > 1000:  # Likely an id_token (JWT)
+            # Verify the Google token with Google's ID token verification endpoint
+            google_response = requests.get(
+                f"https://oauth2.googleapis.com/tokeninfo?id_token={credential}"
+            )
+        else:  # Likely an access_token
+            # Verify the Google token with Google's access token verification endpoint
+            google_response = requests.get(
+                f"https://www.googleapis.com/oauth2/v3/tokeninfo?access_token={credential}"
+            )
         
         if google_response.status_code != 200:
+            logger.error(f"Google token verification failed: {google_response.status_code} - {google_response.text}")
             raise HTTPException(status_code=400, detail="Invalid Google token")
         
         google_data = google_response.json()
+        logger.info(f"Google data received: {json.dumps(google_data)}")
+        
         email = google_data.get("email")
         
         if not email:
@@ -141,16 +157,25 @@ async def google_login(credential: str = Body(...)):
         if not user:
             # Create new user
             name = google_data.get("name", email.split("@")[0])
+            picture = google_data.get("picture")
             
             # Check if this is the default admin email
             is_admin = is_default_admin(email)
+            
+            # Create user profile with avatar URL
+            profile = UserProfile(
+                avatar_url=picture,
+                bio=None,
+                skill_level="beginner"
+            )
             
             user_data = UserCreate(
                 username=email,
                 email=email,
                 password="google-oauth-user",  # This won't be used for login
                 name=name,
-                is_admin=is_admin
+                is_admin=is_admin,
+                profile=profile
             )
             
             result = await user_service.create_user(user_data)
@@ -160,6 +185,13 @@ async def google_login(credential: str = Body(...)):
             
             # Get the newly created user
             user = await user_service.get_user_by_username(email)
+        else:
+            # Update existing user's profile picture if it's not set
+            if not user.get("profile", {}).get("avatar_url") and google_data.get("picture"):
+                profile_update = UserProfile(avatar_url=google_data.get("picture"))
+                await user_service.update_user(email, UserUpdate(profile=profile_update))
+                # Refresh user data
+                user = await user_service.get_user_by_username(email)
         
         # Check if user should have admin privileges
         should_be_admin = is_default_admin(email)
@@ -178,12 +210,16 @@ async def google_login(credential: str = Body(...)):
         # Create JWT token
         token = create_jwt_token(email)
         
+        # Get avatar URL
+        avatar_url = user.get("profile", {}).get("avatar_url")
+        
         return {
             "token": token,
             "username": email,
             "preferences": user.get("preferences", {}),
             "name": user.get("name", email),
-            "isAdmin": current_admin_status
+            "isAdmin": current_admin_status,
+            "avatarUrl": avatar_url
         }
         
     except HTTPException:
@@ -220,7 +256,8 @@ async def get_user_profile(username: str = Query(...)):
             "preferences": user.get("preferences", {}),
             "profile": user.get("profile", {}),
             "stats": stats.dict(),
-            "created_at": user.get("created_at")
+            "created_at": user.get("created_at"),
+            "avatarUrl": user.get("profile", {}).get("avatar_url")
         }
         
     except HTTPException:
@@ -277,6 +314,31 @@ async def update_user_preferences(
     except Exception as e:
         logger.error(f"Preferences update error: {e}")
         raise HTTPException(status_code=500, detail="Failed to update preferences")
+
+@auth_router.post("/update-profile")
+async def update_user_profile(
+    username: str = Body(...),
+    profile: dict = Body(...),
+    current_user: str = Depends(get_current_user)
+):
+    """Update user profile"""
+    try:
+        if current_user != username:
+            raise HTTPException(status_code=403, detail="Access denied")
+        
+        update_data = UserUpdate(profile=profile)
+        result = await user_service.update_user(username, update_data)
+        
+        if not result.success:
+            raise HTTPException(status_code=400, detail=result.message)
+        
+        return {"message": "Profile updated successfully"}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Profile update error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to update profile")
 
 @auth_router.get("/admin-info")
 async def get_admin_info():

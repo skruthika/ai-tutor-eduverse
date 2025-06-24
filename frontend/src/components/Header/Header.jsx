@@ -36,6 +36,7 @@ const Header = () => {
   };
 
   const userName = localStorage.getItem("name") || "User";
+  const userAvatarUrl = localStorage.getItem("avatarUrl");
 
   if (!isAuthenticated() || isWelcomePage) {
     return (
@@ -87,7 +88,11 @@ const Header = () => {
           <Dropdown align="end">
             <Dropdown.Toggle variant="ghost" className="user-dropdown">
               <div className="user-avatar">
-                <Person size={18} />
+                {userAvatarUrl ? (
+                  <img src={userAvatarUrl} alt={userName} className="avatar-image" />
+                ) : (
+                  <Person size={18} />
+                )}
               </div>
               <span className="user-name d-none d-md-inline">{userName}</span>
             </Dropdown.Toggle>
@@ -95,7 +100,11 @@ const Header = () => {
             <Dropdown.Menu className="user-menu">
               <div className="user-header">
                 <div className="user-avatar-large">
-                  <Person size={20} />
+                  {userAvatarUrl ? (
+                    <img src={userAvatarUrl} alt={userName} className="avatar-image-large" />
+                  ) : (
+                    <Person size={20} />
+                  )}
                 </div>
                 <div className="user-details">
                   <div className="name">{userName}</div>

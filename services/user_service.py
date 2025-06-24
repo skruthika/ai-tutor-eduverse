@@ -70,6 +70,14 @@ class UserService:
                 "last_login": datetime.utcnow()  # Set to current time instead of None
             }
             
+            # Update profile if provided
+            if user_data.profile:
+                user_doc["profile"] = {
+                    "bio": user_data.profile.bio,
+                    "avatar_url": user_data.profile.avatar_url,
+                    "skill_level": user_data.profile.skill_level
+                }
+            
             result = self.users_collection.insert_one(user_doc)
             
             return APIResponse(
@@ -107,7 +115,19 @@ class UserService:
             if update_data.preferences:
                 update_doc["preferences"] = update_data.preferences.dict()
             if update_data.profile:
-                update_doc["profile"] = update_data.profile.dict()
+                # Get current profile to merge with updates
+                user = await self.get_user_by_username(username)
+                current_profile = user.get("profile", {}) if user else {}
+                
+                # Create updated profile by merging current with updates
+                updated_profile = current_profile.copy()
+                profile_updates = update_data.profile.dict(exclude_unset=True)
+                
+                for key, value in profile_updates.items():
+                    if value is not None:  # Only update fields that are provided
+                        updated_profile[key] = value
+                
+                update_doc["profile"] = updated_profile
             
             result = self.users_collection.update_one(
                 {"username": username},
@@ -225,7 +245,8 @@ class UserService:
                     "is_admin": 1,
                     "created_at": 1,
                     "last_login": 1,
-                    "stats": 1
+                    "stats": 1,
+                    "profile.avatar_url": 1
                 }
             ))
             
