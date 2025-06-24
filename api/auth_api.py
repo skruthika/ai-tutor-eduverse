@@ -11,6 +11,8 @@ import jwt
 import os
 from datetime import datetime, timedelta
 import logging
+import requests
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -114,6 +116,81 @@ async def login(username: str = Body(...), password: str = Body(...)):
     except Exception as e:
         logger.error(f"Login error: {e}")
         raise HTTPException(status_code=500, detail="Login failed")
+
+@auth_router.post("/google-login")
+async def google_login(credential: str = Body(...)):
+    """Google login endpoint"""
+    try:
+        # Verify the Google token with Google's API
+        google_response = requests.get(
+            f"https://www.googleapis.com/oauth2/v3/tokeninfo?access_token={credential}"
+        )
+        
+        if google_response.status_code != 200:
+            raise HTTPException(status_code=400, detail="Invalid Google token")
+        
+        google_data = google_response.json()
+        email = google_data.get("email")
+        
+        if not email:
+            raise HTTPException(status_code=400, detail="Email not found in Google token")
+        
+        # Check if user exists
+        user = await user_service.get_user_by_username(email)
+        
+        if not user:
+            # Create new user
+            name = google_data.get("name", email.split("@")[0])
+            
+            # Check if this is the default admin email
+            is_admin = is_default_admin(email)
+            
+            user_data = UserCreate(
+                username=email,
+                email=email,
+                password="google-oauth-user",  # This won't be used for login
+                name=name,
+                is_admin=is_admin
+            )
+            
+            result = await user_service.create_user(user_data)
+            
+            if not result.success:
+                raise HTTPException(status_code=400, detail=result.message)
+            
+            # Get the newly created user
+            user = await user_service.get_user_by_username(email)
+        
+        # Check if user should have admin privileges
+        should_be_admin = is_default_admin(email)
+        current_admin_status = user.get("is_admin", False)
+        
+        # Update admin status if needed
+        if should_be_admin and not current_admin_status:
+            update_result = await user_service.update_user(email, UserUpdate())
+            if update_result.success:
+                current_admin_status = True
+                logger.info(f"✅ Admin privileges granted to {email}")
+        
+        # Update last login
+        await user_service.update_last_login(email)
+        
+        # Create JWT token
+        token = create_jwt_token(email)
+        
+        return {
+            "token": token,
+            "username": email,
+            "preferences": user.get("preferences", {}),
+            "name": user.get("name", email),
+            "isAdmin": current_admin_status
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Google login error: {e}")
+        raise HTTPException(status_code=500, detail="Google login failed")
 
 @auth_router.get("/profile")
 async def get_user_profile(username: str = Query(...)):

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { login, signup } from "../../api";
 import "./Welcome.scss";
 import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb, FaPlay, FaCheck } from "react-icons/fa";
+import GoogleLoginButton from "../../components/GoogleLoginButton/GoogleLoginButton";
 
 const Welcome = () => {
   const [showModal, setShowModal] = useState(false);
@@ -61,12 +62,20 @@ const Welcome = () => {
     }
   };
 
+  const handleGoogleLoginSuccess = (data) => {
+    navigate('/dashboard');
+  };
+
+  const handleGoogleLoginError = (errorMessage) => {
+    setError(errorMessage || "Google login failed. Please try again.");
+  };
+
   const handleAuthModalOpen = () => {
     setShowModal(true);
     clearForm();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const authTriggers = document.querySelectorAll('.auth-modal-trigger');
     authTriggers.forEach(trigger => {
       trigger.addEventListener('click', handleAuthModalOpen);
@@ -300,6 +309,15 @@ const Welcome = () => {
           >
             <Tab eventKey="login" title="Sign In">
               <div className="auth-form">
+                <GoogleLoginButton 
+                  onSuccess={handleGoogleLoginSuccess}
+                  onError={handleGoogleLoginError}
+                />
+                
+                <div className="separator">
+                  <span>or sign in with email</span>
+                </div>
+                
                 <Form>
                   <Form.Group className="mb-3">
                     <Form.Label>Email Address</Form.Label>
@@ -345,6 +363,16 @@ const Welcome = () => {
 
             <Tab eventKey="signup" title="Sign Up">
               <div className="auth-form">
+                <GoogleLoginButton 
+                  onSuccess={handleGoogleLoginSuccess}
+                  onError={handleGoogleLoginError}
+                  buttonText="Sign up with Google"
+                />
+                
+                <div className="separator">
+                  <span>or sign up with email</span>
+                </div>
+                
                 <Form>
                   <Form.Group className="mb-3">
                     <Form.Label>Full Name</Form.Label>

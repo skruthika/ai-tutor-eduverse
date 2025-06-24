@@ -138,7 +138,7 @@
       align-items: center;
       gap: 1rem;
       font-size: 1.1rem;
-        font-weight: v.$font-weight-medium;
+      font-weight: v.$font-weight-medium;
       
       .check-icon {
         color: #10b981;
@@ -285,7 +285,6 @@
         font-size: 1rem;
         opacity: 0.9;
         font-weight: v.$font-weight-medium;
-;
       }
     }
   }
@@ -740,6 +739,26 @@
   }
   
   .auth-form {
+    .separator {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 1.5rem 0;
+      color: var(--text-tertiary);
+      
+      &::before,
+      &::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid var(--border-light);
+      }
+      
+      span {
+        padding: 0 1rem;
+        font-size: 0.875rem;
+      }
+    }
+    
     .enhanced-input {
       border-radius: v.$border-radius-lg;
       border: 2px solid var(--border-color);

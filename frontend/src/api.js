@@ -106,6 +106,34 @@ export const signup = async (name, username, password, isAdmin = false) => {
   }
 };
 
+// Google login function
+export const googleLogin = async (credential) => {
+  try {
+    const data = await apiRequest(`${API_BASE_URL}/auth/google-login`, {
+      method: "POST",
+      body: JSON.stringify({ credential }),
+    });
+
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("username", data.username);
+      localStorage.setItem("isAdmin", data.isAdmin || false);
+      if (data.name) {
+        localStorage.setItem("name", data.name);
+      }
+      
+      // Log admin status for debugging
+      if (data.isAdmin) {
+        console.log(`🛡️ Admin privileges granted to ${data.username}`);
+      }
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error(error.message || "Google login failed");
+  }
+};
+
 // Logout function
 export const logout = async () => {
   try {
