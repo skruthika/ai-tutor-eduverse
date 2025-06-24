@@ -8,17 +8,7 @@ from contextlib import asynccontextmanager
 import os
 import logging
 
-# Import API routers
-from api.auth_api import auth_router
-from api.chat_api import chat_router
-from api.upload_api import upload_router
-from api.avatar_api import avatar_router
-
-# Import services for initialization
-from database_config import initialize_database
-from migration_script import run_migration
-
-# Configure logging
+# Configure logging first
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -33,18 +23,21 @@ async def lifespan(app: FastAPI):
     
     try:
         # Initialize database
+        from database_config import initialize_database
         initialize_database()
         logger.info("✅ Database initialized successfully")
         
         # Run migration if needed
         if os.getenv("RUN_MIGRATION", "false").lower() == "true":
             logger.info("🔄 Running data migration...")
+            from migration_script import run_migration
             await run_migration()
             logger.info("✅ Data migration completed")
         
     except Exception as e:
         logger.error(f"❌ Startup failed: {e}")
-        raise
+        # Don't raise the exception, just log it
+        # This allows the server to start even if some services fail
     
     yield
     
@@ -176,6 +169,7 @@ async def api_info():
 async def trigger_migration():
     """Trigger data migration (admin only)"""
     try:
+        from migration_script import run_migration
         await run_migration()
         return {"message": "Migration completed successfully"}
     except Exception as e:
@@ -186,17 +180,28 @@ async def trigger_migration():
 async def initialize_db():
     """Initialize database with collections and indexes (admin only)"""
     try:
+        from database_config import initialize_database
         initialize_database()
         return {"message": "Database initialized successfully"}
     except Exception as e:
         logger.error(f"Database initialization error: {e}")
         raise HTTPException(status_code=500, detail="Database initialization failed")
 
-# Include API routers
-app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
-app.include_router(chat_router, prefix="/chat", tags=["Chat & Messaging"])
-app.include_router(upload_router, prefix="/upload", tags=["File Upload"])
-app.include_router(avatar_router, prefix="/lessons", tags=["Avatar Generation"])
+# Import and include API routers
+try:
+    from api.auth_api import auth_router
+    from api.chat_api import chat_router
+    from api.upload_api import upload_router
+    from api.avatar_api import avatar_router
+    
+    app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
+    app.include_router(chat_router, prefix="/chat", tags=["Chat & Messaging"])
+    app.include_router(upload_router, prefix="/upload", tags=["File Upload"])
+    app.include_router(avatar_router, prefix="/lessons", tags=["Avatar Generation"])
+    
+    logger.info("✅ API routers loaded successfully")
+except Exception as e:
+    logger.error(f"❌ Error loading API routers: {e}")
 
 # Legacy endpoints for backward compatibility
 @app.get("/chat/user-stats")

@@ -3,7 +3,7 @@ AWS S3 Service - Handles file uploads and downloads
 """
 import os
 import boto3
-from botocore.exceptions import ClientError
+from botocore.exceptions import ClientError, NoCredentialsError
 import uuid
 import logging
 from typing import Optional, BinaryIO, Dict, Any
@@ -17,7 +17,7 @@ class S3Service:
         self.aws_region = os.getenv("AWS_REGION", "us-east-1")
         self.bucket_name = os.getenv("AWS_S3_BUCKET_NAME")
         
-        # Check if credentials are configured
+        # Check if credentials are configured and not placeholder values
         self.is_configured = all([
             self.aws_access_key_id,
             self.aws_secret_access_key,
@@ -28,6 +28,8 @@ class S3Service:
             self.bucket_name != "your-bucket-name"
         ])
         
+        self.s3_client = None
+        
         if self.is_configured:
             try:
                 # Initialize S3 client
@@ -37,14 +39,31 @@ class S3Service:
                     aws_secret_access_key=self.aws_secret_access_key,
                     region_name=self.aws_region
                 )
-                logger.info("✅ AWS S3 client initialized successfully")
+                
+                # Test the connection by listing buckets (this will fail if credentials are invalid)
+                self.s3_client.head_bucket(Bucket=self.bucket_name)
+                logger.info("✅ AWS S3 client initialized and bucket accessible")
+                
+            except NoCredentialsError:
+                logger.warning("⚠️ AWS credentials not found")
+                self.is_configured = False
+                self.s3_client = None
+            except ClientError as e:
+                error_code = e.response['Error']['Code']
+                if error_code == '403':
+                    logger.warning("⚠️ AWS S3 access denied - check your credentials and permissions")
+                elif error_code == '404':
+                    logger.warning(f"⚠️ AWS S3 bucket '{self.bucket_name}' not found")
+                else:
+                    logger.warning(f"⚠️ AWS S3 error: {e}")
+                self.is_configured = False
+                self.s3_client = None
             except Exception as e:
-                logger.error(f"❌ Failed to initialize S3 client: {e}")
+                logger.warning(f"⚠️ Failed to initialize S3 client: {e}")
                 self.is_configured = False
                 self.s3_client = None
         else:
-            logger.info("ℹ️ AWS S3 credentials not configured - file upload features will be disabled")
-            self.s3_client = None
+            logger.info("ℹ️ AWS S3 not configured - file upload features disabled")
     
     def upload_file(self, 
                    file_obj: BinaryIO, 
@@ -64,7 +83,7 @@ class S3Service:
             Dict with file URL and key
         """
         try:
-            if not self.is_configured:
+            if not self.is_configured or not self.s3_client:
                 logger.error("❌ AWS S3 not configured")
                 return {
                     "success": False,
@@ -129,7 +148,7 @@ class S3Service:
             Boolean indicating success
         """
         try:
-            if not self.is_configured:
+            if not self.is_configured or not self.s3_client:
                 logger.error("❌ AWS S3 not configured")
                 return False
             
@@ -162,7 +181,7 @@ class S3Service:
             Presigned URL or None if error
         """
         try:
-            if not self.is_configured:
+            if not self.is_configured or not self.s3_client:
                 logger.error("❌ AWS S3 not configured")
                 return None
             
@@ -192,7 +211,7 @@ class S3Service:
             Boolean indicating success
         """
         try:
-            if not self.is_configured:
+            if not self.is_configured or not self.s3_client:
                 logger.error("❌ AWS S3 not configured")
                 return False
             
