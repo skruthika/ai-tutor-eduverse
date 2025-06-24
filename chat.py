@@ -176,7 +176,7 @@ async def save_path(
     """Saves learning path as part of a learning goal."""
     try:
         if not isinstance(path, dict):
-            raise HTTPException(status_code=400, detail="Path must be a valid JSON object")
+            return JSONResponse(status_code=400, content={"detail": "Path must be a valid JSON object"})
 
         chat_session = chats_collection.find_one({"username": username}) or {}
         learning_goals = chat_session.get("learning_goals", [])
@@ -212,6 +212,9 @@ async def save_path(
         return {"message": f"Learning path saved successfully under '{learning_goal_name}'"}
     except Exception as e:
         print(f"❌ Error: {str(e)}")
+        print(f"❌ Error type: {type(e)}")
+        import traceback
+        print(f"❌ Traceback: {traceback.format_exc()}")
         return JSONResponse(status_code=500, content={"detail": str(e)})
 
 @chat_router.get("/get-all-goals")

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Container, Button } from "react-bootstrap";
+import { Card, Container, Button, Alert } from "react-bootstrap";
 import { saveLearningPath, getAllLearningGoals, askQuestion } from "../../../api";
 import { useSelector, useDispatch } from "react-redux";
 import { setChatHistory, setIsGenerating, setIsLearningPathQuery, setLearningGoals, setStreamChat } from "../../../globalSlice";
@@ -8,6 +8,8 @@ import { FaPlus, FaRedo, FaCheck } from "react-icons/fa";
 const LearningPath = ({ content, refreshChat }) => {
   const [isSaved, setIsSaved] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   const learningGoals = useSelector((state) => state.global.learningGoals);
   const dispatch = useDispatch();
   const isQuizQuery = useSelector((state) => state.global.isQuizQuery);
@@ -31,6 +33,7 @@ const LearningPath = ({ content, refreshChat }) => {
         dispatch(setLearningGoals(goals));
       } catch (error) {
         console.error(error);
+        setError("Failed to load learning goals. Please try again.");
       }
     };
     fetchLearningGoals();
@@ -39,12 +42,28 @@ const LearningPath = ({ content, refreshChat }) => {
   const handleSave = async () => {
     try {
       setIsSaving(true);
+      setError(null);
+      setSuccess(null);
+      
+      // Store the last message for regeneration if needed
+      const lastUserMessage = chatHistory.filter(msg => msg.role === "user").pop();
+      if (lastUserMessage) {
+        localStorage.setItem("lastMessage", lastUserMessage.content);
+      }
+      
+      // Make sure content is valid
+      if (!content || !content.name || !content.topics || !Array.isArray(content.topics)) {
+        throw new Error("Invalid learning path data");
+      }
+      
       await saveLearningPath(content, content.name);
       const goals = await getAllLearningGoals();
       dispatch(setLearningGoals(goals));
       setIsSaved(true);
+      setSuccess("Learning path saved successfully!");
     } catch (error) {
       console.error(error);
+      setError("Failed to save learning path. Please try again.");
     } finally {
       setIsSaving(false);
     }
@@ -89,6 +108,18 @@ const LearningPath = ({ content, refreshChat }) => {
           <Card.Subtitle className="mb-2 text-muted">
             Duration: {content.course_duration || "N/A"}
           </Card.Subtitle>
+          
+          {error && (
+            <Alert variant="danger" dismissible onClose={() => setError(null)}>
+              {error}
+            </Alert>
+          )}
+          
+          {success && (
+            <Alert variant="success" dismissible onClose={() => setSuccess(null)}>
+              {success}
+            </Alert>
+          )}
         </Card.Body>
       </Card>
 
@@ -142,52 +173,39 @@ const LearningPath = ({ content, refreshChat }) => {
 
       {/* Action Buttons */}
       {isSaved ? (
-        <div className="mx-2" style={{marginTop: '-15px'}}>
+        <div className="mx-2 mb-4">
           <div className="d-flex align-items-center text-success">
             <FaCheck className="me-2" />
             <span style={{fontSize: "0.85rem"}}>Study Plan Saved</span>
           </div>
         </div>
       ) : (
-        <Card className="bg-white p-3 mb-3 border-0" style={{
-          width: "47%",
-          display: 'flex',
-          flexDirection: 'row',
-          position: 'relative',
-          top: '-15px',
-          left: '-20px'
-        }}>
+        <Card className="bg-white p-3 mb-4 border-0 d-flex flex-row">
           <Button
             variant="outline-primary"
-            className="mt-0 mx-1 rounded-pill"
+            className="me-2 rounded-pill"
             style={{ 
-              height: '32px', 
-              minWidth: "160px", 
-              fontSize: "0.75rem", 
-              borderWidth: "2px", 
-              maxWidth: "200px", 
-              margin: "auto" 
+              height: '38px', 
+              fontSize: "0.875rem", 
+              borderWidth: "2px"
             }}
             onClick={handleSave}
             disabled={isSaving}
           >
-            <FaPlus size={15} className="mx-2 mb-1"/>
+            <FaPlus size={14} className="me-2"/>
             {isSaving ? 'Saving...' : 'Save Study Plan'}
           </Button>
           <Button
             variant="outline-primary"
-            className="mt-0 mx-1 rounded-pill"
+            className="rounded-pill"
             style={{ 
-              height: '32px', 
-              minWidth: "130px", 
-              fontSize: "0.75rem", 
-              borderWidth: "2px", 
-              maxWidth: "200px", 
-              margin: "-10px auto 0" 
+              height: '38px', 
+              fontSize: "0.875rem", 
+              borderWidth: "2px"
             }}
             onClick={handleRegenerate}
           >
-            <FaRedo size={15} className="mx-2 mb-1"/>
+            <FaRedo size={14} className="me-2"/>
             Regenerate
           </Button>
         </Card>

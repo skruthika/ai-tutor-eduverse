@@ -12,59 +12,95 @@ def process_learning_path_query(user_prompt, username, generate_response, extrac
     if retry_count > 0:
         modified_prompt = f"{user_prompt} {REGENRATE_OR_FILTER_JSON}"
     else:
-        print(LEARNING_PATH_PROMPT)
         modified_prompt = f"{user_prompt} {LEARNING_PATH_PROMPT}"
 
     response_content = generate_response(modified_prompt)
     response_timestamp = datetime.datetime.utcnow().isoformat() + "Z"
 
     try:
+        # Try to parse the JSON directly
         learning_path_json = json.loads(response_content)
+        
+        # Validate the JSON structure
+        if not isinstance(learning_path_json, dict):
+            raise ValueError("Response is not a valid JSON object")
+            
+        if "topics" not in learning_path_json or not isinstance(learning_path_json["topics"], list):
+            raise ValueError("Missing or invalid 'topics' field in JSON")
+            
+        # Store the response
         response_message = {
             "role": "assistant",
             "content": learning_path_json,
             "type": "learning_path",
             "timestamp": response_timestamp
         }
+        
         response_data = {
             "response": "JSON",
             "type": "learning_path",
             "timestamp": response_timestamp,
             "content": learning_path_json
         }
+        
         store_chat_history(username, response_message)
         return response_data
 
-    except json.JSONDecodeError:
+    except (json.JSONDecodeError, ValueError) as e:
+        print(f"❌ JSON parsing error: {str(e)}")
+        # Try to extract JSON from text
         parsedData = extract_json(response_content)
-        if parsedData:
-            response_message = {
-                "role": "assistant",
-                "content": parsedData,
-                "type": "learning_path",
-                "timestamp": response_timestamp
-            }
-            response_data = {
-                "response": "JSON",
-                "type": "learning_path",
-                "timestamp": response_timestamp,
-                "content": parsedData
-            }
-            store_chat_history(username, response_message)
-            return response_data
+        
+        if parsedData and isinstance(parsedData, dict):
+            # Validate extracted JSON
+            if "topics" in parsedData and isinstance(parsedData["topics"], list):
+                response_message = {
+                    "role": "assistant",
+                    "content": parsedData,
+                    "type": "learning_path",
+                    "timestamp": response_timestamp
+                }
+                
+                response_data = {
+                    "response": "JSON",
+                    "type": "learning_path",
+                    "timestamp": response_timestamp,
+                    "content": parsedData
+                }
+                
+                store_chat_history(username, response_message)
+                return response_data
+        
+        # If we're here, JSON extraction failed or validation failed
+        print("❌ Failed to parse learning path JSON, retrying...")
+        
+        if retry_count < max_retries - 1:
+            # Try again with more explicit instructions
+            return process_learning_path_query(
+                response_content, 
+                username, 
+                generate_response, 
+                extract_json, 
+                store_chat_history, 
+                REGENRATE_OR_FILTER_JSON, 
+                LEARNING_PATH_PROMPT, 
+                retry_count=retry_count + 1, 
+                max_retries=max_retries
+            )
         else:
-            print("❌ Failed to parse learning path JSON")
-            response_message = {
+            # Final fallback - return error message
+            error_message = "I'm sorry, I couldn't generate a valid learning path. Please try again with more specific details."
+            error_response = {
                 "role": "assistant",
-                "content": extract_json(response_content),
-                "type": "failed_learning_path",
+                "content": error_message,
+                "type": "content",
                 "timestamp": response_timestamp
             }
-            response_data = {
-                "response": "FAIL",
-                "type": "failed_learning_path",
+            
+            store_chat_history(username, error_response)
+            return {
+                "response": "ERROR",
+                "type": "content",
                 "timestamp": response_timestamp,
-                "content": response_content
+                "content": error_message
             }
-
-            return process_learning_path_query(response_content, username, generate_response, extract_json, store_chat_history, REGENRATE_OR_FILTER_JSON, LEARNING_PATH_PROMPT, retry_count=retry_count + 1, max_retries=max_retries)
