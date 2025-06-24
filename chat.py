@@ -145,6 +145,8 @@ async def chat(
 
     except Exception as e:
         print(f"❌ Error: {str(e)}")
+        import traceback
+        print(f"❌ Traceback: {traceback.format_exc()}")
         response_timestamp = datetime.datetime.utcnow().isoformat() + "Z"
         response_message = {
             "role": "assistant",
