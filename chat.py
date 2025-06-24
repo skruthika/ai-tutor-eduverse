@@ -284,10 +284,22 @@ async def update_learning_goal(
 async def get_user_stats(username: str = Query(...)):
     """Retrieves user statistics."""
     try:
+        print(f"📊 Fetching user stats for: {username}")
+        
         # Get stats from user collection
         user = users_collection.find_one({"username": username})
         if not user:
-            raise HTTPException(status_code=404, detail="User not found")
+            print(f"⚠️ User not found in users collection: {username}")
+            # Create default user stats if user doesn't exist
+            default_stats = {
+                "totalGoals": 0,
+                "completedGoals": 0,
+                "totalQuizzes": 0,
+                "averageScore": 0,
+                "streakDays": 0,
+                "totalStudyTime": 0
+            }
+            return default_stats
 
         # Get real-time data from chat collection
         chat_session = chats_collection.find_one({"username": username})
@@ -297,44 +309,72 @@ async def get_user_stats(username: str = Query(...)):
         # Calculate real-time stats
         total_goals = len(learning_goals)
         completed_goals = sum(1 for goal in learning_goals if goal.get("progress", 0) >= 100)
-        quiz_messages = [msg for msg in messages if "quiz" in msg.get("content", "").lower()]
+        
+        # Count quiz messages in chat history - Fixed the error here
+        quiz_messages = []
+        for msg in messages:
+            content = msg.get("content", "")
+            # Ensure content is a string before calling .lower()
+            if isinstance(content, str) and "quiz" in content.lower():
+                quiz_messages.append(msg)
+        
         total_quizzes = len(quiz_messages)
 
         # Calculate study time (estimate based on learning goals and progress)
         total_study_time = 0
         for goal in learning_goals:
-            if goal.get("study_plans"):
-                for plan in goal["study_plans"]:
-                    if plan.get("topics"):
-                        for topic in plan["topics"]:
-                            if topic.get("completed"):
-                                # Estimate study time based on time_required
-                                time_str = topic.get("time_required", "0")
-                                try:
-                                    hours = int(''.join(filter(str.isdigit, time_str)))
-                                    total_study_time += hours
-                                except:
-                                    pass
+            study_plans = goal.get("study_plans", [])
+            if isinstance(study_plans, list):
+                for plan in study_plans:
+                    if isinstance(plan, dict) and plan.get("topics"):
+                        topics = plan.get("topics", [])
+                        if isinstance(topics, list):
+                            for topic in topics:
+                                if isinstance(topic, dict) and topic.get("completed"):
+                                    # Estimate study time based on time_required
+                                    time_str = topic.get("time_required", "0")
+                                    if isinstance(time_str, str):
+                                        try:
+                                            hours = int(''.join(filter(str.isdigit, time_str)))
+                                            total_study_time += hours
+                                        except (ValueError, TypeError):
+                                            pass
 
         stats = {
             "totalGoals": total_goals,
             "completedGoals": completed_goals,
             "totalQuizzes": total_quizzes,
-            "averageScore": user.get("stats", {}).get("averageScore", 0),
-            "streakDays": user.get("stats", {}).get("streakDays", 0),
+            "averageScore": user.get("stats", {}).get("averageScore", 0) if isinstance(user.get("stats"), dict) else 0,
+            "streakDays": user.get("stats", {}).get("streakDays", 0) if isinstance(user.get("stats"), dict) else 0,
             "totalStudyTime": total_study_time
         }
 
         # Update user stats in database
         users_collection.update_one(
             {"username": username},
-            {"$set": {"stats": stats}}
+            {"$set": {"stats": stats}},
+            upsert=True
         )
 
+        print(f"✅ User stats calculated successfully: {stats}")
         return stats
+        
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"❌ Error in get_user_stats: {str(e)}")
+        print(f"❌ Error type: {type(e)}")
+        import traceback
+        print(f"❌ Traceback: {traceback.format_exc()}")
+        
+        # Return default stats on error to prevent frontend crashes
+        default_stats = {
+            "totalGoals": 0,
+            "completedGoals": 0,
+            "totalQuizzes": 0,
+            "averageScore": 0,
+            "streakDays": 0,
+            "totalStudyTime": 0
+        }
+        return default_stats
 
 @chat_router.get("/assessments")
 async def get_assessments(username: str = Query(...)):
@@ -349,8 +389,9 @@ async def get_assessments(username: str = Query(...)):
 
         # Extract quiz-related messages and create assessment records
         for i, message in enumerate(messages):
-            content = message.get("content", "").lower()
-            if "quiz" in content and message.get("role") == "user":
+            content = message.get("content", "")
+            # Ensure content is a string before calling .lower()
+            if isinstance(content, str) and "quiz" in content.lower() and message.get("role") == "user":
                 # Look for the AI response that follows
                 ai_response = None
                 if i + 1 < len(messages) and messages[i + 1].get("role") == "assistant":
@@ -360,13 +401,13 @@ async def get_assessments(username: str = Query(...)):
                 assessment_type = "Quiz"
                 subject = "General"
                 
-                if "python" in content:
+                if "python" in content.lower():
                     subject = "Python Programming"
-                elif "javascript" in content or "js" in content:
+                elif "javascript" in content.lower() or "js" in content.lower():
                     subject = "JavaScript"
-                elif "math" in content:
+                elif "math" in content.lower():
                     subject = "Mathematics"
-                elif "science" in content:
+                elif "science" in content.lower():
                     subject = "Science"
 
                 # Generate a mock score (in real implementation, this would be calculated)
