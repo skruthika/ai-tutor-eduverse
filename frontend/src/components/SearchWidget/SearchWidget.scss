@@ -1,5 +1,5 @@
-@import "../../styles/variables";
-@import "../../styles/themes";
+@use "../../styles/variables" as v;
+@use "../../styles/themes";
 
 .search-widget {
   position: fixed;
@@ -11,7 +11,7 @@
   max-height: 80vh;
   background: var(--card-bg);
   border: 1px solid var(--border-light);
-  border-radius: $border-radius-2xl;
+  border-radius: v.$border-radius-2xl;
   box-shadow: var(--shadow-xl);
   z-index: 1050;
   display: flex;
@@ -20,7 +20,7 @@
   .search-widget-header {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    border-radius: $border-radius-2xl $border-radius-2xl 0 0;
+    border-radius: v.$border-radius-2xl v.$border-radius-2xl 0 0;
     padding: 1rem 1.5rem;
     display: flex;
     justify-content: space-between;
@@ -33,7 +33,7 @@
       color: white;
       padding: 0.25rem;
       border-radius: 50%;
-      transition: $transition-base;
+      transition: v.$transition-base;
       
       &:hover {
         background: rgba(255, 255, 255, 0.2);
@@ -48,11 +48,11 @@
     padding: 1.5rem;
     
     .search-input {
-      border-radius: $border-radius-lg;
+      border-radius: v.$border-radius-lg;
       border: 2px solid var(--border-color);
       padding: 0.875rem 1rem;
       font-size: 1rem;
-      transition: $transition-base;
+      transition: v.$transition-base;
       
       &:focus {
         border-color: var(--primary-color);
@@ -62,10 +62,10 @@
     
     .search-btn {
       width: 100%;
-      border-radius: $border-radius-lg;
+      border-radius: v.$border-radius-lg;
       padding: 0.875rem;
-      font-weight: $font-weight-semibold;
-      transition: $transition-base;
+      font-weight: v.$font-weight-semibold;
+      transition: v.$transition-base;
       
       &:hover:not(:disabled) {
         transform: translateY(-1px);
@@ -76,10 +76,10 @@
     .search-results {
       .search-result-item {
         border: 1px solid var(--border-light);
-        border-radius: $border-radius-lg;
+        border-radius: v.$border-radius-lg;
         margin-bottom: 0.75rem;
         padding: 1rem;
-        transition: $transition-base;
+        transition: v.$transition-base;
         
         &:hover {
           border-color: var(--primary-color);
@@ -113,7 +113,7 @@
 }
 
 // Responsive design
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: v.$breakpoint-mobile) {
   .search-widget {
     width: 95%;
     max-height: 90vh;

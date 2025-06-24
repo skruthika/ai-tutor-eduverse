@@ -1,8 +1,8 @@
-@import "../../../styles/variables";
-@import "../../../styles/themes";
+@use "../../../styles/variables" as v;
+@use "../../../styles/themes";
 
 .chatgpt-chat-screen {
-  height: calc(100vh - #{$navbar-height});
+  height: calc(100vh - #{v.$navbar-height});
   background: var(--bg-primary);
   display: flex;
   flex-direction: column;
@@ -113,7 +113,7 @@
           padding: 1.5rem 2rem;
           background: var(--card-bg);
           border: 1px solid var(--border-light);
-          border-radius: $border-radius-xl;
+          border-radius: v.$border-radius-xl;
           box-shadow: var(--shadow-sm);
           
           .action-option {
@@ -123,7 +123,7 @@
             font-size: 15px;
             font-weight: 500;
             padding: 0.75rem 1rem;
-            border-radius: $border-radius-lg;
+            border-radius: v.$border-radius-lg;
             transition: all 0.2s ease;
             cursor: pointer;
             white-space: nowrap;
@@ -272,7 +272,7 @@
 }
 
 // Responsive Design
-@media (max-width: $breakpoint-tablet) {
+@media (max-width: v.$breakpoint-tablet) {
   .chatgpt-chat-screen {
     .chat-messages {
       padding: 1.5rem 1rem 1rem;
@@ -338,7 +338,7 @@
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: v.$breakpoint-mobile) {
   .chatgpt-chat-screen {
     .chat-messages {
       padding: 1rem 0.75rem 0.75rem;

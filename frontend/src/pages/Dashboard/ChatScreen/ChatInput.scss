@@ -1,5 +1,5 @@
-@import "../../../styles/variables";
-@import "../../../styles/themes";
+@use "../../../styles/variables" as v;
+@use "../../../styles/themes";
 
 .chatgpt-input-container {
   width: 100%;
@@ -179,7 +179,7 @@
 }
 
 // Responsive design
-@media (max-width: $breakpoint-tablet) {
+@media (max-width: v.$breakpoint-tablet) {
   .chatgpt-input-container {
     .input-wrapper {
       border-radius: 20px;
@@ -207,7 +207,7 @@
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: v.$breakpoint-mobile) {
   .chatgpt-input-container {
     .input-wrapper {
       border-radius: 18px;

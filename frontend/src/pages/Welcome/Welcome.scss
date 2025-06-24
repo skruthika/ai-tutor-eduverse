@@ -1,5 +1,5 @@
-@import "../../styles/variables";
-@import "../../styles/themes";
+@use "../../styles/variables" as v;
+@use "../../styles/themes";
 
 .optimized-welcome {
   min-height: 100vh;
@@ -20,7 +20,7 @@
   align-items: center;
   padding: 0;
   // Add padding-top to account for fixed header
-  padding-top: $navbar-height;
+  padding-top: v.$navbar-height;
   
   &::before {
     content: '';
@@ -63,7 +63,7 @@
       margin: 0 auto;
       text-align: center;
       
-      @media (min-width: $breakpoint-tablet) {
+      @media (min-width: v.$breakpoint-tablet) {
         margin: 0;
         text-align: left;
       }
@@ -76,10 +76,10 @@
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: $border-radius-full;
+    border-radius: v.$border-radius-full;
     padding: 0.75rem 1.5rem;
     font-size: 0.9rem;
-    font-weight: $font-weight-semibold;
+    font-weight: v.$font-weight-semibold;
     margin-bottom: 2rem;
     color: rgba(255, 255, 255, 0.95);
     animation: fadeInUp 0.8s ease-out;
@@ -91,7 +91,7 @@
   
   .hero-title {
     font-size: 3.5rem;
-    font-weight: $font-weight-extrabold;
+    font-weight: v.$font-weight-extrabold;
     line-height: 1.1;
     margin-bottom: 2rem;
     animation: fadeInUp 0.8s ease-out 0.2s both;
@@ -122,7 +122,7 @@
     line-height: 1.7;
     margin-bottom: 2rem;
     opacity: 0.95;
-    font-weight: $font-weight-medium;
+    font-weight: v.$font-weight-medium;
     animation: fadeInUp 0.8s ease-out 0.4s both;
   }
   
@@ -138,7 +138,7 @@
       align-items: center;
       gap: 1rem;
       font-size: 1.1rem;
-      font-weight: $font-weight-medium;
+        font-weight: v.$font-weight-medium;
       
       .check-icon {
         color: #10b981;
@@ -163,11 +163,11 @@
     align-items: center;
     animation: fadeInUp 0.8s ease-out 0.8s both;
     
-    @media (min-width: $breakpoint-mobile) {
+    @media (min-width: v.$breakpoint-mobile) {
       flex-direction: row;
       justify-content: center;
       
-      @media (min-width: $breakpoint-tablet) {
+      @media (min-width: v.$breakpoint-tablet) {
         justify-content: flex-start;
       }
     }
@@ -176,8 +176,8 @@
       background: linear-gradient(135deg, #fbbf24, #f59e0b);
       border: none;
       padding: 1.25rem 2.5rem;
-      font-weight: $font-weight-bold;
-      border-radius: $border-radius-xl;
+      font-weight: v.$font-weight-bold;
+      border-radius: v.$border-radius-xl;
       font-size: 1.125rem;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       min-width: 240px;
@@ -211,8 +211,8 @@
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
       padding: 1.25rem 2.5rem;
-      font-weight: $font-weight-semibold;
-      border-radius: $border-radius-xl;
+      font-weight: v.$font-weight-semibold;
+      border-radius: v.$border-radius-xl;
       font-size: 1.125rem;
       min-width: 240px;
       transition: all 0.4s ease;
@@ -234,16 +234,16 @@
     justify-content: center;
     background: rgba(220, 38, 38, 0.15);
     border: 1px solid rgba(220, 38, 38, 0.3);
-    border-radius: $border-radius-lg;
+    border-radius: v.$border-radius-lg;
     padding: 1rem 1.5rem;
     margin-bottom: 2rem;
     color: #fca5a5;
     font-size: 0.9rem;
-    font-weight: $font-weight-medium;
+    font-weight: v.$font-weight-medium;
     animation: fadeInUp 0.8s ease-out 0.9s both;
     backdrop-filter: blur(10px);
     
-    @media (min-width: $breakpoint-tablet) {
+    @media (min-width: v.$breakpoint-tablet) {
       justify-content: flex-start;
     }
     
@@ -254,7 +254,7 @@
     
     strong {
       color: white;
-      font-weight: $font-weight-bold;
+      font-weight: v.$font-weight-bold;
     }
   }
   
@@ -264,7 +264,7 @@
     justify-content: center;
     animation: fadeInUp 0.8s ease-out 1s both;
     
-    @media (min-width: $breakpoint-tablet) {
+    @media (min-width: v.$breakpoint-tablet) {
       justify-content: flex-start;
     }
     
@@ -273,7 +273,7 @@
       
       .stat-number {
         font-size: 2.5rem;
-        font-weight: $font-weight-extrabold;
+        font-weight: v.$font-weight-extrabold;
         color: #fbbf24;
         display: block;
         line-height: 1;
@@ -284,7 +284,8 @@
       .stat-label {
         font-size: 1rem;
         opacity: 0.9;
-        font-weight: $font-weight-medium;
+        font-weight: v.$font-weight-medium;
+;
       }
     }
   }
@@ -324,12 +325,12 @@
         backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
         border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: $border-radius-xl;
+        border-radius: v.$border-radius-xl;
         padding: 1.5rem;
         display: flex;
         align-items: center;
         gap: 1rem;
-        font-weight: $font-weight-semibold;
+        font-weight: v.$font-weight-semibold;
         animation: float 4s ease-in-out infinite;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         
@@ -397,10 +398,10 @@
     align-items: center;
     background: var(--primary-color);
     color: white;
-    border-radius: $border-radius-full;
+    border-radius: v.$border-radius-full;
     padding: 0.75rem 1.5rem;
     font-size: 0.9rem;
-    font-weight: $font-weight-semibold;
+    font-weight: v.$font-weight-semibold;
     margin-bottom: 2rem;
     
     svg {
@@ -410,7 +411,7 @@
   
   .section-title {
     font-size: 3rem;
-    font-weight: $font-weight-extrabold;
+    font-weight: v.$font-weight-extrabold;
     color: var(--text-primary);
     margin-bottom: 1.5rem;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
@@ -441,7 +442,7 @@
     
     .enhanced-feature-card {
       background: var(--card-bg);
-      border-radius: $border-radius-2xl;
+      border-radius: v.$border-radius-2xl;
       padding: 3rem 2rem; // Consistent padding
       text-align: center;
       box-shadow: var(--shadow-lg);
@@ -530,7 +531,7 @@
       
       h3 {
         font-size: 1.75rem;
-        font-weight: $font-weight-bold;
+        font-weight: v.$font-weight-bold;
         color: var(--text-primary);
         margin-bottom: 1.5rem;
         min-height: 4rem; // Consistent title height
@@ -594,7 +595,7 @@
   
   .cta-title {
     font-size: 3rem;
-    font-weight: $font-weight-extrabold;
+    font-weight: v.$font-weight-extrabold;
     margin-bottom: 1.5rem;
     line-height: 1.2;
   }
@@ -617,7 +618,7 @@
       align-items: center;
       gap: 1rem;
       font-size: 1.1rem;
-      font-weight: $font-weight-medium;
+      font-weight: v.$font-weight-medium;
       text-align: left;
       
       .check-icon {
@@ -639,8 +640,8 @@
     background: linear-gradient(135deg, #fbbf24, #f59e0b);
     border: none;
     padding: 1.5rem 3rem;
-    font-weight: $font-weight-bold;
-    border-radius: $border-radius-xl;
+    font-weight: v.$font-weight-bold;
+    border-radius: v.$border-radius-xl;
     font-size: 1.25rem;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
@@ -671,7 +672,7 @@
 // Enhanced Modal Styling
 .auth-modal {
   .modal-content {
-    border-radius: $border-radius-2xl;
+    border-radius: v.$border-radius-2xl;
     border: none;
     box-shadow: var(--shadow-xl);
     background: var(--modal-bg);
@@ -686,7 +687,7 @@
     color: white;
     
     .modal-title {
-      font-weight: $font-weight-bold;
+      font-weight: v.$font-weight-bold;
       color: white;
       font-size: 1.5rem;
       
@@ -715,10 +716,10 @@
     
     .nav-link {
       border: none;
-      border-radius: $border-radius-lg;
+      border-radius: v.$border-radius-lg;
       margin-right: 1rem;
       color: var(--text-secondary);
-      font-weight: $font-weight-semibold;
+      font-weight: v.$font-weight-semibold;
       padding: 1rem 2rem;
       transition: all 0.3s ease;
       background: var(--bg-secondary);
@@ -740,7 +741,7 @@
   
   .auth-form {
     .enhanced-input {
-      border-radius: $border-radius-lg;
+      border-radius: v.$border-radius-lg;
       border: 2px solid var(--border-color);
       padding: 1rem 1.5rem;
       font-size: 1rem;
@@ -762,9 +763,9 @@
     }
     
     .enhanced-button {
-      border-radius: $border-radius-lg;
+      border-radius: v.$border-radius-lg;
       padding: 1rem 2rem;
-      font-weight: $font-weight-semibold;
+      font-weight: v.$font-weight-semibold;
       transition: all 0.3s ease;
       border: none;
       font-size: 1rem;
@@ -818,7 +819,7 @@
 }
 
 // Enhanced responsive design
-@media (max-width: $breakpoint-tablet) {
+@media (max-width: v.$breakpoint-tablet) {
   .enhanced-hero {
     .hero-title {
       font-size: 2.5rem;
@@ -871,11 +872,11 @@
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: v.$breakpoint-mobile) {
   .enhanced-hero {
     text-align: center;
     padding: 2rem 0;
-    padding-top: calc(#{$navbar-height} + 2rem); // Account for mobile navbar height
+    padding-top: calc(#{v.$navbar-height} + 2rem); // Account for mobile navbar height
     
     .hero-title {
       font-size: 2rem;

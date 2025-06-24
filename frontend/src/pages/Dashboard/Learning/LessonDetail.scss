@@ -1,5 +1,4 @@
-@import "../../../styles/variables";
-@import "../../../styles/themes";
+@use "../../../styles/variables" as v;`r`n@use "../../../styles/themes";
 
 .lesson-detail {
   width: 100%;
@@ -20,7 +19,7 @@
   .lesson-card {
     background: var(--card-bg);
     border: 1px solid var(--border-light);
-    border-radius: $border-radius-xl;
+    border-radius: v.$border-radius-xl;
     box-shadow: var(--shadow);
     overflow: hidden;
     
@@ -37,7 +36,7 @@
         
         .lesson-title {
           margin: 0;
-          font-weight: $font-weight-bold;
+          font-weight: v.$font-weight-bold;
           line-height: 1.3;
         }
         
@@ -48,7 +47,7 @@
           .badge {
             font-size: 0.875rem;
             padding: 0.5rem 0.75rem;
-            border-radius: $border-radius-lg;
+            border-radius: v.$border-radius-lg;
           }
         }
       }
@@ -63,7 +62,7 @@
         margin-bottom: 2rem;
         padding: 1rem 1.5rem;
         background: var(--bg-secondary);
-        border-radius: $border-radius-lg;
+        border-radius: v.$border-radius-lg;
         
         .meta-item {
           display: flex;
@@ -86,7 +85,7 @@
         
         h5 {
           font-size: 1.25rem;
-          font-weight: $font-weight-semibold;
+          font-weight: v.$font-weight-semibold;
           color: var(--text-primary);
           margin-bottom: 1rem;
           padding-bottom: 0.5rem;
@@ -103,7 +102,7 @@
         .content-text {
           background: var(--bg-secondary);
           padding: 1.5rem;
-          border-radius: $border-radius-lg;
+          border-radius: v.$border-radius-lg;
           border-left: 4px solid var(--primary-color);
         }
       }
@@ -125,7 +124,7 @@
               left: 0;
               top: 0;
               color: var(--success-color);
-              font-weight: $font-weight-bold;
+              font-weight: v.$font-weight-bold;
               width: 1.5rem;
               height: 1.5rem;
               background: var(--success-bg);
@@ -148,7 +147,7 @@
           .prereq-badge {
             font-size: 0.875rem;
             padding: 0.5rem 0.75rem;
-            border-radius: $border-radius-lg;
+            border-radius: v.$border-radius-lg;
             background: var(--bg-secondary);
             color: var(--text-secondary);
           }
@@ -157,7 +156,7 @@
       
       .avatar-video-section {
         .video-container {
-          border-radius: $border-radius-lg;
+          border-radius: v.$border-radius-lg;
           overflow: hidden;
           box-shadow: var(--shadow-md);
           
@@ -172,12 +171,12 @@
         margin-bottom: 2rem;
         padding: 1.5rem;
         background: var(--bg-secondary);
-        border-radius: $border-radius-lg;
+        border-radius: v.$border-radius-lg;
         text-align: center;
         
         .create-avatar-btn {
           padding: 0.75rem 1.5rem;
-          font-weight: $font-weight-semibold;
+          font-weight: v.$font-weight-semibold;
           
           &:hover {
             transform: translateY(-2px);
@@ -202,7 +201,7 @@
       
       .btn {
         padding: 0.75rem 1.5rem;
-        font-weight: $font-weight-semibold;
+        font-weight: v.$font-weight-semibold;
         
         &:hover {
           transform: translateY(-2px);
@@ -214,7 +213,7 @@
 }
 
 // Responsive design
-@media (max-width: $breakpoint-tablet) {
+@media (max-width: v.$breakpoint-tablet) {
   .lesson-detail {
     .lesson-card {
       .card-header {
@@ -244,7 +243,7 @@
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: v.$breakpoint-mobile) {
   .lesson-detail {
     .lesson-card {
       .card-header {

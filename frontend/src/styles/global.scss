@@ -1,6 +1,5 @@
 // Import global styles
-@import "./variables";
-@import "./mixins";
+@use "./variables" as v;
 
 // Global resets and base styles
 * {
@@ -10,8 +9,8 @@
 }
 
 body {
-  font-family: "Arial", sans-serif;
-  background-color: $background-color;
-  color: $text-color;
+  font-family: v.$font-family-base;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
  

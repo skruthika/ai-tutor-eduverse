@@ -1,10 +1,9 @@
-@import "../../styles/variables";
-@import "../../styles/themes";
+@use "../../styles/variables" as v;`r`n@use "../../styles/themes";
 
 .avatar-uploader {
   background: var(--card-bg);
   border: 1px solid var(--border-light);
-  border-radius: $border-radius-xl;
+  border-radius: v.$border-radius-xl;
   box-shadow: var(--shadow);
   overflow: hidden;
   
@@ -16,7 +15,7 @@
     
     h5 {
       margin: 0;
-      font-weight: $font-weight-semibold;
+      font-weight: v.$font-weight-semibold;
     }
   }
   
@@ -26,7 +25,7 @@
   
   .upload-container {
     border: 2px dashed var(--border-color);
-    border-radius: $border-radius-lg;
+    border-radius: v.$border-radius-lg;
     padding: 2rem;
     text-align: center;
     transition: all 0.3s ease;
@@ -47,7 +46,7 @@
       p {
         color: var(--text-secondary);
         margin-bottom: 0.5rem;
-        font-weight: $font-weight-medium;
+        font-weight: v.$font-weight-medium;
       }
       
       small {
@@ -61,7 +60,7 @@
       .image-preview {
         max-width: 100%;
         max-height: 300px;
-        border-radius: $border-radius-lg;
+        border-radius: v.$border-radius-lg;
         box-shadow: var(--shadow-sm);
       }
       
@@ -76,7 +75,7 @@
   .action-buttons {
     .btn {
       padding: 0.75rem 1.5rem;
-      font-weight: $font-weight-semibold;
+      font-weight: v.$font-weight-semibold;
       
       &:hover:not(:disabled) {
         transform: translateY(-2px);
@@ -87,7 +86,7 @@
   
   .progress {
     height: 0.75rem;
-    border-radius: $border-radius-full;
+    border-radius: v.$border-radius-full;
     
     .progress-bar {
       background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
@@ -96,7 +95,7 @@
 }
 
 // Responsive design
-@media (max-width: $breakpoint-tablet) {
+@media (max-width: v.$breakpoint-tablet) {
   .avatar-uploader {
     .upload-container {
       padding: 1.5rem;
@@ -104,7 +103,7 @@
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: v.$breakpoint-mobile) {
   .avatar-uploader {
     .card-header {
       padding: 1rem;

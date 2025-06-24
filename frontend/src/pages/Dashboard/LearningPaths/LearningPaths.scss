@@ -1,9 +1,8 @@
-@import "../../../styles/variables";
-@import "../../../styles/themes";
+@use "../../../styles/variables" as v;`r`n@use "../../../styles/themes";
 
 .learning-paths-page {
   background: var(--bg-primary);
-  min-height: calc(100vh - #{$navbar-height});
+  min-height: calc(100vh - #{v.$navbar-height});
   padding: 2rem;
   
   .loading-state {
@@ -31,7 +30,7 @@
       
       .page-title {
         font-size: 2.5rem;
-        font-weight: $font-weight-bold;
+        font-weight: v.$font-weight-bold;
         color: var(--text-primary);
         margin: 0 0 1rem 0;
         display: flex;
@@ -59,7 +58,7 @@
     .lesson-content-card {
       background: var(--card-bg);
       border: 1px solid var(--border-light);
-      border-radius: $border-radius-xl;
+      border-radius: v.$border-radius-xl;
       transition: all 0.3s ease;
       height: 100%;
       position: relative;
@@ -102,7 +101,7 @@
         
         .content-title {
           font-size: 1.25rem;
-          font-weight: $font-weight-bold;
+          font-weight: v.$font-weight-bold;
           color: var(--text-primary);
           margin: 0;
           flex: 1;
@@ -149,7 +148,7 @@
           align-items: center;
           margin-bottom: 0.5rem;
           font-size: 0.875rem;
-          font-weight: $font-weight-semibold;
+          font-weight: v.$font-weight-semibold;
           color: var(--text-secondary);
         }
         
@@ -169,8 +168,8 @@
         margin-top: auto;
         
         .btn {
-          font-weight: $font-weight-semibold;
-          border-radius: $border-radius-lg;
+          font-weight: v.$font-weight-semibold;
+          border-radius: v.$border-radius-lg;
           transition: all 0.3s ease;
           
           &:hover {
@@ -193,7 +192,7 @@
       h3 {
         color: var(--text-primary);
         margin-bottom: 1rem;
-        font-weight: $font-weight-bold;
+        font-weight: v.$font-weight-bold;
       }
       
       p {
@@ -209,7 +208,7 @@
   
   // Modal styling
   .modal-content {
-    border-radius: $border-radius-xl;
+    border-radius: v.$border-radius-xl;
     border: none;
     box-shadow: var(--shadow-xl);
   }
@@ -229,7 +228,7 @@
         margin-bottom: 2rem;
         padding: 1.5rem;
         background: var(--bg-secondary);
-        border-radius: $border-radius-lg;
+        border-radius: v.$border-radius-lg;
         
         .stat-item {
           display: flex;
@@ -243,7 +242,7 @@
           
           .stat-value {
             font-size: 1.25rem;
-            font-weight: $font-weight-bold;
+            font-weight: v.$font-weight-bold;
             color: var(--text-primary);
             line-height: 1;
           }
@@ -261,13 +260,13 @@
         h5 {
           color: var(--text-primary);
           margin-bottom: 1.5rem;
-          font-weight: $font-weight-bold;
+          font-weight: v.$font-weight-bold;
         }
         
         .topic-card {
           margin-bottom: 1rem;
           border: 1px solid var(--border-light);
-          border-radius: $border-radius-lg;
+          border-radius: v.$border-radius-lg;
           transition: all 0.3s ease;
           
           &:hover {
@@ -284,7 +283,7 @@
             h6 {
               margin: 0;
               color: var(--text-primary);
-              font-weight: $font-weight-semibold;
+              font-weight: v.$font-weight-semibold;
             }
           }
           
@@ -300,7 +299,7 @@
     .path-sidebar {
       .card {
         border: 1px solid var(--border-light);
-        border-radius: $border-radius-lg;
+        border-radius: v.$border-radius-lg;
         
         .card-header {
           background: var(--bg-secondary);
@@ -309,7 +308,7 @@
           h6 {
             margin: 0;
             color: var(--text-primary);
-            font-weight: $font-weight-semibold;
+            font-weight: v.$font-weight-semibold;
           }
         }
         
@@ -340,7 +339,7 @@
 }
 
 // Responsive Design
-@media (max-width: $breakpoint-tablet) {
+@media (max-width: v.$breakpoint-tablet) {
   .learning-paths-page {
     padding: 1.5rem;
     
@@ -367,7 +366,7 @@
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: v.$breakpoint-mobile) {
   .learning-paths-page {
     padding: 1rem;
     

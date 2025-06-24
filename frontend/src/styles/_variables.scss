@@ -1,3 +1,7 @@
+// Import Sass modules first
+@use "sass:color";
+@use "sass:math";
+
 // Enhanced Variables with Modern Design System
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -168,4 +172,4 @@ $z-popover: 1060;
 $z-tooltip: 1070;
 $z-chat-widget: 1080;
 
-@import "bootstrap/scss/bootstrap";
+// Bootstrap will be imported in main files using @use

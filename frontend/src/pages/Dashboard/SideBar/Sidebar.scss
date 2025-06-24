@@ -1,5 +1,5 @@
-@import "../../../styles/variables";
-@import "../../../styles/themes";
+@use "../../../styles/variables" as v;
+@use "../../../styles/themes";
 
 .optimized-sidebar {
   width: 280px;
@@ -116,7 +116,7 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     margin: 0 1rem;
-    border-radius: $border-radius-xl;
+    border-radius: v.$border-radius-xl;
     padding: 0;
     overflow: visible; // Changed from hidden to visible for better icon display
     
@@ -131,7 +131,7 @@
         
         .nav-text {
           color: var(--danger-color);
-          font-weight: $font-weight-semibold;
+          font-weight: v.$font-weight-semibold;
         }
       }
       
@@ -163,7 +163,7 @@
       padding: 1rem 1.25rem;
       width: 100%;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border-radius: $border-radius-xl;
+      border-radius: v.$border-radius-xl;
       border: 1px solid transparent;
       min-height: 52px; // Ensure consistent height for icon visibility
     }
@@ -218,7 +218,7 @@
     }
     
     .nav-text {
-      font-weight: $font-weight-semibold;
+      font-weight: v.$font-weight-semibold;
       font-size: 0.95rem;
       color: inherit;
       white-space: nowrap;
@@ -243,7 +243,7 @@
       
       .stat-number {
         font-size: 1.5rem;
-        font-weight: $font-weight-extrabold;
+        font-weight: v.$font-weight-extrabold;
         color: var(--primary-color);
         line-height: 1;
         margin-bottom: 0.25rem;
@@ -255,7 +255,7 @@
         color: var(--text-tertiary);
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        font-weight: $font-weight-semibold;
+        font-weight: v.$font-weight-semibold;
       }
     }
     
@@ -272,11 +272,11 @@
     justify-content: center;
     background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(239, 68, 68, 0.1));
     border: 1px solid rgba(220, 38, 38, 0.2);
-    border-radius: $border-radius-lg;
+    border-radius: v.$border-radius-lg;
     padding: 0.5rem 1rem;
     color: var(--danger-color);
     font-size: 0.8rem;
-    font-weight: $font-weight-semibold;
+    font-weight: v.$font-weight-semibold;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
@@ -295,7 +295,7 @@
 }
 
 // Responsive design
-@media (max-width: $breakpoint-tablet) {
+@media (max-width: v.$breakpoint-tablet) {
   .optimized-sidebar {
     position: fixed;
     top: 70px; // Match navbar height
@@ -311,7 +311,7 @@
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: v.$breakpoint-mobile) {
   .optimized-sidebar {
     width: 100%;
     max-width: 280px;

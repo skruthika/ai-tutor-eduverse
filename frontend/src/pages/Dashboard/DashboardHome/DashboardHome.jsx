@@ -56,16 +56,14 @@ const DashboardHome = () => {
       setLoading(true);
       setError(null);
       
-      // Fetch dashboard stats
-      const statsResponse = await fetch('/api/dashboard/stats');
-      const stats = statsResponse.ok ? await statsResponse.json() : await getUserStats();
+      // Fetch dashboard stats using the proper API function
+      const stats = await getUserStats();
       
       // Fetch learning goals
       const goals = await getAllLearningGoals();
       
-      // Fetch recent activity
-      const activityResponse = await fetch('/api/dashboard/recent-activity');
-      const activity = activityResponse.ok ? await activityResponse.json() : [];
+      // For now, set empty activity array (no backend endpoint exists yet)
+      const activity = [];
       
       setUserStats(stats);
       setLearningGoals(goals);
@@ -74,15 +72,17 @@ const DashboardHome = () => {
       console.error("Error fetching dashboard data:", error);
       setError("Failed to load dashboard data. Please try again.");
       
-      // Fallback to basic data
-      try {
-        const fallbackStats = await getUserStats();
-        const fallbackGoals = await getAllLearningGoals();
-        setUserStats(fallbackStats);
-        setLearningGoals(fallbackGoals);
-      } catch (fallbackError) {
-        console.error("Fallback data fetch failed:", fallbackError);
-      }
+      // Set default values on error
+      setUserStats({
+        totalGoals: 0,
+        completedGoals: 0,
+        totalQuizzes: 0,
+        averageScore: 0,
+        streakDays: 0,
+        totalStudyTime: 0
+      });
+      setLearningGoals([]);
+      setRecentActivity([]);
     } finally {
       setLoading(false);
     }

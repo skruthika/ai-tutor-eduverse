@@ -1,5 +1,5 @@
-@import "../../styles/variables";
-@import "../../styles/themes";
+@use "../../styles/variables" as v;
+@use "../../styles/themes";
 
 .clean-navbar {
   background: var(--navbar-bg) !important;
@@ -7,9 +7,9 @@
   height: 70px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  transition: $transition-base;
+  transition: v.$transition-base;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  z-index: $z-fixed;
+  z-index: v.$z-fixed;
   
   .navbar-container {
     display: flex;
@@ -30,7 +30,7 @@
     }
     
     .brand-logo {
-      transition: $transition-base;
+      transition: v.$transition-base;
       border-radius: 50%;
       
       &:hover {
@@ -40,7 +40,7 @@
     
     .brand-name {
       font-size: 1.5rem;
-      font-weight: $font-weight-bold;
+      font-weight: v.$font-weight-bold;
       color: var(--primary-color);
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       -webkit-background-clip: text;
@@ -57,10 +57,10 @@
     .get-started-btn {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       border: none;
-      font-weight: $font-weight-semibold;
+      font-weight: v.$font-weight-semibold;
       padding: 0.75rem 1.5rem;
-      border-radius: $border-radius-lg;
-      transition: $transition-base;
+      border-radius: v.$border-radius-lg;
+      transition: v.$transition-base;
       color: white;
       
       &:hover {
@@ -72,12 +72,12 @@
     .user-dropdown {
       background: transparent !important;
       border: 1px solid var(--border-light) !important;
-      border-radius: $border-radius-lg !important;
+      border-radius: v.$border-radius-lg !important;
       padding: 0.5rem 1rem !important;
       display: flex !important;
       align-items: center !important;
       gap: 0.5rem !important;
-      transition: $transition-base !important;
+      transition: v.$transition-base !important;
       color: var(--text-primary) !important;
       
       &:hover, &:focus, &:active {
@@ -103,7 +103,7 @@
       
       .user-name {
         font-size: 0.9rem;
-        font-weight: $font-weight-medium;
+        font-weight: v.$font-weight-medium;
         color: var(--text-primary);
       }
     }
@@ -111,7 +111,7 @@
     .user-menu {
       background: var(--card-bg);
       border: 1px solid var(--border-light);
-      border-radius: $border-radius-lg;
+      border-radius: v.$border-radius-lg;
       box-shadow: var(--shadow-lg);
       padding: 0;
       min-width: 240px;
@@ -123,7 +123,7 @@
         align-items: center;
         gap: 0.75rem;
         background: var(--bg-secondary);
-        border-radius: $border-radius-lg $border-radius-lg 0 0;
+        border-radius: v.$border-radius-lg v.$border-radius-lg 0 0;
         
         .user-avatar-large {
           width: 36px;
@@ -139,7 +139,7 @@
         .user-details {
           .name {
             font-size: 0.9rem;
-            font-weight: $font-weight-semibold;
+            font-weight: v.$font-weight-semibold;
             color: var(--text-primary);
             line-height: 1.2;
           }
@@ -155,8 +155,8 @@
       .dropdown-item {
         padding: 0.75rem 1rem;
         color: var(--text-primary);
-        font-weight: $font-weight-medium;
-        transition: $transition-base;
+        font-weight: v.$font-weight-medium;
+        transition: v.$transition-base;
         
         &:hover {
           background: var(--bg-secondary);
@@ -182,7 +182,7 @@
 }
 
 // Responsive design
-@media (max-width: $breakpoint-tablet) {
+@media (max-width: v.$breakpoint-tablet) {
   .clean-navbar {
     height: 70px;
     
@@ -214,7 +214,7 @@
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: v.$breakpoint-mobile) {
   .clean-navbar {
     height: 60px;
   }

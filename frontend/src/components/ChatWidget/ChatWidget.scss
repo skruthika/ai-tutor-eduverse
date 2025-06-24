@@ -1,5 +1,4 @@
-@import "../../styles/variables";
-@import "../../styles/themes";
+@use "../../styles/variables" as v;`r`n@use "../../styles/themes";
 
 .chat-widget {
   position: fixed;
@@ -9,9 +8,9 @@
   height: 500px;
   background: var(--card-bg);
   border: 1px solid var(--border-light);
-  border-radius: $border-radius-2xl;
+  border-radius: v.$border-radius-2xl;
   box-shadow: var(--shadow-xl);
-  z-index: $z-chat-widget;
+  z-index: v.$z-chat-widget;
   display: flex;
   flex-direction: column;
   animation: slideInUp 0.3s ease-out;
@@ -19,7 +18,7 @@
   .chat-widget-header {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    border-radius: $border-radius-2xl $border-radius-2xl 0 0;
+    border-radius: v.$border-radius-2xl v.$border-radius-2xl 0 0;
     padding: 1rem 1.5rem;
     display: flex;
     justify-content: space-between;
@@ -32,7 +31,7 @@
       color: white;
       padding: 0.25rem;
       border-radius: 50%;
-      transition: $transition-base;
+      transition: v.$transition-base;
       
       &:hover {
         background: rgba(255, 255, 255, 0.2);
@@ -93,7 +92,7 @@
         
         .message-bubble {
           padding: 0.75rem 1rem;
-          border-radius: $border-radius-lg;
+          border-radius: v.$border-radius-lg;
           max-width: 80%;
           word-wrap: break-word;
           font-size: 0.9rem;
@@ -115,12 +114,12 @@
     background: transparent;
     border-top: 1px solid var(--border-light);
     padding: 1rem;
-    border-radius: 0 0 $border-radius-2xl $border-radius-2xl;
+    border-radius: 0 0 v.$border-radius-2xl v.$border-radius-2xl;
     
     .input-group {
       .message-input {
         border: 1px solid var(--border-light);
-        border-radius: $border-radius-lg 0 0 $border-radius-lg;
+        border-radius: v.$border-radius-lg 0 0 v.$border-radius-lg;
         background: var(--input-bg);
         color: var(--text-primary);
         font-size: 0.9rem;
@@ -140,9 +139,9 @@
       .send-btn {
         background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         border: none;
-        border-radius: 0 $border-radius-lg $border-radius-lg 0;
+        border-radius: 0 v.$border-radius-lg v.$border-radius-lg 0;
         padding: 0.75rem 1rem;
-        transition: $transition-base;
+        transition: v.$transition-base;
         
         &:hover {
           transform: scale(1.05);
@@ -158,7 +157,7 @@
 }
 
 // Responsive adjustments
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: v.$breakpoint-mobile) {
   .chat-widget {
     width: calc(100vw - 2rem);
     right: 1rem;

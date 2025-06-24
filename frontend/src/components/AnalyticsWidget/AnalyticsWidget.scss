@@ -1,17 +1,17 @@
-@import "../../styles/variables";
-@import "../../styles/themes";
+@use "../../styles/variables" as v;
+@use "../../styles/themes";
 
 .analytics-widget {
   background: var(--card-bg);
   border: 1px solid var(--border-light);
-  border-radius: $border-radius-xl;
+  border-radius: v.$border-radius-xl;
   box-shadow: var(--shadow);
   overflow: hidden;
   
   .analytics-header {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    border-radius: $border-radius-xl $border-radius-xl 0 0;
+    border-radius: v.$border-radius-xl v.$border-radius-xl 0 0;
     padding: 1rem 1.5rem;
     display: flex;
     justify-content: space-between;
@@ -21,7 +21,7 @@
     .time-selector {
       display: flex;
       background: rgba(255, 255, 255, 0.2);
-      border-radius: $border-radius-full;
+      border-radius: v.$border-radius-full;
       padding: 0.25rem;
       
       .time-option {
@@ -29,9 +29,9 @@
         border: none;
         color: white;
         padding: 0.25rem 0.75rem;
-        border-radius: $border-radius-full;
+        border-radius: v.$border-radius-full;
         font-size: 0.875rem;
-        transition: $transition-base;
+        transition: v.$transition-base;
         
         &:hover {
           background: rgba(255, 255, 255, 0.1);
@@ -40,7 +40,7 @@
         &.active {
           background: white;
           color: var(--primary-color);
-          font-weight: $font-weight-semibold;
+          font-weight: v.$font-weight-semibold;
         }
       }
     }
@@ -66,8 +66,8 @@
         gap: 1rem;
         padding: 1rem;
         background: var(--bg-secondary);
-        border-radius: $border-radius-lg;
-        transition: $transition-base;
+        border-radius: v.$border-radius-lg;
+        transition: v.$transition-base;
         
         &:hover {
           transform: translateY(-2px);
@@ -89,7 +89,7 @@
         .stat-content {
           .stat-value {
             font-size: 1.5rem;
-            font-weight: $font-weight-bold;
+            font-weight: v.$font-weight-bold;
             color: var(--text-primary);
             line-height: 1.2;
           }
@@ -105,7 +105,7 @@
     .chart-container {
       .chart-title {
         font-size: 1rem;
-        font-weight: $font-weight-semibold;
+        font-weight: v.$font-weight-semibold;
         color: var(--text-primary);
         margin-bottom: 1rem;
       }
@@ -189,7 +189,7 @@
 }
 
 // Responsive design
-@media (max-width: $breakpoint-tablet) {
+@media (max-width: v.$breakpoint-tablet) {
   .analytics-widget {
     .analytics-body {
       padding: 1.25rem;
@@ -203,7 +203,7 @@
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: v.$breakpoint-mobile) {
   .analytics-widget {
     .analytics-header {
       flex-direction: column;
