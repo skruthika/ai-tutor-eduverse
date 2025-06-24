@@ -8,8 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
   QuestionCircle,
-  Shield,
-  GraduationCap
+  Shield
 } from "react-bootstrap-icons";
 
 const Sidebar = ({
@@ -36,7 +35,7 @@ const Sidebar = ({
     {
       id: "learning",
       text: "Learning",
-      icon: <GraduationCap size={20} />,
+      icon: <BookHalf size={20} />,
       screen: "learning-paths", // Keep existing routing
     },
     {
