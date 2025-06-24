@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, Table, Modal, Form, Alert, Badge, Spinner } from "react-bootstrap";
 import { 
   Shield, 
-  Users, 
+  People, 
   BookHalf, 
   Plus, 
   Trash, 
@@ -10,7 +10,7 @@ import {
   BarChart,
   Award,
   Clock,
-  TrendingUp
+  GraphUp
 } from "react-bootstrap-icons";
 import "./AdminDashboard.scss";
 
@@ -203,7 +203,7 @@ const AdminDashboard = () => {
               className="me-2"
               onClick={() => setShowUsersModal(true)}
             >
-              <Users size={16} className="me-2" />
+              <People size={16} className="me-2" />
               View Users
             </Button>
             <Button 
@@ -235,7 +235,7 @@ const AdminDashboard = () => {
               <Card.Body>
                 <div className="stat-content">
                   <div className="stat-icon bg-primary">
-                    <Users size={24} />
+                    <People size={24} />
                   </div>
                   <div className="stat-details">
                     <h3>{adminStats.total_users || 0}</h3>
@@ -280,7 +280,7 @@ const AdminDashboard = () => {
               <Card.Body>
                 <div className="stat-content">
                   <div className="stat-icon bg-info">
-                    <TrendingUp size={24} />
+                    <GraphUp size={24} />
                   </div>
                   <div className="stat-details">
                     <h3>{adminStats.recent_users || 0}</h3>
