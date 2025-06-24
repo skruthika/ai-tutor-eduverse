@@ -100,7 +100,7 @@ async def api_info():
     return {
         "message": "Welcome to AI Tutor Comprehensive LMS API v4.0",
         "cors_status": "enabled",
-        "allowed_origins": origins,
+        "allowed_origins": "all",
         "new_features": [
             "Dynamic Dashboard with Real-time Data",
             "Enhanced Study Plan Integration",
