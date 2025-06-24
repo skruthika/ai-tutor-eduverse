@@ -16,6 +16,9 @@ auth_router = APIRouter()
 # JWT Secret
 JWT_SECRET = os.getenv("JWT_SECRET")
 
+# Default admin email
+DEFAULT_ADMIN_EMAIL = "blackboxgenai@gmail.com"
+
 # Request Models
 class SignupRequest(BaseModel):
     name: str
@@ -52,6 +55,11 @@ def get_current_user(token: str):
     except jwt.JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
+# Check if email should have admin privileges
+def is_default_admin(email: str) -> bool:
+    """Check if the email is the default admin email"""
+    return email.lower() == DEFAULT_ADMIN_EMAIL.lower()
+
 # Signup Endpoint
 @auth_router.post("/signup")
 async def signup(request: SignupRequest):
@@ -71,12 +79,15 @@ async def signup(request: SignupRequest):
         "ageGroup": "Above 18"
     }
 
+    # Check if this is the default admin email
+    is_admin = is_default_admin(request.username) or request.isAdmin
+
     # Create user document
     user_doc = {
         "name": request.name,
         "username": request.username,
         "password": hashed_password,
-        "isAdmin": request.isAdmin,  # Store admin status
+        "isAdmin": is_admin,  # Store admin status (auto-grant for default admin email)
         "preferences": default_preferences,
         "created_at": datetime.utcnow().isoformat() + "Z",
         "stats": {
@@ -91,7 +102,11 @@ async def signup(request: SignupRequest):
 
     users_collection.insert_one(user_doc)
 
-    return {"message": "User registered successfully with default preferences"}
+    success_message = "User registered successfully with default preferences"
+    if is_admin:
+        success_message += " (Admin privileges granted)"
+
+    return {"message": success_message, "isAdmin": is_admin}
 
 # Login Endpoint
 @auth_router.post("/login")
@@ -132,13 +147,26 @@ async def login(request: LoginRequest):
         )
         user["stats"] = default_stats
 
+    # Check if user should have admin privileges (for existing users)
+    current_admin_status = user.get("isAdmin", False)
+    should_be_admin = is_default_admin(request.username)
+    
+    # Update admin status if needed
+    if should_be_admin and not current_admin_status:
+        users_collection.update_one(
+            {"username": request.username},
+            {"$set": {"isAdmin": True}}
+        )
+        current_admin_status = True
+        print(f"✅ Admin privileges granted to {request.username}")
+
     token = create_jwt_token(request.username)
     return {
         "token": token, 
         "username": request.username, 
         "preferences": user["preferences"], 
         "name": user["name"],
-        "isAdmin": user.get("isAdmin", False)  # Include admin status in response
+        "isAdmin": current_admin_status  # Include admin status in response
     }
 
 # Get User Profile Endpoint
@@ -158,9 +186,15 @@ async def get_user_profile(username: str = Query(...)):
         total_goals = len(learning_goals)
         completed_goals = sum(1 for goal in learning_goals if goal.get("progress", 0) >= 100)
         
-        # Count quiz messages in chat history
+        # Count quiz messages in chat history - Fixed the error here
         messages = chat_session.get("messages", []) if chat_session else []
-        quiz_messages = [msg for msg in messages if isinstance(msg.get("content", ""), str) and "quiz" in msg.get("content", "").lower()]
+        quiz_messages = []
+        for msg in messages:
+            content = msg.get("content", "")
+            # Ensure content is a string before calling .lower()
+            if isinstance(content, str) and "quiz" in content.lower():
+                quiz_messages.append(msg)
+        
         total_quizzes = len(quiz_messages)
         
         # Update user stats
@@ -178,10 +212,21 @@ async def get_user_profile(username: str = Query(...)):
             {"$set": {"stats": updated_stats}}
         )
 
+        # Check if user should have admin privileges (for profile updates)
+        current_admin_status = user.get("isAdmin", False)
+        should_be_admin = is_default_admin(username)
+        
+        if should_be_admin and not current_admin_status:
+            users_collection.update_one(
+                {"username": username},
+                {"$set": {"isAdmin": True}}
+            )
+            current_admin_status = True
+
         return {
             "name": user["name"],
             "username": user["username"],
-            "isAdmin": user.get("isAdmin", False),
+            "isAdmin": current_admin_status,
             "preferences": user.get("preferences", {}),
             "stats": updated_stats,
             "created_at": user.get("created_at")
@@ -199,7 +244,20 @@ async def check_admin_status(username: str = Query(...)):
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         
-        return {"isAdmin": user.get("isAdmin", False)}
+        # Check if user should have admin privileges
+        current_admin_status = user.get("isAdmin", False)
+        should_be_admin = is_default_admin(username)
+        
+        # Update admin status if needed
+        if should_be_admin and not current_admin_status:
+            users_collection.update_one(
+                {"username": username},
+                {"$set": {"isAdmin": True}}
+            )
+            current_admin_status = True
+            print(f"✅ Admin privileges auto-granted to {username}")
+        
+        return {"isAdmin": current_admin_status}
     except Exception as e:
         print(f"Error checking admin status: {e}")
         raise HTTPException(status_code=500, detail="Failed to check admin status")
@@ -229,3 +287,13 @@ async def promote_to_admin(username: str = Query(...), admin_username: str = Que
     except Exception as e:
         print(f"Error promoting user to admin: {e}")
         raise HTTPException(status_code=500, detail="Failed to promote user")
+
+# Get admin info endpoint
+@auth_router.get("/admin-info")
+async def get_admin_info():
+    """Get information about admin configuration"""
+    return {
+        "default_admin_email": DEFAULT_ADMIN_EMAIL,
+        "message": f"Users with email '{DEFAULT_ADMIN_EMAIL}' automatically receive admin privileges",
+        "auto_admin_enabled": True
+    }

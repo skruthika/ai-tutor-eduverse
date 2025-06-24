@@ -67,6 +67,11 @@ export const login = async (username, password) => {
       if (data.name) {
         localStorage.setItem("name", data.name);
       }
+      
+      // Log admin status for debugging
+      if (data.isAdmin) {
+        console.log(`🛡️ Admin privileges granted to ${username}`);
+      }
     }
 
     return data;
@@ -77,10 +82,23 @@ export const login = async (username, password) => {
 
 export const signup = async (name, username, password, isAdmin = false) => {
   try {
+    // Check if this is the default admin email
+    const isDefaultAdmin = username.toLowerCase() === "blackboxgenai@gmail.com";
+    
     const data = await apiRequest(`${API_BASE_URL}/auth/signup`, {
       method: "POST",
-      body: JSON.stringify({ name, username, password, isAdmin }),
+      body: JSON.stringify({ 
+        name, 
+        username, 
+        password, 
+        isAdmin: isAdmin || isDefaultAdmin 
+      }),
     });
+
+    // Log admin status for debugging
+    if (data.isAdmin) {
+      console.log(`🛡️ Admin account created for ${username}`);
+    }
 
     return data;
   } catch (error) {
@@ -118,10 +136,27 @@ export const checkAdminStatus = async () => {
     
     // Update local storage
     localStorage.setItem("isAdmin", data.isAdmin);
+    
+    // Log admin status changes
+    if (data.isAdmin) {
+      console.log(`🛡️ Admin status confirmed for ${username}`);
+    }
+    
     return data;
   } catch (error) {
     console.error("Error checking admin status:", error);
     return { isAdmin: false };
+  }
+};
+
+// Get admin configuration info
+export const getAdminInfo = async () => {
+  try {
+    const data = await apiRequest(`${API_BASE_URL}/auth/admin-info`);
+    return data;
+  } catch (error) {
+    console.error("Error fetching admin info:", error);
+    return null;
   }
 };
 
@@ -338,6 +373,11 @@ export const getUserProfile = async () => {
         },
       }
     );
+
+    // Update local admin status if it changed
+    if (data.isAdmin !== undefined) {
+      localStorage.setItem("isAdmin", data.isAdmin);
+    }
 
     return data;
   } catch (error) {

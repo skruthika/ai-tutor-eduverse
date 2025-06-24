@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { login, signup } from "../../api";
+import { login, signup, getAdminInfo } from "../../api";
 import "./Welcome.scss";
-import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb, FaPlay, FaCheck } from "react-icons/fa";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb, FaPlay, FaCheck, FaShield } from "react-icons/fa";
 
 const Welcome = () => {
   const [showModal, setShowModal] = useState(false);
@@ -13,13 +13,31 @@ const Welcome = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [adminInfo, setAdminInfo] = useState(null);
   const navigate = useNavigate();
+
+  // Fetch admin info when component mounts
+  React.useEffect(() => {
+    const fetchAdminInfo = async () => {
+      try {
+        const info = await getAdminInfo();
+        setAdminInfo(info);
+      } catch (error) {
+        console.error("Error fetching admin info:", error);
+      }
+    };
+    fetchAdminInfo();
+  }, []);
 
   const clearForm = () => {
     setName("");
     setEmail("");
     setPassword("");
     setError(null);
+  };
+
+  const isDefaultAdminEmail = (email) => {
+    return email.toLowerCase() === "blackboxgenai@gmail.com";
   };
 
   const handleLogin = async () => {
@@ -31,7 +49,16 @@ const Welcome = () => {
     try {
       const data = await login(email, password);
       localStorage.setItem("username", email);
-      navigate("/dashboard");
+      
+      // Show admin welcome message if applicable
+      if (data.isAdmin) {
+        setError("Welcome, Admin! You have been granted administrative privileges.");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
+      } else {
+        navigate("/dashboard");
+      }
     } catch (err) {
       setError(err.message || "Login failed. Please try again.");
     } finally {
@@ -46,13 +73,19 @@ const Welcome = () => {
     }
     setLoading(true);
     try {
-      await signup(name, email, password);
+      const data = await signup(name, email, password);
       setActiveTab("login");
       clearForm();
       setError(null);
-      // Show success message
+      
+      // Show success message with admin info if applicable
+      let successMessage = "Account created successfully! Please sign in.";
+      if (data.isAdmin) {
+        successMessage += " (Admin privileges have been granted)";
+      }
+      
       setTimeout(() => {
-        setError("Account created successfully! Please sign in.");
+        setError(successMessage);
       }, 100);
     } catch (err) {
       setError(err.message || "Signup failed. Please try again.");
@@ -160,6 +193,16 @@ const Welcome = () => {
                     Sign In
                   </Button>
                 </div>
+                
+                {/* Admin Info Display */}
+                {adminInfo && (
+                  <div className="admin-info-banner">
+                    <FaShield className="me-2" />
+                    <span>
+                      Admin Access: <strong>{adminInfo.default_admin_email}</strong> automatically receives admin privileges
+                    </span>
+                  </div>
+                )}
                 
                 <div className="hero-stats">
                   <div className="stat-item">
@@ -288,8 +331,16 @@ const Welcome = () => {
         </Modal.Header>
         <Modal.Body className="p-4">
           {error && (
-            <Alert variant={error.includes("successfully") ? "success" : "danger"} className="mb-3">
+            <Alert variant={error.includes("successfully") || error.includes("Admin") ? "success" : "danger"} className="mb-3">
               {error}
+            </Alert>
+          )}
+          
+          {/* Admin Email Info */}
+          {adminInfo && (
+            <Alert variant="info" className="mb-3">
+              <FaShield className="me-2" />
+              <strong>Admin Access:</strong> Users with email <code>{adminInfo.default_admin_email}</code> automatically receive admin privileges.
             </Alert>
           )}
           
@@ -310,6 +361,12 @@ const Welcome = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       className="enhanced-input"
                     />
+                    {isDefaultAdminEmail(email) && (
+                      <Form.Text className="text-success">
+                        <FaShield className="me-1" />
+                        This email will receive admin privileges
+                      </Form.Text>
+                    )}
                   </Form.Group>
                   <Form.Group className="mb-4">
                     <Form.Label>Password</Form.Label>
@@ -365,6 +422,12 @@ const Welcome = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       className="enhanced-input"
                     />
+                    {isDefaultAdminEmail(email) && (
+                      <Form.Text className="text-success">
+                        <FaShield className="me-1" />
+                        This email will receive admin privileges automatically
+                      </Form.Text>
+                    )}
                   </Form.Group>
                   <Form.Group className="mb-4">
                     <Form.Label>Password</Form.Label>
