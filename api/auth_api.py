@@ -122,9 +122,14 @@ async def login(username: str = Body(...), password: str = Body(...)):
         raise HTTPException(status_code=500, detail="Login failed")
 
 @auth_router.post("/google-login")
-async def google_login(credential: str = Body(...)):
+async def google_login(request_body: dict = Body(...)):
     """Google login endpoint"""
     try:
+        credential = request_body.get("credential")
+        
+        if not credential:
+            raise HTTPException(status_code=422, detail="Missing credential in request body")
+        
         logger.info(f"Received Google login request with credential length: {len(credential)}")
         
         # Determine if this is an access_token or id_token based on length and format
