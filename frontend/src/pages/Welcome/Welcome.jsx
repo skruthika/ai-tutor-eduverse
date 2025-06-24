@@ -3,7 +3,8 @@ import { Tab, Tabs, Button, Form, Modal, Alert, Spinner, Container, Row, Col } f
 import { useNavigate } from "react-router-dom";
 import { login, signup, getAdminInfo } from "../../api";
 import "./Welcome.scss";
-import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb, FaPlay, FaCheck, FaShield } from "react-icons/fa";
+import { FaUserGraduate, FaRocket, FaChartLine, FaBrain, FaGraduationCap, FaLightbulb, FaPlay, FaCheck } from "react-icons/fa";
+import { MdSecurity } from "react-icons/md";
 
 const Welcome = () => {
   const [showModal, setShowModal] = useState(false);
@@ -197,7 +198,7 @@ const Welcome = () => {
                 {/* Admin Info Display */}
                 {adminInfo && (
                   <div className="admin-info-banner">
-                    <FaShield className="me-2" />
+                    <MdSecurity className="me-2" />
                     <span>
                       Admin Access: <strong>{adminInfo.default_admin_email}</strong> automatically receives admin privileges
                     </span>
@@ -339,7 +340,7 @@ const Welcome = () => {
           {/* Admin Email Info */}
           {adminInfo && (
             <Alert variant="info" className="mb-3">
-              <FaShield className="me-2" />
+              <MdSecurity className="me-2" />
               <strong>Admin Access:</strong> Users with email <code>{adminInfo.default_admin_email}</code> automatically receive admin privileges.
             </Alert>
           )}
@@ -363,7 +364,7 @@ const Welcome = () => {
                     />
                     {isDefaultAdminEmail(email) && (
                       <Form.Text className="text-success">
-                        <FaShield className="me-1" />
+                        <MdSecurity className="me-1" />
                         This email will receive admin privileges
                       </Form.Text>
                     )}
@@ -424,7 +425,7 @@ const Welcome = () => {
                     />
                     {isDefaultAdminEmail(email) && (
                       <Form.Text className="text-success">
-                        <FaShield className="me-1" />
+                        <MdSecurity className="me-1" />
                         This email will receive admin privileges automatically
                       </Form.Text>
                     )}
