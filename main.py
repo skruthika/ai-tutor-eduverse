@@ -118,7 +118,7 @@ async def api_info():
 @app.get("/api/dashboard/stats")
 async def get_dashboard_stats():
     """Get dashboard statistics"""
-    try {
+    try:
         # This would typically fetch from database
         return {
             "totalGoals": 8,
@@ -128,7 +128,7 @@ async def get_dashboard_stats():
             "streakDays": 7,
             "totalStudyTime": 24
         }
-    } catch Exception as e:
+    except Exception as e:
         return {
             "totalGoals": 0,
             "completedGoals": 0,
