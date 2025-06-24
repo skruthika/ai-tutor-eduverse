@@ -569,6 +569,84 @@ export const getChatAnalytics = async (days = 30) => {
   }
 };
 
+// File Upload API Calls
+export const uploadImage = async (file) => {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("User not authenticated");
+
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch(`${API_BASE_URL}/upload/image`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to upload image");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    throw error;
+  }
+};
+
+// Generate Avatar API Call
+export const generateAvatar = async (lessonId, avatarImageUrl, voiceLanguage = "en", voiceGender = "female") => {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(`${API_BASE_URL}/lessons/generate-avatar`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        lesson_id: lessonId,
+        avatar_image_url: avatarImageUrl,
+        voice_language: voiceLanguage,
+        voice_gender: voiceGender
+      }),
+    });
+
+    return data;
+  } catch (error) {
+    console.error("Error generating avatar:", error);
+    throw error;
+  }
+};
+
+// Get Avatar Status API Call
+export const getAvatarStatus = async (lessonId) => {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("User not authenticated");
+
+  try {
+    const data = await apiRequest(
+      `${API_BASE_URL}/lessons/status/${lessonId}`,
+      {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      }
+    );
+
+    return data;
+  } catch (error) {
+    console.error("Error checking avatar status:", error);
+    throw error;
+  }
+};
+
 // Lesson Management API Calls
 
 // Get lessons for user (admin + personal)

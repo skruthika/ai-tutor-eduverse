@@ -15,6 +15,10 @@ passlib[bcrypt]==1.7.4
 
 # AI & ML
 groq==0.28.0
+gTTS==2.3.2
+
+# AWS
+boto3==1.28.38
 
 # Data Validation
 pydantic==2.11.7

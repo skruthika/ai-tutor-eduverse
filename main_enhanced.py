@@ -11,6 +11,8 @@ import logging
 # Import API routers
 from api.auth_api import auth_router
 from api.chat_api import chat_router
+from api.upload_api import upload_router
+from api.avatar_api import avatar_router
 
 # Import services for initialization
 from database_config import initialize_database
@@ -110,7 +112,9 @@ async def root():
             "Data Migration Support",
             "Full-text Search",
             "Message Archiving",
-            "Role-based Access Control"
+            "Role-based Access Control",
+            "AWS S3 File Storage",
+            "Avatar Video Generation"
         ],
         "collections": [
             "users",
@@ -136,6 +140,8 @@ async def health_check():
             "chat_service": "active",
             "learning_service": "active",
             "migration_service": "ready",
+            "s3_service": "active",
+            "avatar_service": "active",
             "api": "running",
             "cors": "enabled"
         },
@@ -158,7 +164,9 @@ async def api_info():
             "Real-time analytics",
             "Full-text search capabilities",
             "Automated data migration",
-            "Message archiving system"
+            "Message archiving system",
+            "AWS S3 file storage integration",
+            "Avatar video generation"
         ],
         "documentation": "/docs"
     }
@@ -187,6 +195,8 @@ async def initialize_db():
 # Include API routers
 app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 app.include_router(chat_router, prefix="/chat", tags=["Chat & Messaging"])
+app.include_router(upload_router, prefix="/upload", tags=["File Upload"])
+app.include_router(avatar_router, prefix="/lessons", tags=["Avatar Generation"])
 
 # Legacy endpoints for backward compatibility
 @app.get("/chat/user-stats")
@@ -239,6 +249,8 @@ async def not_found_handler(request, exc):
         "available_endpoints": [
             "/auth/login", "/auth/signup", "/auth/profile",
             "/chat/ask", "/chat/history", "/chat/search",
+            "/upload/image", "/upload/audio", "/upload/video",
+            "/lessons/generate-avatar", "/lessons/status/{lesson_id}",
             "/admin/migrate", "/admin/initialize-db",
             "/docs", "/health"
         ]
@@ -266,4 +278,6 @@ if __name__ == "__main__":
     print("📚 API Documentation: http://localhost:8000/docs")
     print("🛡️ Enhanced Security & Performance")
     print("📈 Real-time Analytics & Search")
+    print("🗄️ AWS S3 File Storage Integration")
+    print("🎬 Avatar Video Generation")
     uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)

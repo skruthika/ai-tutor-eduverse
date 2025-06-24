@@ -186,6 +186,7 @@ class Lesson(BaseModel):
     resources: List[str] = []
     tags: List[str] = []
     created_at: datetime
+    avatar_video_url: Optional[str] = None
 
     class Config:
         allow_population_by_field_name = True
@@ -238,3 +239,25 @@ class PaginatedResponse(BaseModel):
     page: int
     per_page: int
     pages: int
+
+# File Upload Models
+class UploadFileResponse(BaseModel):
+    success: bool
+    message: str
+    url: Optional[str] = None
+    key: Optional[str] = None
+    error: Optional[str] = None
+
+# Avatar Generation Models
+class GenerateAvatarRequest(BaseModel):
+    lesson_id: str
+    avatar_image_url: str
+    voice_language: str = "en"
+    voice_gender: str = "female"
+
+class GenerateAvatarResponse(BaseModel):
+    success: bool
+    message: str
+    avatar_video_url: Optional[str] = None
+    lesson_id: str
+    error: Optional[str] = None
