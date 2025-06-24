@@ -16,10 +16,50 @@ def process_learning_path_query(user_prompt, username, generate_response, extrac
 
     response_content = generate_response(modified_prompt)
     response_timestamp = datetime.datetime.utcnow().isoformat() + "Z"
+    
+    # Check if response is empty or None
+    if not response_content or not response_content.strip():
+        print("❌ Empty response from AI model")
+        if retry_count < max_retries - 1:
+            print("🔄 Retrying due to empty response...")
+            return process_learning_path_query(
+                user_prompt, 
+                username, 
+                generate_response, 
+                extract_json, 
+                store_chat_history, 
+                REGENRATE_OR_FILTER_JSON, 
+                LEARNING_PATH_PROMPT, 
+                retry_count=retry_count + 1, 
+                max_retries=max_retries
+            )
+        else:
+            # Final fallback for empty response
+            error_message = "I'm sorry, I couldn't generate a response. Please check your API configuration and try again."
+            error_response = {
+                "role": "assistant",
+                "content": error_message,
+                "type": "content",
+                "timestamp": response_timestamp
+            }
+            
+            store_chat_history(username, error_response)
+            return {
+                "response": "ERROR",
+                "type": "content",
+                "timestamp": response_timestamp,
+                "content": error_message
+            }
+
+    print(f"📝 AI Response length: {len(response_content)} characters")
+    print(f"📝 First 200 chars: {response_content[:200]}...")
 
     try:
+        # Clean the response content first
+        cleaned_content = response_content.strip()
+        
         # Try to parse the JSON directly
-        learning_path_json = json.loads(response_content)
+        learning_path_json = json.loads(cleaned_content)
         
         # Validate the JSON structure
         if not isinstance(learning_path_json, dict):
@@ -28,6 +68,8 @@ def process_learning_path_query(user_prompt, username, generate_response, extrac
         if "topics" not in learning_path_json or not isinstance(learning_path_json["topics"], list):
             raise ValueError("Missing or invalid 'topics' field in JSON")
             
+        print("✅ Successfully parsed and validated JSON")
+        
         # Store the response
         response_message = {
             "role": "assistant",
@@ -48,12 +90,15 @@ def process_learning_path_query(user_prompt, username, generate_response, extrac
 
     except (json.JSONDecodeError, ValueError) as e:
         print(f"❌ JSON parsing error: {str(e)}")
-        # Try to extract JSON from text
+        print(f"📝 Raw response content: {repr(response_content[:500])}")
+        
+        # Try to extract JSON from text using utility function
         parsedData = extract_json(response_content)
         
         if parsedData and isinstance(parsedData, dict):
             # Validate extracted JSON
             if "topics" in parsedData and isinstance(parsedData["topics"], list):
+                print("✅ Successfully extracted and validated JSON from text")
                 response_message = {
                     "role": "assistant",
                     "content": parsedData,
@@ -77,7 +122,7 @@ def process_learning_path_query(user_prompt, username, generate_response, extrac
         if retry_count < max_retries - 1:
             # Try again with more explicit instructions
             return process_learning_path_query(
-                response_content, 
+                user_prompt,  # Use original prompt, not the response
                 username, 
                 generate_response, 
                 extract_json, 

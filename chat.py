@@ -5,6 +5,8 @@ import asyncio
 import groq
 from fastapi import APIRouter, HTTPException, Body
 from fastapi.responses import StreamingResponse, JSONResponse
+from pydantic import BaseModel
+from typing import Optional
 from database import chats_collection, users_collection
 from constants import LEARNING_PATH_PROMPT, BASIC_ENVIRONMENT_PROMPT, REGENRATE_OR_FILTER_JSON, CALCULATE_SCORE
 from utils import extract_json
@@ -18,16 +20,46 @@ chat_router = APIRouter()
 client = groq.Client(api_key=os.getenv("API_KEY"))
 
 def generate_response(prompt):
-    """Generates a response using Groq's model"""
+    """Generates a response using Groq's model with enhanced error handling"""
     try:
+        # Check if API key is configured
+        api_key = os.getenv("API_KEY")
+        if not api_key or api_key == "your_groq_api_key_here":
+            print("❌ API_KEY not configured properly")
+            return "API configuration error. Please check your API_KEY in the environment variables."
+        
+        model_name = os.getenv("MODEL_NAME", "llama3-70b-8192")
+        print(f"🤖 Calling Groq API with model: {model_name}")
+        print(f"📝 Prompt length: {len(prompt)} characters")
+        
         response = client.chat.completions.create(
-            model=os.getenv("MODEL_NAME", "llama3-70b-8192"),
+            model=model_name,
             messages=[{"role": "user", "content": prompt}],
+            max_tokens=8000,  # Ensure we get a complete response
+            temperature=0.7   # Add some creativity while maintaining consistency
         )
-        return response.choices[0].message.content
+        
+        content = response.choices[0].message.content
+        if not content:
+            print("❌ Empty response from Groq API")
+            return ""
+        
+        print(f"✅ Successfully generated response: {len(content)} characters")
+        return content
+        
     except Exception as e:
-        print(f"Error generating response: {e}")
-        return "Error generating response. Please try again."
+        error_msg = str(e)
+        print(f"❌ Error generating response: {error_msg}")
+        
+        # Provide more specific error messages
+        if "api_key" in error_msg.lower() or "unauthorized" in error_msg.lower():
+            return "API authentication error. Please check your API key configuration."
+        elif "rate" in error_msg.lower() or "quota" in error_msg.lower():
+            return "API rate limit exceeded. Please try again in a few moments."
+        elif "timeout" in error_msg.lower():
+            return "API request timed out. Please try again."
+        else:
+            return f"Error generating response: {error_msg}"
 
 async def generate_chat_stream(messages):
     """Streams chat responses from Groq asynchronously"""
@@ -169,12 +201,16 @@ async def get_chat_history(username: str):
     messages = chat_session.get("messages", [])
     return {"history": messages}
 
+class SavePathRequest(BaseModel):
+    username: str
+    path: dict
+    learning_goal_name: Optional[str] = None
+
 @chat_router.post("/save-path")
-async def save_path(
-    username: str = Body(...),
-    path: dict = Body(...),
-    learning_goal_name: str = Body(None)
-):
+async def save_path(request: SavePathRequest):
+    username = request.username
+    path = request.path
+    learning_goal_name = request.learning_goal_name
     """Saves learning path as part of a learning goal."""
     try:
         if not isinstance(path, dict):

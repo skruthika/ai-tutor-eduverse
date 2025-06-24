@@ -80,7 +80,7 @@ class User(BaseModel):
     last_login: Optional[datetime] = None
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 # Chat Models
 class ChatMessageMetadata(BaseModel):
@@ -92,14 +92,14 @@ class ChatMessage(BaseModel):
     id: Optional[str] = Field(alias="_id")
     username: str
     session_id: str
-    role: str = Field(..., regex="^(user|assistant|system)$")
+    role: str = Field(..., pattern="^(user|assistant|system)$")
     content: str
     message_type: MessageType = MessageType.CONTENT
     metadata: Optional[ChatMessageMetadata] = None
     timestamp: datetime
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 # Learning Goal Models
 class StudyPlan(BaseModel):
@@ -125,13 +125,13 @@ class LearningGoal(BaseModel):
     target_completion_date: Optional[datetime] = None
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 # Quiz Models
 class QuizQuestion(BaseModel):
     question_id: str
     question: str
-    question_type: str = Field(..., regex="^(mcq|true_false|short_answer)$")
+    question_type: str = Field(..., pattern="^(mcq|true_false|short_answer)$")
     options: Optional[List[str]] = None
     correct_answer: str
     explanation: Optional[str] = None
@@ -152,7 +152,7 @@ class Quiz(BaseModel):
     created_at: datetime
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 class QuizAttempt(BaseModel):
     id: Optional[str] = Field(alias="_id")
@@ -168,7 +168,7 @@ class QuizAttempt(BaseModel):
     completed_at: Optional[datetime] = None
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 # Lesson Models
 class Lesson(BaseModel):
@@ -189,7 +189,7 @@ class Lesson(BaseModel):
     avatar_video_url: Optional[str] = None
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 # Enrollment Models
 class UserEnrollment(BaseModel):
@@ -205,7 +205,7 @@ class UserEnrollment(BaseModel):
     last_accessed: Optional[datetime] = None
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 # Session Models
 class SessionActivity(BaseModel):
@@ -224,7 +224,7 @@ class UserSession(BaseModel):
     activities: List[SessionActivity] = []
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 # API Response Models
 class APIResponse(BaseModel):
