@@ -116,28 +116,29 @@ const ChatScreen = () => {
                   className="welcome-logo"
                 />
                 <h2 className="welcome-title">How can I help you today?</h2>
-                <div className="suggestion-cards">
+                
+                {/* Optimized Action Buttons - Single Horizontal Row */}
+                <div className="action-options">
                   <button 
-                    className="suggestion-card"
+                    className="action-option"
                     onClick={handleStudyPlan}
                   >
-                    <Book size={20} />
-                    <span>Create a study plan</span>
+                    Create a study plan
                   </button>
+                  <span className="separator">|</span>
                   <button 
-                    className="suggestion-card"
+                    className="action-option"
                     onClick={handleSelfyQuiz}
                   >
-                    <List size={20} />
-                    <span>Generate a quiz</span>
+                    Generate a quiz
                   </button>
-                  <button className="suggestion-card">
-                    <span>📚</span>
-                    <span>Explain a concept</span>
+                  <span className="separator">|</span>
+                  <button className="action-option">
+                    📚 Explain a concept
                   </button>
-                  <button className="suggestion-card">
-                    <span>💡</span>
-                    <span>Get homework help</span>
+                  <span className="separator">|</span>
+                  <button className="action-option">
+                    💡 Get homework help
                   </button>
                 </div>
               </div>

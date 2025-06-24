@@ -164,55 +164,17 @@ const LearningPaths = () => {
   return (
     <div className="learning-paths-page">
       <Container fluid>
-        {/* Header */}
+        {/* Clean Header - Lesson Content Focus */}
         <div className="page-header">
           <div className="header-content">
             <h1 className="page-title">
               <BookHalf className="me-3" />
-              Learning Paths
+              My Learning Paths
             </h1>
             <p className="page-subtitle">
-              Manage and track your personalized learning journeys
+              Your personalized learning content and study materials
             </p>
           </div>
-          <Button 
-            variant="primary" 
-            className="create-btn"
-            onClick={() => setShowCreateModal(true)}
-          >
-            <Plus size={16} className="me-2" />
-            Create New Path
-          </Button>
-        </div>
-
-        {/* Filters */}
-        <div className="filters-section">
-          <Row className="g-3">
-            <Col md={4}>
-              <Form.Select
-                value={filter.difficulty}
-                onChange={(e) => setFilter({ ...filter, difficulty: e.target.value })}
-              >
-                <option value="">All Difficulties</option>
-                <option value="Beginner">Beginner</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>
-              </Form.Select>
-            </Col>
-            <Col md={4}>
-              <Form.Control
-                type="text"
-                placeholder="Filter by tags..."
-                value={filter.tags}
-                onChange={(e) => setFilter({ ...filter, tags: e.target.value })}
-              />
-            </Col>
-            <Col md={4}>
-              <Button variant="outline-secondary" onClick={() => setFilter({ difficulty: "", tags: "" })}>
-                Clear Filters
-              </Button>
-            </Col>
-          </Row>
         </div>
 
         {/* Error Alert */}
@@ -222,31 +184,31 @@ const LearningPaths = () => {
           </Alert>
         )}
 
-        {/* Learning Paths Grid */}
-        <div className="paths-grid">
+        {/* Learning Content Grid - Clean Layout */}
+        <div className="content-grid">
           {learningPaths.length > 0 ? (
             <Row className="g-4">
               {learningPaths.map((path) => (
                 <Col lg={4} md={6} key={path.id}>
-                  <Card className="path-card">
+                  <Card className="lesson-content-card">
                     <Card.Body>
-                      <div className="path-header">
-                        <h5 className="path-title">{path.name}</h5>
+                      <div className="content-header">
+                        <h5 className="content-title">{path.name}</h5>
                         <Badge bg={getDifficultyColor(path.difficulty)}>
                           {path.difficulty}
                         </Badge>
                       </div>
                       
-                      <p className="path-description">{path.description}</p>
+                      <p className="content-description">{path.description}</p>
                       
-                      <div className="path-meta">
+                      <div className="content-meta">
                         <div className="meta-item">
                           <Clock size={14} />
                           <span>{path.duration}</span>
                         </div>
                         <div className="meta-item">
                           <BookHalf size={14} />
-                          <span>{path.topics_count} topics</span>
+                          <span>{path.topics_count} lessons</span>
                         </div>
                       </div>
 
@@ -258,33 +220,19 @@ const LearningPaths = () => {
                         <ProgressBar 
                           now={path.progress || 0} 
                           variant="primary"
-                          className="path-progress"
+                          className="content-progress"
                         />
                       </div>
 
-                      <div className="path-tags">
-                        {path.tags?.slice(0, 3).map((tag, index) => (
-                          <Badge key={index} bg="light" text="dark" className="me-1">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      <div className="path-actions">
+                      <div className="content-actions">
                         <Button 
                           variant="primary" 
                           size="sm"
                           onClick={() => handleViewDetails(path.id)}
-                        >
-                          <Eye size={14} className="me-1" />
-                          View Details
-                        </Button>
-                        <Button 
-                          variant="outline-primary" 
-                          size="sm"
+                          className="w-100"
                         >
                           <PlayCircleFill size={14} className="me-1" />
-                          Continue
+                          Continue Learning
                         </Button>
                       </div>
                     </Card.Body>
@@ -295,101 +243,18 @@ const LearningPaths = () => {
           ) : (
             <div className="empty-state">
               <BookHalf size={64} className="empty-icon" />
-              <h3>No Learning Paths Found</h3>
-              <p>Create your first learning path to get started on your educational journey.</p>
+              <h3>No Learning Content Yet</h3>
+              <p>Start a conversation with our AI tutor to create your first personalized learning path.</p>
               <Button 
                 variant="primary" 
-                onClick={() => setShowCreateModal(true)}
+                onClick={() => window.location.href = '/dashboard/chat'}
               >
                 <Plus size={16} className="me-2" />
-                Create Your First Path
+                Start Learning
               </Button>
             </div>
           )}
         </div>
-
-        {/* Create Path Modal */}
-        <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)} size="lg">
-          <Modal.Header closeButton>
-            <Modal.Title>Create New Learning Path</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Row>
-                <Col md={6}>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Path Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Enter path name"
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={6}>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Duration</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={formData.duration}
-                      onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
-                      placeholder="e.g., 4 weeks"
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-              
-              <Form.Group className="mb-3">
-                <Form.Label>Description</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Describe your learning path"
-                />
-              </Form.Group>
-
-              <Row>
-                <Col md={6}>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Difficulty</Form.Label>
-                    <Form.Select
-                      value={formData.difficulty}
-                      onChange={(e) => setFormData({ ...formData, difficulty: e.target.value })}
-                    >
-                      <option value="Beginner">Beginner</option>
-                      <option value="Intermediate">Intermediate</option>
-                      <option value="Advanced">Advanced</option>
-                    </Form.Select>
-                  </Form.Group>
-                </Col>
-                <Col md={6}>
-                  <Form.Group className="mb-3">
-                    <Form.Label>Tags (comma-separated)</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="programming, web development, python"
-                      onChange={(e) => setFormData({ 
-                        ...formData, 
-                        tags: e.target.value.split(',').map(tag => tag.trim()).filter(tag => tag)
-                      })}
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowCreateModal(false)}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={handleCreatePath}>
-              Create Path
-            </Button>
-          </Modal.Footer>
-        </Modal>
 
         {/* Path Detail Modal */}
         <Modal show={showDetailModal} onHide={() => setShowDetailModal(false)} size="xl">
@@ -429,7 +294,7 @@ const LearningPaths = () => {
                       </div>
 
                       <div className="topics-section">
-                        <h5>Topics</h5>
+                        <h5>Lessons</h5>
                         {selectedPath.topics?.map((topic, index) => (
                           <Card key={index} className="topic-card">
                             <Card.Body>
@@ -462,7 +327,7 @@ const LearningPaths = () => {
                     <div className="path-sidebar">
                       <Card>
                         <Card.Header>
-                          <h6>Path Information</h6>
+                          <h6>Learning Information</h6>
                         </Card.Header>
                         <Card.Body>
                           <div className="info-item">
@@ -484,7 +349,7 @@ const LearningPaths = () => {
                             </div>
                           </div>
                           <div className="info-item">
-                            <strong>Tags:</strong>
+                            <strong>Topics:</strong>
                             <div>
                               {selectedPath.tags?.map((tag, index) => (
                                 <Badge key={index} bg="primary" className="me-1 mb-1">

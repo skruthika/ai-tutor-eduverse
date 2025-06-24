@@ -87,7 +87,7 @@
       
       .welcome-content {
         text-align: center;
-        max-width: 600px;
+        max-width: 800px;
         
         .welcome-logo {
           width: 80px;
@@ -100,43 +100,51 @@
           font-size: 2rem;
           font-weight: 600;
           color: var(--text-primary);
-          margin-bottom: 2rem;
+          margin-bottom: 3rem;
         }
         
-        .suggestion-cards {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        // Optimized Action Options - Single Horizontal Row
+        .action-options {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
           gap: 1rem;
+          padding: 1.5rem 2rem;
+          background: var(--card-bg);
+          border: 1px solid var(--border-light);
+          border-radius: $border-radius-xl;
+          box-shadow: var(--shadow-sm);
           
-          .suggestion-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+          .action-option {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-weight: 500;
+            padding: 0.75rem 1rem;
+            border-radius: $border-radius-lg;
             transition: all 0.2s ease;
             cursor: pointer;
-            color: var(--text-primary);
-            font-size: 14px;
-            font-weight: 500;
+            white-space: nowrap;
             
             &:hover {
               background: var(--bg-secondary);
-              border-color: var(--primary-color);
+              color: var(--primary-color);
               transform: translateY(-1px);
             }
             
-            svg {
-              color: var(--primary-color);
-              flex-shrink: 0;
+            &:active {
+              transform: translateY(0);
             }
-            
-            span:first-child {
-              font-size: 16px;
-              flex-shrink: 0;
-            }
+          }
+          
+          .separator {
+            color: var(--border-color);
+            font-weight: 300;
+            font-size: 18px;
+            margin: 0 0.5rem;
+            user-select: none;
           }
         }
       }
@@ -252,13 +260,20 @@
             font-size: 1.75rem;
           }
           
-          .suggestion-cards {
-            grid-template-columns: 1fr;
+          .action-options {
+            flex-direction: column;
             gap: 0.75rem;
+            padding: 1.25rem 1.5rem;
             
-            .suggestion-card {
-              padding: 0.875rem;
-              font-size: 13px;
+            .action-option {
+              width: 100%;
+              text-align: center;
+              padding: 1rem;
+              font-size: 14px;
+            }
+            
+            .separator {
+              display: none;
             }
           }
         }
@@ -307,14 +322,15 @@
           
           .welcome-title {
             font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
           }
           
-          .suggestion-cards {
-            .suggestion-card {
-              padding: 0.75rem;
-              font-size: 12px;
-              gap: 0.5rem;
+          .action-options {
+            padding: 1rem;
+            
+            .action-option {
+              font-size: 13px;
+              padding: 0.875rem;
             }
           }
         }
@@ -355,8 +371,10 @@
     
     .welcome-message {
       .welcome-content {
-        .suggestion-cards {
-          .suggestion-card {
+        .action-options {
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+          
+          .action-option {
             &:hover {
               box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             }
